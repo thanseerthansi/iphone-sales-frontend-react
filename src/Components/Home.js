@@ -56,6 +56,7 @@ export default function Home() {
     
       <div className=" p-3 lg:w-1/2  md:w-1/3 flex  items-center " data-groups="[&quot;branding&quot;]">
         <div className="group relative block  justify-center overflow-hidden rounded-md transition-all duration-500">
+          {/* <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link> */}
           <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
           <div className="content pt-3">
           <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
