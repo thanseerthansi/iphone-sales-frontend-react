@@ -1,13 +1,41 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar'
-import { BiMenuAltLeft } from 'react-icons/bi';
-import { FaSearch } from 'react-icons/fa';
+import { BiMenuAltLeft,BiText } from 'react-icons/bi';
+import { FaSearch,FaRegImage,FaRegImages } from 'react-icons/fa';
 import { GrAddCircle } from 'react-icons/gr';
+import { MdPhoneIphone } from 'react-icons/md';
+import { ImPriceTags } from 'react-icons/im';
+import Callaxios from './Callaxios';
+import { useNavigate } from 'react-router-dom';
+import { Simplecontext } from './Simplecontext';
 
 export default function Adminproducts() {
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [cartmodal,setcartmodal]=useState(false)
+    const [next,setnext]=useState(null)
+    const [productdata,setproductdata]=useState([])
+    const {accesscheck} =useContext(Simplecontext)
+  
+    let navigate = useNavigate(); 
+    // console.log("next",next) 
+    useEffect(() => {        
+        if (window.localStorage.getItem("refresh_token")===null)
+        {
+            return navigate('/adminlogin')
+        }else{
+            accesscheck()
+            getproduct()
+        }
+    }, [])
+    const getproduct = async()=>{
+        let data = await Callaxios("get","http://127.0.0.1:8000/product/product/")
+        console.log("dataresponsenwxt",data.data.next)
+        if (data.status===200){
+            setnext(data.data.next)           
+        }
+    }
+    
   return (
     <div>
     <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
@@ -96,10 +124,13 @@ export default function Adminproducts() {
                     <div className="flex flex-col items-center w-full px-4 py-2 space-y-2 text-sm text-gray-500 sm:justify-between sm:space-y-0 sm:flex-row">
                     <div className="flex items-center justify-between space-x-2">
                         {/* <a href="#" className="hover:text-gray-600">Load More</a> */}
+                    
                         <div className="flex flex-row space-x-1">
-                        <button className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>
-                        
+                        {next ===null ? null:
+                        <button className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>      
+                         }
                         </div>
+                    
                         
                     </div>
                     </div>
@@ -115,7 +146,7 @@ export default function Adminproducts() {
                     <div className="modal-content border-none h-full shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                         <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                         <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
-                            My Cart
+                            Add New Product
                         </h5>
                         <button type="button" onClick={()=>setcartmodal(!cartmodal)} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
                         </div>
@@ -131,19 +162,19 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Your Full Name:</label>
+                                                <label htmlFor="name" className="font-semibold">Model Name:</label>
                                                 <div className="form-icon relative mt-2">
-                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><MdPersonOutline size={18} /></i> */}
-                                                <input name="name" id="name" type="text" className="form-input pl-11" placeholder="Name :" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
+                                                <input name="phone" id="phone" type="text" className="form-input pl-11" placeholder="phone model :" />
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Your Email:</label>
+                                                <label htmlFor="email" className="font-semibold">Sell Price</label>
                                                 <div className="form-icon relative mt-2">
-                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineEmail size={18} /></i> */}
-                                                <input name="email" id="email" type="email" className="form-input pl-11" placeholder="Email :" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
@@ -151,39 +182,46 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Contact:</label>
+                                                <label htmlFor="contact" className="font-semibold">Purchase Price</label>
                                                 <div className="form-icon relative mt-2">
-                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><MdPhone size={18} /></i> */}
-                                                <input name="name" id="name" type="text" className="form-input pl-11" placeholder="Contact :" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">City:</label>
+                                                <label htmlFor="email" className="font-semibold">Description</label>
                                                 <div className="form-icon relative mt-2">
-                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><MdLocationCity  size={18} /></i> */}
-                                                <input name="email" id="email" type="email" className="form-input pl-11" placeholder="City :" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
+                                                <textarea  className='form-input pl-11' placeholder='description'/>
                                                 </div>
                                             </div>
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-1">
-                                            <div className="mb-5">
+                                        <div className="grid lg:grid-cols-12 lg:gap-6">
+                                            <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="address" className="font-semibold">Delivery Address:</label>
+                                                <label htmlFor="contact" className="font-semibold">Add Image</label>
                                                 <div className="form-icon relative mt-2">
-                                                {/* <i className="w-4 h-4 absolute top-3 left-4">< MdOutlineHome size={18} /></i> */}
-                                                <input name="subject" id="subject" className="form-input pl-11" placeholder="Address :" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><FaRegImage size={18} /></i>
+                                                <input name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
-                                            <div className="mb-5">
-                                            
+                                            <div className="lg:col-span-6 mb-5">
+                                            <div className="text-left">
+                                                <label htmlFor="email" className="font-semibold">Add Extra Images</label>
+                                                <div className="form-icon relative mt-2">
+                                                <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
+                                                <input name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
+                                       
                                         {/* <button type="submit" id="submit" name="send" className="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center">Send Message</button> */}
-                                        <div><button type="submit" className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Buy now</button></div>
+                                        <div className='flex justify-end' ><button type="submit" className='w-64 p-2 bg-green-700 rounded-md  text-white hover:bg-green-900'>Submit</button></div>
                                         </form>
                                     </div>{/*end grid*/}
                                 </div>{/*end col*/}
@@ -201,7 +239,7 @@ export default function Adminproducts() {
                             
                             {/*end container*/}
                             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                    <button type="button" onClick={()=>setcartmodal(!cartmodal)} className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
+                                    <button type="button" onClick={()=>setcartmodal(!cartmodal)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
                                         Close
                                     </button>
                                     {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">

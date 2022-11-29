@@ -9,12 +9,16 @@ import Adminselledphone from "./Components/Adminselledphone";
 import Home from './Components/Home';
 import Phonedetail from "./Components/Phonedetail";
 import Selliphone from "./Components/Selliphone";
+import Simplecontextprovider from "./Components/Simplecontext";
 
 function App() {
   return (
 <div className="justify-center items-center ">
+    
      <Router>
+     <Simplecontextprovider> 
       <Routes>
+      
         <Route exact path='/' element={<Home/>}/>
         <Route exact path='details' element={<Phonedetail/>}/>
         <Route exact path='selliphone' element={<Selliphone/>}/>
@@ -23,9 +27,11 @@ function App() {
         <Route exact path='adminsell' element={<Adminselledphone/>}/>
         <Route exact path='adminlogin' element={<Adminlogin/>}/>
         <Route exact path="adminproducts" element={<Adminproducts/>}/>
-       
+        
       </Routes>
+      </Simplecontextprovider>
      </Router>
+     
     </div>
   );
 }

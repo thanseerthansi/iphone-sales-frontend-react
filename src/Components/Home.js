@@ -125,7 +125,7 @@ export default function Home() {
         <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
           
           <div className="content pt-14 flex  items-center">
-            <h5 className="mb-1 flex justify-center text-blue-600 font-semibold cursor-pointer hover:text-blue-900"> Load More>></h5>
+            <h5 className="mb-1 flex justify-center text-blue-600 font-semibold cursor-pointer hover:text-blue-900">{`Load More>>`}</h5>
             {/* <h6 className="text-slate-400 flex justify-center">Branding</h6> */}
           </div>
         </div>
