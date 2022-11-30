@@ -2,6 +2,7 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import React, { createContext, useEffect } from 'react'
 import {useNavigate } from 'react-router-dom';
+import { BaseURL } from './urlcall';
 export const Simplecontext = createContext();
 
 
@@ -32,7 +33,7 @@ export default function Simplecontextprovider({children}) {
         try {
             let accessdata = await axios({
               method: 'post',
-              url: 'http://127.0.0.1:8000/api/token/refresh/',
+              url: BaseURL+'api/token/refresh/',
               data:{"refresh" : refresh_token },
           })
         //   console.log("data",accessdata)    

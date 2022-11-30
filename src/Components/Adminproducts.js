@@ -1,22 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar'
 import { BiMenuAltLeft,BiText } from 'react-icons/bi';
-import { FaSearch,FaRegImage,FaRegImages } from 'react-icons/fa';
+import { FaSearch,FaRegImage,FaRegImages,FaEdit } from 'react-icons/fa';
 import { GrAddCircle } from 'react-icons/gr';
 import { MdPhoneIphone } from 'react-icons/md';
 import { ImPriceTags } from 'react-icons/im';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import Callaxios from './Callaxios';
 import { useNavigate } from 'react-router-dom';
 import { Simplecontext } from './Simplecontext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Adminproducts() {
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [cartmodal,setcartmodal]=useState(false)
     const [next,setnext]=useState(null)
+    const [products,setproducts]=useState([])
     const [productdata,setproductdata]=useState([])
+    const [editproduct,seteditproduct]=useState();
+    const [images,setimages]=useState([])
+    // console.log("productdata add",productdata)
     const {accesscheck} =useContext(Simplecontext)
-  
+
     let navigate = useNavigate(); 
     // console.log("next",next) 
     useEffect(() => {        
@@ -28,11 +35,60 @@ export default function Adminproducts() {
             getproduct()
         }
     }, [])
+    const notifyproductadded = () => toast.success('✅ Product added Successfully!', {
+        position: "top-center",
+        });
+    const notifyerror = () => toast.error('✅ Something went wrong', {
+        position: "top-center",
+        });
     const getproduct = async()=>{
-        let data = await Callaxios("get","http://127.0.0.1:8000/product/product/")
-        console.log("dataresponsenwxt",data.data.next)
+        let data = await Callaxios("get","product/product/")
+        // console.log("dataresponsenwxt",data.data.results)
         if (data.status===200){
-            setnext(data.data.next)           
+            setnext(data.data.next)  
+            setproducts(data.data.results)        
+        }else{
+            notifyerror()
+        }
+    }
+    const getnextproduct = async()=>{
+        let data = await Callaxios("get",next)
+        if (data.status===200){
+            setnext(data.data.next)
+            setproducts(products=>[...products,...data.data.results])
+        }else{
+            notifyerror()
+        }
+    }
+    const imageaddtolist = (img)=>{
+        let imagelist = images.concat(img)
+        setimages(imagelist)
+    }
+    const deletefromlist=(k)=>{
+        const splc = images
+        splc.splice(k,1)
+        setimages(() => [ ...splc]);
+      }
+    const addproduct = async(e)=>{
+        e.preventDefault();
+        const form_data = new FormData();
+        if (images){
+            images.map((itm,k)=>{
+                form_data.append("images",itm)
+            })  
+        }
+        for (const [key, value] of Object.entries(productdata)) {
+            form_data.append(`${key}`, `${value}`)
+          }
+        
+        let data =  await Callaxios("post","product/product/",form_data)
+        console.log("datainaftrcallaxios",data.data)
+        if (data.data.Status===200){
+            setproductdata([])
+            notifyproductadded()
+            setcartmodal(!cartmodal)
+        }else{
+            notifyerror()
         }
     }
     
@@ -54,7 +110,7 @@ export default function Adminproducts() {
             </div>
                 
                 <div className='md:p-8  pt-4'>
-                    
+                <ToastContainer />
                     <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[70%]   w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Products</b>
                     {/* search start */}
@@ -77,47 +133,68 @@ export default function Adminproducts() {
                     {/* search end */}
                     {/* Dashboard home start */}
 
-                    <div className=" mx-auto">
+                    <div className=" mx-auto ">
 
-                    <div className="mt-6 overflow-x-auto rounded-md">
-                    <table className="w-full border border-collapse table-auto">
+                    <div className="mt-6 overflow-auto rounded-md">
+                    <table className="w-full border  ">
                         <thead >
                         <tr className="text-base font-bold text-left bg-gray-50">
                             <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
-                            <th className="px-4 py-3 border-b-2 border-blue-500">Customer</th>
-                            <th className="px-4 py-3 border-b-2 border-green-500">Contact</th>
-                            <th className="px-4 py-3 border-b-2 border-red-500">Order No</th>
-                            <th className="px-4 py-3  border-b-2 border-yellow-500 ">Purchased On</th>
+                            <th className="px-4 py-3 border-b-2 border-blue-500">Model</th>
+                            <th className="px-4 py-3 border-b-2 border-green-500">Images</th>
+                            <th className="px-4 py-3 border-b-2 border-yellow-500 ">Sell Price</th>
+                            <th className="px-4 py-3  border-b-2 border-blue-500 ">Sell Status</th>
+                            <th className="px-4 py-3  border-b-2 border-red-500  ">Buy Price</th>
+                            <th className="px-4 py-3  border-b-2 border-cyan-500 ">Buy Status</th>
+                            <th className="px-4 py-3  border-b-2 border-red-500">Date</th>
+                            <th className="px-4 py-3  border-b-2 border-yellow-500 ">Action</th>
                         </tr>
                         </thead>
                         <tbody className="text-sm font-normal text-gray-700">
-                            
-                        <tr className="py-10 border-b border-gray-200 hover:bg-gray-100">
-                            
-                        <td className="px-4 py-4">
-                            1
+                        {products.map((itm,k)=>(  
+                        <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">                            
+                            <td className="px-4 py-4">{k+1}</td>
+                            <td className=" px-4 py-4  " >                      
+                                <div className="flex font-medium dark:text-gray-700">{itm.model_name}</div>
                             </td>
-                            <td className="flex flex-row items-center px-4 py-4">
-                            
-                            <div className="flex-1 ">
-                                <div className="font-medium dark:text-gray-500">Barbara Curtis</div>
-                                {/* <div className="text-sm text-blue-600 dark:text-gray-200">
-                                Account Deactivated
-                                </div> */}
-                            </div>
+                            <td className="px-4 py-4"> 
+                                {itm.images[0] ? 
+                                <>
+                                    {itm.images.map((imag,k1)=>(
+                                    <div key={k1} className='w-10'>
+                                    <img  className='rounded '  src={ imag.image} alt='img' />
+                                    </div>
+                                    ))}
+                                </>:null}
                             </td>
+                            <td className="px-2 py-4">{itm.sellprice.split(',').map((sellp,k2)=>(
+                              <ul key={k2} className='list-outside list-disc'>
+                                <li className=''>{sellp}</li></ul>  
+                            ))} </td>
                             <td className="px-4 py-4">
-                            480-570-3413
+                                {itm.sellstatus ?
+                                <button className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
+                                <button className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
+                            <td className="px-2 py-4">{itm.buyprice.split(',').map((sellp,k2)=>(
+                              <ul key={k2} className='list-outside list-disc'>
+                                <li className=''>{sellp}</li></ul>  
+                            ))} </td>
                             <td className="px-4 py-4">
-                            MX-8523537435
+                                {itm.buystatus ?
+                                <button className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
+                                <button className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
-                            <td className="px-4 py-4">
-                            Just Now
+                            <td className='px-4 py-4'> {itm.created_date.split('T')[0]}</td>
+                            <td className='px-4 py-4'>
+                                <ul >
+                                    <li><button onClick={()=>seteditproduct(itm)} className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>
+                                    <li className='pt-1'><button className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
+                                </ul>
                             </td>
                         </tr>
                         
-
+                        ))}  
                         </tbody>
                     </table>
                     </div>
@@ -127,7 +204,7 @@ export default function Adminproducts() {
                     
                         <div className="flex flex-row space-x-1">
                         {next ===null ? null:
-                        <button className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>      
+                        <button onClick={()=>getnextproduct()} className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>      
                          }
                         </div>
                     
@@ -148,15 +225,15 @@ export default function Adminproducts() {
                         <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
                             Add New Product
                         </h5>
-                        <button type="button" onClick={()=>setcartmodal(!cartmodal)} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
+                        <button type="button" onClick={()=>setcartmodal(!cartmodal) & seteditproduct()} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
                         </div>
-                        {/* cart data start */}
+                        {/* data start */}
                         <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
                             <div className="container">
                                 <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                                 <div className="lg:col-span-12 md:col-span-12">
                                     <div className="grid grid-cols-1 gap-[10px]">
-                                    <form method="post" name="myForm" id="myForm"  className='pt-5' >
+                                    <form  onSubmit={(e)=>addproduct(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
                                         <div id="simple-msg" />
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
@@ -165,16 +242,16 @@ export default function Adminproducts() {
                                                 <label htmlFor="name" className="font-semibold">Model Name:</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
-                                                <input name="phone" id="phone" type="text" className="form-input pl-11" placeholder="phone model :" />
+                                                <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } defaultValue={editproduct ? editproduct.model_name :null} name="phone" id="phone" type="text"  className="form-input pl-11" placeholder="phone model :" />
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Sell Price</label>
+                                                <label htmlFor="email" className="font-semibold">Sell Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=> setproductdata({...productdata,sellprice:e.target.value}) } defaultValue={editproduct ? editproduct.sellprice :null}  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
@@ -182,10 +259,10 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Purchase Price</label>
+                                                <label htmlFor="contact" className="font-semibold">Purchase Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=>setproductdata({...productdata,buyprice:e.target.value})} defaultValue={editproduct ? editproduct.buyprice :null}  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
@@ -194,13 +271,13 @@ export default function Adminproducts() {
                                                 <label htmlFor="email" className="font-semibold">Description</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea  className='form-input pl-11' placeholder='description'/>
+                                                <textarea onChange={(e)=>setproductdata({...productdata,description:e.target.value})} defaultValue={editproduct ? editproduct.description :null}  className='form-input pl-11' placeholder='description'/>
                                                 </div>
                                             </div>
                                             </div>
                                         </div>
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
-                                            <div className="lg:col-span-6 mb-5">
+                                            {/* <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Add Image</label>
                                                 <div className="form-icon relative mt-2">
@@ -208,13 +285,38 @@ export default function Adminproducts() {
                                                 <input name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
-                                            </div>
+                                            </div> */}
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Add Extra Images</label>
+                                            {/* {editproduct.images[0] ? 
+                                                <div className='grid grid-cols-4'>
+                                                {editproduct.images.map((itm,k)=>(
+                                                    <div key={k} className="col-span-2 pt-1"> 
+                                                    <div className='col-span-1 flex w-20'>
+                                                    <img  className='rounded '  src={ URL.createObjectURL(itm)} alt='img' />
+                                                    <button type='button' className='pl-2 hover:text-red-600 ' onClick={()=>deletefrom(k)}>< RiDeleteBin6Line /></button>
+                                                    </div>
+                                                </div> 
+                                                ))}
+                                                </div>
+                                            :null } */}
+                                            {images[0]?
+                                                <>
+                                                <div className='grid grid-cols-4'>
+                                                {images.map((itm,k)=>(
+                                                    <div key={k} className="col-span-2 pt-1"> 
+                                                    <div className='col-span-1 flex w-20'>
+                                                    <img  className='rounded '  src={ URL.createObjectURL(itm)} alt='img' />
+                                                    <button type='button' className='pl-2 hover:text-red-600 ' onClick={()=>deletefromlist(k)}>< RiDeleteBin6Line /></button>
+                                                    </div>
+                                                </div> 
+                                                ))}
+                                                </div>
+                                                </>: null}
+                                                <label htmlFor="email" className="font-semibold">Add  Images</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
-                                                <input name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
@@ -239,7 +341,7 @@ export default function Adminproducts() {
                             
                             {/*end container*/}
                             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                    <button type="button" onClick={()=>setcartmodal(!cartmodal)} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
+                                    <button type="button" onClick={()=>setcartmodal(!cartmodal) & seteditproduct()} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
                                         Close
                                     </button>
                                     {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">

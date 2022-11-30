@@ -6,10 +6,13 @@ import Adminlogin from "./Components/Adminlogin";
 import Adminorders from "./Components/Adminorders";
 import Adminproducts from "./Components/Adminproducts";
 import Adminselledphone from "./Components/Adminselledphone";
+import Adminstatus from "./Components/Adminstatus";
+import Admincity from "./Components/Admincity";
 import Home from './Components/Home';
 import Phonedetail from "./Components/Phonedetail";
 import Selliphone from "./Components/Selliphone";
 import Simplecontextprovider from "./Components/Simplecontext";
+import Admincontact from "./Components/Admincontact";
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
         <Route exact path='adminsell' element={<Adminselledphone/>}/>
         <Route exact path='adminlogin' element={<Adminlogin/>}/>
         <Route exact path="adminproducts" element={<Adminproducts/>}/>
+        <Route exact path="admincity" element={<Admincity/>}/>
+        <Route exact path="adminstatus" element={<Adminstatus/>}/>
+        <Route exact path="admincontact" element={<Admincontact/>}/>
         
       </Routes>
       </Simplecontextprovider>

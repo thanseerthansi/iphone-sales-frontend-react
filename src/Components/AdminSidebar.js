@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import {FaProductHunt} from 'react-icons/fa';
+import {MdLocationCity} from 'react-icons/md';
+import {GrStatusInfo} from 'react-icons/gr';
 import {useNavigate } from 'react-router-dom';
 
 export default function AdminSidebar(show) {
@@ -61,20 +63,37 @@ export default function AdminSidebar(show) {
           <span className="ml-3 ">Products</span>
         </Link>
       </li>
+      <li className="my-px">
+        <Link to="/adminstatus" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
+          <span className="flex items-center justify-center text-lg text-gray-500">
+            <GrStatusInfo size={20}/>
+          </span>
+          <span className="ml-3 ">Status</span>
+        </Link>
+      </li>
+      <li className="my-px">
+        <Link to="/admincity" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
+          <span className="flex items-center justify-center text-lg text-gray-500">
+            <MdLocationCity size={20}/>
+          </span>
+          <span className="ml-3 ">City</span>
+        </Link>
+      </li>
      
       <li className="my-px">
         <span className="flex font-medium text-sm text-gray-400 px-4 my-4 uppercase">Account</span>
       </li>
       <li className="my-px">
-        <a href="#" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
+        <a href="#" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">
             <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
               <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </span>
-          <span className="ml-3">Profile</span>
+          <span className="ml-3 ">Profile</span>
         </a>
       </li>
+      
       {/* <li className="my-px">
         <a href="#" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
           <span className="flex items-center justify-center text-lg text-gray-500">
@@ -86,8 +105,8 @@ export default function AdminSidebar(show) {
           <span className="flex items-center justify-center text-sm text-red-500 font-semibold bg-red-300 h-6 px-2 rounded-full ml-auto">10</span>
         </a>
       </li> */}
-      {/* <li className="my-px">
-        <a href="#" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
+      <li className="my-px">
+        <Link to="/admincontact" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">
             <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
               <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -95,16 +114,16 @@ export default function AdminSidebar(show) {
             </svg>
           </span>
           <span className="ml-3">Settings</span>
-        </a>
-      </li> */}
+        </Link>
+      </li>
       <li className="my-px">
-        <p onClick={()=>logout()} className="flex cursor-pointer flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700">
+        <p onClick={()=>logout()} className="flex cursor-pointer flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
           <span className="flex items-center justify-center text-lg text-red-400">
             <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
               <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
             </svg>
           </span>
-          <span className="ml-3">Logout</span>
+          <span className="ml-3 ">Logout</span>
         </p>
       </li>
     </ul>

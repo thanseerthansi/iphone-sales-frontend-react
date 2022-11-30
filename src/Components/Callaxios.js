@@ -1,24 +1,31 @@
 import axios from 'axios';
+import { BaseURL } from './urlcall';
 
 export default async function  Callaxios(method,url,datalist) { 
     const token = localStorage.getItem('access_token');
-    // var refresh_token = window.localStorage.getItem('refresh_token')       
+    // var refresh_token = window.localStorage.getItem('refresh_token')
+    // console.log("datalist",datalist)       
     try {
         if(method==="get"){
-            let data = await axios.get(url)
+            // console.log("url",BaseURL)
+            let data = await axios.get(BaseURL+url)
+            console.log("dataget",data)
             return data
         }else if(method==="post"){
+            console.log("post")
             let data = await  axios({
                 method: 'post',
-                url: url,
+                url: BaseURL+url,
                 headers:{"Authorization" : `Bearer ${token}`},
                 data: datalist
                 })
+                console.log("datapost",data)
             return data
         }else if (method==="delete"){
+            console.log("delete")
             let data = await axios({
                 method: 'delete',
-                url: url,
+                url: BaseURL+url,
                 headers:{"Authorization" : `Bearer ${token}`},
                 data:datalist,
               })
