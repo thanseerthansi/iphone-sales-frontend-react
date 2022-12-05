@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import {FaProductHunt} from 'react-icons/fa';
-import {MdLocationCity} from 'react-icons/md';
+import {FaProductHunt,FaMobileAlt} from 'react-icons/fa';
+// import {MdLocationCity} from 'react-icons/md';
 import {GrStatusInfo} from 'react-icons/gr';
 import {useNavigate } from 'react-router-dom';
 
@@ -72,11 +72,11 @@ export default function AdminSidebar(show) {
         </Link>
       </li>
       <li className="my-px">
-        <Link to="/admincity" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
+        <Link to="/admincategory" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">
-            <MdLocationCity size={20}/>
+            <FaMobileAlt size={20}/>
           </span>
-          <span className="ml-3 ">City</span>
+          <span className="ml-3 ">Conditions</span>
         </Link>
       </li>
      

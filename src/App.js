@@ -7,7 +7,7 @@ import Adminorders from "./Components/Adminorders";
 import Adminproducts from "./Components/Adminproducts";
 import Adminselledphone from "./Components/Adminselledphone";
 import Adminstatus from "./Components/Adminstatus";
-import Admincity from "./Components/Admincity";
+import Admincategory from "./Components/Admincategory";
 import Home from './Components/Home';
 import Phonedetail from "./Components/Phonedetail";
 import Selliphone from "./Components/Selliphone";
@@ -23,14 +23,14 @@ function App() {
       <Routes>
       
         <Route exact path='/' element={<Home/>}/>
-        <Route exact path='details' element={<Phonedetail/>}/>
+        <Route exact path='details/:id' element={<Phonedetail/>}/>
         <Route exact path='selliphone' element={<Selliphone/>}/>
         <Route exact path='adminhome' element={<Adminhome/>}/>
         <Route exact path='adminorder' element={<Adminorders/>}/>
         <Route exact path='adminsell' element={<Adminselledphone/>}/>
         <Route exact path='adminlogin' element={<Adminlogin/>}/>
         <Route exact path="adminproducts" element={<Adminproducts/>}/>
-        <Route exact path="admincity" element={<Admincity/>}/>
+        <Route exact path="admincategory" element={<Admincategory/>}/>
         <Route exact path="adminstatus" element={<Adminstatus/>}/>
         <Route exact path="admincontact" element={<Admincontact/>}/>
         

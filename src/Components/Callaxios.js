@@ -1,28 +1,40 @@
 import axios from 'axios';
 import { BaseURL } from './urlcall';
-
+let canceltoken;
 export default async function  Callaxios(method,url,datalist) { 
+    // if(typeof canceltoken != typeof undefined){
+    //     canceltoken.cancel("Cancelling Request")
+    // }
+    // canceltoken = axios.CancelToken.source()
     const token = localStorage.getItem('access_token');
     // var refresh_token = window.localStorage.getItem('refresh_token')
+    // console.log("url",url)       
+    // console.log("method",method)       
     // console.log("datalist",datalist)       
     try {
         if(method==="get"){
             // console.log("url",BaseURL)
-            let data = await axios.get(BaseURL+url)
-            console.log("dataget",data)
+            let data = await axios.get(BaseURL+url,{params:datalist})
+            // console.log("dataget",data)
             return data
-        }else if(method==="post"){
-            console.log("post")
+        }else if(method==="next"){
+            // console.log("url",BaseURL)
+            let data = await axios.get(url)
+            // console.log("dataget",data)
+            return data
+        }
+        else if(method==="post"){
+            // console.log("post")
             let data = await  axios({
                 method: 'post',
                 url: BaseURL+url,
                 headers:{"Authorization" : `Bearer ${token}`},
                 data: datalist
                 })
-                console.log("datapost",data)
+                // console.log("datapost",data)
             return data
         }else if (method==="delete"){
-            console.log("delete")
+            // console.log("delete")
             let data = await axios({
                 method: 'delete',
                 url: BaseURL+url,
@@ -30,6 +42,16 @@ export default async function  Callaxios(method,url,datalist) {
                 data:datalist,
               })
               return data
+        }else if(method==="patch"){
+            // console.log("patch")
+            let data = await axios({
+                method: 'patch',
+                url: BaseURL+url,
+                headers:{"Authorization" : `Bearer ${token}`},
+                data:datalist
+              })
+              return data
+
         }
         
         
@@ -37,7 +59,11 @@ export default async function  Callaxios(method,url,datalist) {
         // setvalue(data.data)
         
     } catch (error) {
-        console.log(error)
+        console.log("error",error)
+        // if (error.message==="Request failed with status code 401"){
+        //     console.log("notoken")
+        //     window.location.href = '/adminlogin';
+        // }
         return null
     }
 

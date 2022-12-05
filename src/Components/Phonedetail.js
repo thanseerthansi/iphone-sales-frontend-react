@@ -1,17 +1,56 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Footer from './Footer'
 import Header from './Header'
-import { Link} from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
 import {GiReturnArrow} from 'react-icons/gi';
 import {FaUnlock,FaThumbsUp} from 'react-icons/fa';
 import {AiOutlineSafetyCertificate} from 'react-icons/ai';
 import Whatsappbutton from './Whatsappbutton';
+import Callaxios from './Callaxios';
+import { Simplecontext } from './Simplecontext';
 // import {TbPlayerTrackNext} from 'react-icons/tb';
 export default function Phonedetail() {
+  // const {products} =useContext(Simplecontext)
+  const [storagelist,setstoragelist] = useState([])
+  const [productdetail,setproductdetail]=useState('')
   const [iquantity,setiquantity]=useState(1)
   const [icolor,seticolor]=useState() //store as array index :value
   const [istorage,setistorage]=useState()//store as array index :value
   const [icondition,seticondition]=useState()//store as array index :value
+  const  urlparam  = useParams()
+  let urlid = urlparam.id
+  // console.log("produ",istorage)
+  
+  useEffect(() => {
+    getdetailproduct()
+  }, [])
+  
+  const getdetailproduct=async()=>{
+    let data =await Callaxios("get","product/product/",{"id":urlid})
+    // console.log("prodetsila",data)
+    if (data.status===200){
+      setproductdetail(data.data.results)
+      storagecheck(data.data.results)
+    }
+  }
+  // to add the strage in  storagelist state
+  const storagecheck = (data)=>{
+    let list =[];
+    data[0].sellprice.split(',').map((itm,k)=>{
+      let spl = itm.split('-')[0]
+      if (list[0]){
+        if (list.indexOf(spl) !== -1){
+          }else{
+            list.push(itm.split('-')[0])
+          }
+      }else{
+        list.push(itm.split('-')[0])
+      }
+      })
+      // console.log("list",list)
+      setstoragelist(()=>[...list])
+      setistorage(list[0])
+  }   
   const decrementhandler =()=>{
     if (iquantity!==1){
       let lessone = iquantity-1
@@ -48,10 +87,16 @@ export default function Phonedetail() {
     <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
       <div className="lg:col-span-5 md:col-span-6">
         <div className="grid grid-cols-1 gap-[30px]">
-          <img src="https://www.apple.com/v/iphone-14-pro/c/images/overview/hero/hero_iphone_14_pro__e0act2165xqq_large.jpg" className="rounded-lg" alt={''} />
+          {productdetail[0]?<>
+          {productdetail[0].images.map((itm,k)=>(
+            // <div>dsfsdgfsd</div>
+            <img key={k} src={itm.image} className="rounded-lg" alt={''} />
+          ))}
+          </>:null}
+          {/* <img src="https://www.apple.com/v/iphone-14-pro/c/images/overview/hero/hero_iphone_14_pro__e0act2165xqq_large.jpg" className="rounded-lg" alt={''} />
           <img src="https://media.wired.com/photos/632119a7f1e5c40d2b1bc647/master/pass/iPhone-14-Pro-Review-Gear.jpg" className="rounded-lg" alt={''} />
           <img src="https://www.digitaltrends.com/wp-content/uploads/2022/09/iPhone-14-Pro-Back-Purple-Hand.jpg?p=1" className="rounded-lg" alt={''} />
-          <img src="https://imageio.forbes.com/specials-images/imageserve/62ec001d64a2e8ce307b70bd/Apple-iphone13-design-09142021/960x0.jpg?height=399&width=711&fit=bounds" className="rounded-lg" alt={''} />
+          <img src="https://imageio.forbes.com/specials-images/imageserve/62ec001d64a2e8ce307b70bd/Apple-iphone13-design-09142021/960x0.jpg?height=399&width=711&fit=bounds" className="rounded-lg" alt={''} /> */}
         </div>{/*end grid*/}
       </div>{/*end col*/}
       <div className="lg:col-span-7 md:col-span-6">
@@ -62,23 +107,45 @@ export default function Phonedetail() {
                 <h4 className="text-xl font-semibold mb-3 border-b border-gray-100 dark:border-gray-700 text-black dark:text-white pb-3">iPhone 14</h4>
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Color :</h5>
                 <div className='flex '>
-                  <div className='p-2'><button className='rounded-full bg-[#ff0000] w-7 h-7  border-gray-900 hover:border-2 '></button></div>
+                  {productdetail[0]?<>
+                  {productdetail[0].colors ?<>
+                    {productdetail[0].colors.split(',').map((itm,k)=>
+                    <div key={k} className='p-2'>
+                      <button className='rounded-full w-7 h-7  border-gray-900 hover:border-2 ' style={{backgroundColor:"itm"}}></button>
+                    </div>
+                    )} 
+                    </> :null}
+                  </>:null}
+                  {/* <div className='p-2'><button className='rounded-full bg-[#ff0000] w-7 h-7  border-gray-900 hover:border-2 '></button></div>
                   <div className='p-2'><button className='rounded-full bg-[grey] w-7 h-7  border-gray-900 hover:border-2'></button></div>
                   <div className='p-2'><button className='rounded-full bg-[purple] w-7 h-7 border-black hover:border-2'></button></div>
-                  <div className='p-2'><button className='rounded-full bg-[pink] w-7 h-7   border-gray-900    hover:border-2'></button></div>
+                  <div className='p-2'><button className='rounded-full bg-[pink] w-7 h-7   border-gray-900    hover:border-2'></button></div> */}
                 </div></div>
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Storage :</h5>
                 <div className='flex '>
-                  <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 128 GB</button></div>
+        
+                  {storagelist?<>
+                    {storagelist.map((itm,k)=>(
+                      <>
+                      <div key={k} className='p-2'><button onClick={()=>setistorage(itm)} className={istorage === itm ? `bg-gray-700 font-semibold  py-2 px-4 border  text-white border-gray-400  hover:bg-gray-700  rounded`:`bg-gray font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  hover:bg-gray-700  rounded`} >{itm} GB</button></div>
+                      </>
+                    ))}
+                  </>:null}
+                  {/* <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 128 GB</button></div>
                   <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 256 GB</button></div>
-                  <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 512 GB</button></div>
+                  <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 512 GB</button></div> */}
                   
                 </div></div>
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Condition :</h5>
                 <div className='flex '>
-                  <div className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> Good <br/>AED 3,100</button></div>
+                  {productdetail[0] ?<>
+                    {(productdetail[0].sellprice.split(',')).filter(name => name.includes(istorage)).map((itm,k1) =>(
+                      <div key={k1} className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> {itm.split("-")[1]}<br/>AED {itm.split('-')[2]}</button></div>
+                    ))}
+                  </> :null}
+                  {/* <div className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> Good <br/>AED 3,100</button></div>
                   <div className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> VeryGood<br/>AED 3,250</button></div>
-                  <div className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> Excellent<br/>AED 3,400</button></div>
+                  <div className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> Excellent<br/>AED 3,400</button></div> */}
                   
                 </div></div>
                 

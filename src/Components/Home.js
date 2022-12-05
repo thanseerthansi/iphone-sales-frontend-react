@@ -1,12 +1,53 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import { Link} from 'react-router-dom';
 import {FaSearch} from 'react-icons/fa';
 import Whatsappbutton from './Whatsappbutton';
 // import { BsCart4 } from 'react-icons/fa';
+import { Simplecontext } from './Simplecontext';
+import Callaxios from './Callaxios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Home() {
-  
+  const {accesscheck,next,setnext,products,setproducts,getproduct} =useContext(Simplecontext)
+  const [search,setsearch]= useState('')
+  useEffect(() => {
+    const getData = setTimeout(() => {    
+      searchproduct()
+    }, 1500)
+
+    return () => clearTimeout(getData)
+  }, [search])
+  const notifyproductadded = () => toast.success('✅ Product added Successfully!', {
+    position: "top-center",
+    });
+const notifyerror = () => toast.error(' Something went wrong', {
+    position: "top-center",
+    });
+  const searchproduct = async()=>{
+    console.log("search product",search)
+    let data = await Callaxios("get","/product/product",{model_name:search})
+    // console.log("data",data)
+    if (data.status===200){
+        setnext(data.data.next)  
+        setproducts(data.data.results) 
+    }else{
+        notifyerror()
+    }
+}
+const getnextproduct = async()=>{
+    let data = await Callaxios("next",next)
+    console.log("nextinnextcall",next)
+    if (data.status===200){
+        // console.log("daatanext",data.data.next)
+        setnext(data.data.next)
+        setproducts(products=>[...products,...data.data.results])
+    }else{
+        notifyerror()
+    }
+}
   return (
     <div className='transition-all'>
         <Header/>
@@ -33,9 +74,10 @@ export default function Home() {
       {/* search start */}
         <div className="flex justify-center">
           <div className="mb-3 xl:w-96">
-          <div className="form-icon relative mt-2">
+          <div className="form-icon relative mt-2 flex">
                     <i className="w-4 h-4 absolute top-3 left-4"><FaSearch size={18} /></i>
-                      <input name="email" id="email" type="search" className="form-input pl-11 border-gray-500" placeholder="Search your iPhone here" />
+                      <input name="email" id="email" type="search" onChange={(e)=>setsearch(e.target.value)} className="form-input pl-11 border-gray-500 " placeholder="Search your iPhone here" />
+                      {/* <button onClick={()=>searchproduct()} className='bg-gray-700 hover:bg-gray-600 px-3 rounded-r-md'><FaSearch size={20} color='white' /></button> */}
                     </div>
             {/* <div className="input-group relative flex border border-gray-400 rounded items-stretch w-full mb-4">
               <input type="search" className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search Your iPhone" aria-label="Search" aria-describedby="button-addon2" />
@@ -53,83 +95,34 @@ export default function Home() {
     <div className=' flex justify-center test-center'>
 
     <div id="" className="grid md:grid-cols-4 grid-cols-2 lg:pl-28 pl-auto mt-4 ">
+      {products.map((itm,k)=>(
     
-      <div className=" p-3 lg:w-1/2  md:w-1/3 flex  items-center " data-groups="[&quot;branding&quot;]">
+      <div key={k} className=" p-3 lg:w-3/5 md:w-3/5 flex  items-center " data-groups="[&quot;branding&quot;]">
         <div className="group relative block  justify-center overflow-hidden rounded-md transition-all duration-500">
           {/* <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link> */}
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
+          <Link to={`/details/${itm.id}`}><img src={itm.images[0].image} className="rounded-md" alt={''} /></Link>
           <div className="content pt-3">
-          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
+          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">{itm.model_name}</Link></h5>
+            <div className='flex justify-center '>
+            <h6 className=" flex justify-center text-amber-700">From <span className=''>&nbsp; ${itm.sellfromprice}</span></h6>
+            {/* <h6 className="text-slate-400 flex justify-center"> ${itm.sellfromprice}</h6> */}
+            </div>
           </div>
         </div>
       </div>
-      <div className="lg:w-1/2 md:w-1/3 p-3 picture-item " data-groups="[&quot;branding&quot;]">
-        <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
-          <div className="content pt-3">
-          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
-          </div>
-        </div>
-      </div>
-      <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">
-        <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
-          <div className="content pt-3">
-          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
-          </div>
-        </div>
-      </div>
-      <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">
-        <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
-          <div className="content pt-3">
-          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
-          </div>
-        </div>
-      </div>
-  
-    
-      <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">
-        <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
-          <div className="content pt-3">
-          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
-          </div>
-        </div>
-      </div>
-      <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">
-        <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
-          <div className="content pt-3">
-            <h5 className="mb-1 flex justify-center"><Link to='/details' className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
-          </div>
-        </div>
-      </div>
-      <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">
-        <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
-          <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link>
-          <div className="content pt-3">
-            <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">Iphone 14</Link></h5>
-            <h6 className="text-slate-400 flex justify-center">Branding</h6>
-          </div>
-        </div>
-      </div>
-    
+      ))}
+      
+     {next ? 
       <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">
         <div className="group relative block overflow-hidden rounded-md transition-all duration-500">
           
-          <div className="content pt-14 flex  items-center">
-            <h5 className="mb-1 flex justify-center text-blue-600 font-semibold cursor-pointer hover:text-blue-900">{`Load More>>`}</h5>
+          <div  className="content pt-14 flex  items-center">
+            <h5 onClick={()=>getnextproduct()} className="mb-1 flex justify-center text-blue-600 font-semibold cursor-pointer hover:text-blue-900">{`Load More>>`}</h5>
             {/* <h6 className="text-slate-400 flex justify-center">Branding</h6> */}
           </div>
         </div>
       </div>
+      :null}
     
      
       

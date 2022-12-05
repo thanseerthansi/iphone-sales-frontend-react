@@ -9,12 +9,12 @@ export default function Adminhome() {
   return (
     <div>
         <div className='bg-[#2e2e2e] fixed h-screen w-screen '>
-            <div className='grid md:grid-cols-5 '>
+            <div className='grid md:grid-cols-8 '>
             <div className='md:col-span-1'>
                 <div className={isMobileDevice? `${showsidebar ? 'translate-x-0':'-translate-x-full'}  modal eas duration-300  z-40 top-0 fixed  overflow-y-auto `:' modal eas top-0 fixed overflow-y-auto -translate-x-0 z-40 '}>
                 <AdminSidebar show={showsidebar} setshow={setshowsidebar}/>
                 </div></div>
-                <div className='md:col-span-4 md:pl-12 md:pt-4 container'>
+                <div className='md:col-span-7 md:pl-12 md:pt-4 container'>
                 <div className='flex justify-start'> 
                 {isMobileDevice? 
                 <button onClick={()=>setshowsidebar(!showsidebar)} className='text-white pl-2  pt-4 '><BiMenuAltLeft size={26} />

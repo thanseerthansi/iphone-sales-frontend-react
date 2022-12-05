@@ -35,7 +35,7 @@ export default function Header() {
      <nav id="topnav" className="defaultscroll is-sticky z-20">
   <div className="container">
     {/* Logo container*/}
-    <a className="logo pl-0" href="index.html">
+    <a className="logo pl-0" href="/">
       <span className="inline-block dark:hidden">
         <img src="assets/images/logo-dark.png" className="l-dark" height={24} alt={''} />
         <img src="assets/images/logo-light.png" className="l-light" height={24} alt ={''}/>
