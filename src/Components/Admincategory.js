@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar';
 import { GrAddCircle,GrStatusCritical } from 'react-icons/gr';
 // import { MdPhoneIphone,MdOutlineFormatColorFill } from 'react-icons/md';
@@ -11,9 +11,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { Simplecontext } from './Simplecontext';
 
 export default function Admincategory() {
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
+    const {accesscheck} =useContext(Simplecontext)
     const [showsidebar,setshowsidebar]=useState(false)
     const [search,setsearch]=useState()
     const [conditiondata,setconditiondata]=useState([])
@@ -21,8 +23,11 @@ export default function Admincategory() {
     const [editcondition,seteditcondition]=useState('')
     const [condition,setcondition]=useState('')
     const [description,setdescription]=useState('')
+    const [descriptionstring,setdescriptionstring]=useState('')
+    // console.log("gsadugv",description)
     // const [colorcode,setcolorcode]=useState('')
     useEffect(() => {
+        accesscheck()
         getcondition()
     }, [])
     
@@ -33,6 +38,9 @@ export default function Admincategory() {
         position: "top-center",
         });
     const notifyerror = () => toast.error(' Something went wrong', {
+        position: "top-center",
+        });
+    const notifyaddfield = (msg) => toast.error(msg, {
         position: "top-center",
         });
     const notifydelete = () => toast.success('✅ deleted Successfully ', {
@@ -50,36 +58,42 @@ export default function Admincategory() {
     }
     const addcondition=async(e)=>{
         e.preventDefault(); 
-        let datalist={"condition":condition,"description":description}
-        if(editcondition){
-            // console.log("dfsdffs",editcondition)
-            datalist.id=editcondition.id
-        }
-        // console.log("dataaaaaaaaaaalist",datalist)
-        let data = await Callaxios("post","/product/condition/",datalist)
-        // console.log("dataresponse",data)
-        if (data.data.Status===200){
+        if (descriptionstring){
+            console.log("datacondition",condition.toUpperCase())
+            let datalist={"condition":condition.toUpperCase(),"description":descriptionstring}
             if(editcondition){
-                notifyupdated()
-            }else{notifyadded()}
-            setallnull()
-            setaddmodal(!addmodal)
-            getcondition()
-            
-            
+                // console.log("dfsdffs",editcondition)
+                datalist.id=editcondition.id
+            }
+            // console.log("dataaaaaaaaaaalist",datalist)
+            let data = await Callaxios("post","/product/condition/",datalist)
+            // console.log("dataresponse",data)
+            if (data.data.Status===200){
+                if(editcondition){
+                    notifyupdated()
+                }else{notifyadded()}
+                setallnull()
+                setaddmodal(!addmodal)
+                getcondition()
+                
+                
+            }else{
+                notifyerror()
+            }
         }else{
-            notifyerror()
+            notifyaddfield("Add Description")
         }
-    }
+        }
     const functioneditcondition=(itm)=>{
         seteditcondition(itm)
         // setcolorcode(itm.code)
-        setdescription(itm.description)
+        setdescriptionstring(itm.description)
+        // setdescription(itm.description)
         setcondition(itm.condition)
         setaddmodal(!addmodal)
     }
     const deletefunction = async(itmid,k)=>{
-        console.log("idddddd",itmid)
+        // console.log("idddddd",itmid)
         let data = await Callaxios("delete","/product/condition/",{"id":JSON.stringify([itmid])})
         if(data.data.Status===200){
            let splc = conditiondata
@@ -96,6 +110,7 @@ export default function Admincategory() {
         setdescription('')
         // setcolorcode('')
         seteditcondition('')
+        setdescriptionstring('')
     }
     const submitdeleteproduct = (itemid,k) => {
         confirmAlert({
@@ -114,6 +129,38 @@ export default function Admincategory() {
             
         });
         };
+    const adddescriptiofctn=()=>{
+        // console.log("data",description)
+        if ( description ){
+            let string = descriptionstring
+            // console.log("string",string)
+            let result =''
+            if (string){
+                // console.log("stryn")
+                result = string.concat(",",description)
+            }else{
+                // console.log("not")
+                result = description 
+            }
+            // console.log("string",result)
+            setdescriptionstring(result)
+            setdescription('')
+        }else{
+            notifyaddfield("Add Description ")
+        }
+        
+    }
+    const deletestringfunction =(k)=>{
+        let array =[]
+        let string = descriptionstring
+        // let slice = string.slice(k,1)
+        string.split(',').forEach(element=>
+            array.push(element)
+        )
+        array.splice(k,1)
+        setdescriptionstring(array.toString())
+        // console.log("arrya",array.toString())
+    }
   return (
     <div>
     <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
@@ -146,7 +193,7 @@ export default function Admincategory() {
                             </div> */}
                         </div>
                         
-                    <div className='col-span-1 flex items-center justify-end  '>
+                    <div className='col-span-1 flex items-center justify-end'>
                         <div className=' '>
                             <button onClick={()=>setaddmodal(!addmodal)} className=' p-2 rounded-md flex text- bg-green-500 hover:bg-green-400'><GrAddCircle size={25} color='white'/><b>New</b> </button>
                         </div>
@@ -173,9 +220,15 @@ export default function Admincategory() {
                             <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">
                                 
                                 <td className="px-4 py-4">{k+1}</td>
-                                    <td className="px-4 py-4">{itm.condition}</td>
+                                    <td className="px-4 py-4 capitalize">{itm.condition}
+                                    </td>
                                     {/* <td className="px-4 py-4 "><span  className = {`rounded p-1 text-white`} style={{backgroundColor: `${itm.code}` }}>{itm.code}</span></td> */}
-                                    <td className="px-4 py-4">{itm.description}</td>
+                                    <td className="px-4 py-4 ">
+                                    {itm.description.split(',').map((citem,k1)=>(
+                                        <ul key={k1} className='list-outside list-disc flex'>
+                                        <li className='capitalize'>{citem}</li></ul>
+                                    ))}
+                                    </td>
                                     <td className="px-4 py-4">
                                     <ul >
                                             <li><button onClick={()=>functioneditcondition(itm) }  className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>
@@ -236,17 +289,31 @@ export default function Admincategory() {
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><GrStatusCritical size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
-                                                <input type='text' onChange={(e)=>setcondition(e.target.value)} value={condition} className='form-input pl-11' placeholder='Good/bad/....'/>
+                                                <input type='text' required onChange={(e)=>setcondition(e.target.value)} value={condition} className='form-input pl-11' placeholder='Good/bad/....'/>
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
+                                               
                                                 <label htmlFor="contact" className="font-semibold">Description</label>
+                                                {descriptionstring ? <>
+                                                {descriptionstring.split(',').map((itm,k)=>(
+                                                    
+                                                    <ul key={k} className='list-outside list-disc flex pl-5'>
+                                                    <li className='capitalize'>{itm}</li>
+                                                    <button type='button' onClick={()=>deletestringfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                    </ul> 
+                                                
+                                                ))}
+                                                </>:null}
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description} name="text" id="text" type="text" className="form-input pl-11" placeholder="description" />
-                                                </div>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)}  value={description} name="text" id="text" type="text" className="form-input pl-11" placeholder="description" />
+                                                <div className='flex justify-end'>
+                                                <button type='button'  onClick={()=>adddescriptiofctn()} className='bg-blue-600 text-white p-2 rounded '>Add Another</button>
+                                                </div></div>
+                                                
                                             </div>
                                             </div>
                                         </div>

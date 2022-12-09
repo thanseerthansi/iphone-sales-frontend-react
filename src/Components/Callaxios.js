@@ -7,8 +7,24 @@ export default async function  Callaxios(method,url,datalist) {
     // }
     // canceltoken = axios.CancelToken.source()
     const token = localStorage.getItem('access_token');
+    // console.log("token",token)
+    let body = {
+                method: 'post',
+                url: BaseURL+url,
+                headers:{"Authorization" : `Bearer ${token}`},
+                data: datalist
+                }
+    if (token === null){  
+        // console.log("undefined token")     
+        body = {
+            method: 'post',
+            url: BaseURL+url,           
+            data: datalist
+            }
+    }
+   
     // var refresh_token = window.localStorage.getItem('refresh_token')
-    // console.log("url",url)       
+    // console.log("token",token)       
     // console.log("method",method)       
     // console.log("datalist",datalist)       
     try {
@@ -25,12 +41,7 @@ export default async function  Callaxios(method,url,datalist) {
         }
         else if(method==="post"){
             // console.log("post")
-            let data = await  axios({
-                method: 'post',
-                url: BaseURL+url,
-                headers:{"Authorization" : `Bearer ${token}`},
-                data: datalist
-                })
+            let data = await  axios(body)
                 // console.log("datapost",data)
             return data
         }else if (method==="delete"){

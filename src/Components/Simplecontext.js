@@ -17,7 +17,7 @@ export default function Simplecontextprovider({children}) {
     useEffect(() => {
         // window.localStorage.setItem("refresh_token",[])
         if (window.localStorage.getItem('refresh_token')!==null){
-            console.log("login both token ")
+            // console.log("login both token ")
             
             getproduct()
         }
@@ -26,7 +26,7 @@ export default function Simplecontextprovider({children}) {
     }, [])
     const getproduct = async()=>{
       let data = await Callaxios("get","product/product/")
-      console.log("dataresponsenwxt",data.data.results)
+      // console.log("dataresponsenwxt",data.data.results)
       if (data.status===200){
           setnext(data.data.next)  
           setproducts(data.data.results) 

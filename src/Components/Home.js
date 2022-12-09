@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const getData = setTimeout(() => {    
       searchproduct()
-    }, 1500)
+    }, 1000)
 
     return () => clearTimeout(getData)
   }, [search])
@@ -27,7 +27,7 @@ const notifyerror = () => toast.error(' Something went wrong', {
     position: "top-center",
     });
   const searchproduct = async()=>{
-    console.log("search product",search)
+    // console.log("search product",search)
     let data = await Callaxios("get","/product/product",{model_name:search})
     // console.log("data",data)
     if (data.status===200){
@@ -39,7 +39,7 @@ const notifyerror = () => toast.error(' Something went wrong', {
 }
 const getnextproduct = async()=>{
     let data = await Callaxios("next",next)
-    console.log("nextinnextcall",next)
+    // console.log("nextinnextcall",next)
     if (data.status===200){
         // console.log("daatanext",data.data.next)
         setnext(data.data.next)

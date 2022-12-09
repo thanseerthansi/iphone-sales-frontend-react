@@ -22,19 +22,26 @@ export default function Adminproducts() {
     const [editmodal,seteditmodal]=useState(false)
     // const [productvalue,setproductvalue]=useState([''])
     const [model_name,setmodel_name]=useState()
-    const [buyprice,setbuyprice]=useState([''])
-    const [sellprice,setsellprice]=useState([''])
+    const [buyprice,setbuyprice]=useState('')
+    const [sellprice,setsellprice]=useState('')
     const [fromprice,setfromprice]=useState('')
     const [oldprice,setoldprice]=useState('')
     const [description,setdescription]=useState([''])
+    const [conditiondata,setconditiondata]=useState([''])
     const [colors,setcolors]=useState('')
     const [editproduct,seteditproduct]=useState('');
     const [editimages,seteditimages]=useState('');
     const [images,setimages]=useState([''])
     const [search,setsearch]=useState('')
     const [searchcheck,setsearchcheck]=useState('')
+    // const [sellstoragetolist,setsellstoragetolist]=useState('')
+    // const [sellconditiontolist,setsellconditiontolist]=useState('')
+    const [sellpricetolist,setsellpricetolist]=useState('')
+    const [buystoragetolist,setbuystoragetolist]=useState('')
+    const [buyconditiontolist,setbuyconditiontolist]=useState('')
+    const [buypricetolist,setbuypricetolist]=useState('')
     
-    // console.log("productdata add",productvalue)
+    // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
     // console.log("product",products)
     const {accesscheck,next,setnext,products,setproducts,getproduct} =useContext(Simplecontext)
@@ -42,14 +49,16 @@ export default function Adminproducts() {
     let navigate = useNavigate(); 
     // console.log("next",next) 
     useEffect(() => {        
-        if (window.localStorage.getItem("refresh_token")===null)
-        {
-            return navigate('/adminlogin')
-        }else{
-            accesscheck()
-            
-        }
-    }, [])
+        
+        accesscheck()
+        getcondition()
+        const getData = setTimeout(() => {    
+            searchproduct()
+            }, 1000)
+        return () => clearTimeout(getData)
+        
+  
+    }, [search])
     const notifyproductadded = () => toast.success('✅ Product added Successfully!', {
         position: "top-center",
         });
@@ -59,11 +68,22 @@ export default function Adminproducts() {
     const notifyerror = () => toast.error(' Something went wrong', {
         position: "top-center",
         });
+    const notifyaddfield = (msg) => toast.error(msg, {
+        position: "top-center",
+        });
     const notifydelete = () => toast.success('✅ deleted Successfully ', {
         position: "top-center",
         });
    
-
+    const getcondition = async()=>{
+        let data = await Callaxios("get","/product/condition/")
+        if (data.status===200){
+            // console.log("conditiondata",data)
+            setconditiondata(data.data)
+        }else{
+            notifyerror()
+        }
+    }
     // const getproduct = async()=>{
     //     let data = await Callaxios("get","product/product/")
     //     // console.log("dataresponsenwxt",data.data.results)
@@ -87,7 +107,7 @@ export default function Adminproducts() {
     }
     const getnextproduct = async()=>{
         let data = await Callaxios("next",next)
-        console.log("nextinnextcall",next)
+        // console.log("nextinnextcall",next)
         if (data.status===200){
             // console.log("daatanext",data.data.next)
             setnext(data.data.next)
@@ -114,8 +134,8 @@ export default function Adminproducts() {
             form_data.append("id",id)
         }
         if (images){
-            images.map((itm,k)=>{
-                form_data.append("images",itm)
+            images.map((itm)=>{
+                form_data.append("imagelist",itm)
                
             })  
         }
@@ -257,6 +277,105 @@ export default function Adminproducts() {
         setoldprice('')
         setdescription('')
         setcolors('')
+        // setsellstoragetolist('')
+        // setsellconditiontolist('')
+        setsellpricetolist('')
+        setbuystoragetolist('')
+        setbuyconditiontolist('')
+        setbuypricetolist('')
+    }
+    // const addsellpricefctn=()=>{
+        // sellpricetolist
+        // sellstoragetolist
+        // sellconditiontolist
+        // let string = sellprice
+        // if(sellstoragetolist && sellconditiontolist && sellpricetolist){
+        //     let eachprice=''
+        //     let list=''
+        //     let cc = eachprice.concat(sellstoragetolist+"-"+sellconditiontolist+"-"+sellpricetolist)
+        //     if (sellprice){
+        //         list = string.concat(",",cc) 
+        //     }else{
+        //         console.log("not")
+        //         list = cc 
+        //     }
+        //     console.log("list",list)
+        //     setsellprice(list)
+        //     setsellpricetolist('')
+        //     setsellconditiontolist('')
+        //     setsellstoragetolist('')
+        // }else{
+        //     notifyaddfield("Fill all 3 fields in sellprice")
+        // }
+    // }
+    const addbuypricefctn=()=>{
+        // sellpricetolist
+        // sellstoragetolist
+        // sellconditiontolist
+        if (buypricetolist){
+            let string = buyprice
+            if(buystoragetolist && buyconditiontolist && buypricetolist ){
+                let eachprice=''
+                let list=''
+                let cc = eachprice.concat(buystoragetolist+"-"+buyconditiontolist+"-"+buypricetolist)
+                if (buyprice){
+                    list = string.concat(",",cc) 
+                }else{
+                    // console.log("not")
+                    list = cc 
+                }
+                // console.log("list",list)
+                setbuyprice(list)
+                setbuypricetolist('')
+                
+            }else{
+                notifyaddfield("Fill all 3 fields in buyprice")
+            }
+        }
+        if(sellpricetolist){
+            let string = sellprice
+        if(buystoragetolist && buyconditiontolist && sellpricetolist){
+            let eachprice=''
+            let list=''
+            let cc = eachprice.concat(buystoragetolist+"-"+buyconditiontolist+"-"+sellpricetolist)
+            if (sellprice){
+                list = string.concat(",",cc) 
+            }else{
+                // console.log("not")
+                list = cc 
+            }
+            console.log("list",list)
+            setsellprice(list)
+            setsellpricetolist('')
+            
+        }else{
+            notifyaddfield("Fill all 3 fields in sellprice")
+        }
+        }
+        setbuyconditiontolist('')
+        setbuystoragetolist('')
+    }
+    const deletestringfunction =(k)=>{
+        let array =[]
+        let string = sellprice
+        // let slice = string.slice(k,1)
+        string.split(',').forEach(element=>
+            array.push(element)
+        )
+        array.splice(k,1)
+        setsellprice(array.toString())
+        // console.log("arrya",array.toString())
+    }
+    const deletebuyfunction =(k)=>{
+        let array =[]
+        let string = buyprice
+        // let slice = string.slice(k,1)
+        string.split(',').forEach(element=>
+            array.push(element)
+        )
+        array.splice(k,1)
+        setbuyprice(array.toString())
+        // console.log("arrya",array.toString())
     }
   return (
     <div>
@@ -286,7 +405,7 @@ export default function Adminproducts() {
                                 <div className="form-icon relative mt-2 flex border border-gray-500 rounded-lg ">
                                     <i className="w-4 h-4 absolute top-3 left-4"><FaSearch size={18} color='grey'  /></i>
                                     <input name="text" id="search" type="search" onChange={(e)=>setsearch(e.target.value)} className="form-input pl-11 border-none" placeholder="Search here" />
-                                    <button onClick={()=>searchproduct()} className='bg-blue-600 hover:bg-blue-400 px-3 rounded-r-md'><FaSearch size={20} color='white' /></button>
+                                    {/* <button onClick={()=>searchproduct()} className='bg-blue-600 hover:bg-blue-400 px-3 rounded-r-md'><FaSearch size={20} color='white' /></button> */}
                                 </div>                      
                             </div>
                         </div>
@@ -427,10 +546,10 @@ export default function Adminproducts() {
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Sell Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
+                                                <label htmlFor="email" className="font-semibold">Description</label>
                                                 <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/>
                                                 </div>
                                             </div>
                                             </div>
@@ -439,20 +558,76 @@ export default function Adminproducts() {
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Purchase Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
-                                                <div className="form-icon relative mt-2">
+                                                {/* <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setbuyprice(e.target.value)} value={buyprice} required  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
+                                                </div> */}
+                                                 <div className="form-icon relative mt-2">
+                                                    
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
+                                                <div className='grid grid-cols-4'>
+                                                    <div className=' col-span-2'>
+                                                    <b>Storage :</b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value)} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/> 
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                    <b>Condition :</b><br/> 
+                                                    {/* <input onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/>  */}
+                                                    <select onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
+                                                        <option value='' hidden>Select storage</option>
+                                                        {conditiondata.map((itm,k)=>(
+                                                            <option className='capitalize' key={k} value={itm.condition}>{itm.condition}</option>
+                                                        ))}
+                                                    </select>
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                    <b>Purchase Price :</b><br/> <input onChange={(e)=>setbuypricetolist(e.target.value)} value={buypricetolist} className='border border-gray-500 rounded p-2' placeholder='Price'/> 
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                    <b>Sell Price :</b><br/> <input onChange={(e)=>setsellpricetolist(e.target.value)} value={sellpricetolist} className='border border-gray-500 rounded p-2' placeholder='Price'/> 
+                                                    </div>
+                                                    <div className=' col-span-2'><br/>
+                                                    <button type='button'  onClick={()=>addbuypricefctn()}  className='bg-blue-600 hover:bg-blue-400 text-white p-2 rounded '>Add Another</button>
+                                                    </div>
+                                                </div>
+                                                
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Old Starting Price</label>
+                                                {/* <label htmlFor="email" className="font-semibold">Sell Price <span className='text-gray-500'>(storage-condition-price,...)</span></label> */}
                                                 <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input onChange={(e)=>setoldprice(e.target.value)} value={oldprice} required  name="oldprice" id="oldprice" type="oldprice" className="form-input pl-11" placeholder="old price eg:(13000)" />
+                                                   
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
+                                                <div className='grid grid-cols-4'>
+                                                    <div className=' col-span-2'>
+                                                    {buyprice ?  <b>Purchase Price</b>:null}
+                                                    {buyprice ? buyprice.split(',').map((itm,k)=>(
+                                                        <ul key={k} className='list-outside list-disc flex pl-5'>
+                                                        <li className='capitalize'>{itm}</li>
+                                                        <button type='button' onClick={()=>deletebuyfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                        </ul>
+                                                    )):null}
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                        {sellprice ? <b>Sell Price</b>:null}
+                                                    {sellprice ? sellprice.split(',').map((itm,k)=>(
+                                                        <ul key={k} className='list-outside list-disc flex pl-5'>
+                                                        <li className='capitalize'>{itm}</li>
+                                                        <button type='button' onClick={()=>deletestringfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                        </ul>
+                                                    )):null}
+                                                    </div>
+                                                    
                                                 </div>
+                                                
+                                                </div>
+                                                
+                                                
                                             </div>
+                                           
                                             </div>
                                            
                                         </div>
@@ -468,11 +643,12 @@ export default function Adminproducts() {
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Description</label>
+                                            
+                                             <div className="text-left">
+                                                <label htmlFor="contact" className="font-semibold">Old Starting Price</label>
                                                 <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/>
+                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input onChange={(e)=>setoldprice(e.target.value)} value={oldprice} required  name="oldprice" id="oldprice" type="oldprice" className="form-input pl-11" placeholder="old price eg:(13000)" />
                                                 </div>
                                             </div>
                                             </div>
@@ -590,16 +766,16 @@ export default function Adminproducts() {
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
-                                                <input onChange={(e)=> setmodel_name(e.target.value) } required value={model_name} name="phone"  type="text"  className="form-input pl-11" placeholder="phone model :" />
+                                                <input onChange={(e)=> setmodel_name(e.target.value) } value={model_name} required  name="phone"  type="text"  className="form-input pl-11" placeholder="phone model :" />
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Sell Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
+                                                <label htmlFor="email" className="font-semibold">Description</label>
                                                 <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input onChange={(e)=> setsellprice(e.target.value) } required value={sellprice}  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
+                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/>
                                                 </div>
                                             </div>
                                             </div>
@@ -607,31 +783,79 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Purchase Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
-                                                <div className="form-icon relative mt-2">
+                                                <label htmlFor="contact" className="font-semibold">Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
+                                                {/* <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input onChange={(e)=>setbuyprice(e.target.value)} required value={buyprice}  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
+                                                <input onChange={(e)=>setbuyprice(e.target.value)} value={buyprice} required  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
+                                                </div> */}
+                                                 <div className="form-icon relative mt-2">
+                                                    
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
+                                                <div className='grid grid-cols-4'>
+                                                    <div className=' col-span-2'>
+                                                    <b>Storage :</b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value)} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/> 
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                    <b>Condition :</b><br/> 
+                                                    {/* <input onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/>  */}
+                                                    <select onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
+                                                        <option value='' hidden>Select storage</option>
+                                                        {conditiondata.map((itm,k)=>(
+                                                            <option className='capitalize' key={k} value={itm.condition}>{itm.condition}</option>
+                                                        ))}
+                                                    </select>
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                    <b>Purchase Price :</b><br/> <input onChange={(e)=>setbuypricetolist(e.target.value)} value={buypricetolist} className='border border-gray-500 rounded p-2' placeholder='Price'/> 
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                    <b>Sell Price :</b><br/> <input onChange={(e)=>setsellpricetolist(e.target.value)} value={sellpricetolist} className='border border-gray-500 rounded p-2' placeholder='Price'/> 
+                                                    </div>
+                                                    <div className=' col-span-2'><br/>
+                                                    <button type='button'  onClick={()=>addbuypricefctn()}  className='bg-blue-600 hover:bg-blue-400 text-white p-2 rounded '>Add Another</button>
+                                                    </div>
+                                                </div>
+                                                
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Old Starting Price</label>
+                                                {/* <label htmlFor="email" className="font-semibold">Sell Price <span className='text-gray-500'>(storage-condition-price,...)</span></label> */}
                                                 <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input onChange={(e)=>setoldprice(e.target.value)} value={oldprice}  required  name="oldprice" id="oldprice" type="oldprice" className="form-input pl-11" placeholder="old price eg:(13000)" />
+                                                   
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
+                                                <div className='grid grid-cols-4'>
+                                                    <div className=' col-span-2'>
+                                                    {buyprice ?  <b>Price</b>:null}
+                                                    {buyprice ? buyprice.split(',').map((itm,k)=>(
+                                                        <ul key={k} className='list-outside list-disc flex pl-5'>
+                                                        <li className='capitalize'>{itm}</li>
+                                                        <button type='button' onClick={()=>deletebuyfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                        </ul>
+                                                    )):null}
+                                                    </div>
+                                                    <div className=' col-span-2'>
+                                                        {sellprice ? <b>Sell Price</b>:null}
+                                                    {sellprice ? sellprice.split(',').map((itm,k)=>(
+                                                        <ul key={k} className='list-outside list-disc flex pl-5'>
+                                                        <li className='capitalize'>{itm}</li>
+                                                        <button type='button' onClick={()=>deletestringfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                        </ul>
+                                                    )):null}
+                                                    </div>
+                                                    
                                                 </div>
-                                            </div>
-                                            </div>
-                                            {/* <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Description</label>
-                                                <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)} defaultValue={editproduct ? editproduct.description :null}  className='form-input pl-11' placeholder='description'/>
+                                                
                                                 </div>
+                                                
+                                                
                                             </div>
-                                            </div> */}
+                                           
+                                            </div>
+                                           
                                         </div>
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                            
@@ -640,22 +864,23 @@ export default function Adminproducts() {
                                                 <label htmlFor="email" className="font-semibold">New Starting Price</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input onChange={(e)=>setfromprice(e.target.value)} value={fromprice}  className='form-input pl-11' placeholder='new price eg:(1200)'/>
+                                                <input onChange={(e)=>setfromprice(e.target.value)} value={fromprice}   className='form-input pl-11' placeholder='new price eg:(1200)'/>
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Description</label>
+                                            
+                                             <div className="text-left">
+                                                <label htmlFor="contact" className="font-semibold">Old Starting Price</label>
                                                 <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}  className='form-input pl-11' placeholder='description'/>
+                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
+                                                <input onChange={(e)=>setoldprice(e.target.value)} value={oldprice} required  name="oldprice" id="oldprice" type="oldprice" className="form-input pl-11" placeholder="old price eg:(13000)" />
                                                 </div>
                                             </div>
                                             </div>
                                         </div>
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
-                                        <div className="lg:col-span-6 mb-5">
+                                            <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Colors</label>
                                                 <div className="form-icon relative mt-2">
@@ -667,9 +892,9 @@ export default function Adminproducts() {
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                             <div className='grid grid-cols-4'>
-                                            {editimages ? 
+                                            {/* {editimages ? 
                                                 <>
-                                                {/* {editimages.images ? <> */}
+                                                
                                                 {editimages.map((itm,k)=>(
                                                     <div key={k} className="col-span-2 pt-1"> 
                                                     <div className='col-span-1 flex w-20'>
@@ -678,9 +903,9 @@ export default function Adminproducts() {
                                                     </div>
                                                 </div> 
                                                 ))}
-                                                </>:null}
-                                               {/* </>  */}
-                                            {/* :null } */}
+                                                </>:null} */}
+                                                
+                                               
                                             {images[0]?
                                                 <>
                                                 

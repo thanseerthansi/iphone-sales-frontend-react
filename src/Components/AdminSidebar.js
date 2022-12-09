@@ -11,7 +11,7 @@ export default function AdminSidebar(show) {
     const logout =()=>{
       window.localStorage.removeItem("access_token")
       window.localStorage.removeItem("refresh_token")
-      console.log("okdelete")
+      // console.log("okdelete")
       return navigate('/adminlogin');
       
   }
