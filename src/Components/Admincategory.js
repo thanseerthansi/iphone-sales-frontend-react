@@ -31,10 +31,10 @@ export default function Admincategory() {
         getcondition()
     }, [])
     
-    const notifyadded = () => toast.success('✅ Added Successfully!', {
+    const notifyadded = () => toast.success(' Added Successfully!', {
         position: "top-center",
         });
-    const notifyupdated = () => toast.success('✅ Updated Successfully!', {
+    const notifyupdated = () => toast.success(' Updated Successfully!', {
         position: "top-center",
         });
     const notifyerror = () => toast.error(' Something went wrong', {
@@ -43,7 +43,7 @@ export default function Admincategory() {
     const notifyaddfield = (msg) => toast.error(msg, {
         position: "top-center",
         });
-    const notifydelete = () => toast.success('✅ deleted Successfully ', {
+    const notifydelete = () => toast.success(' deleted Successfully ', {
         position: "top-center",
         });
 

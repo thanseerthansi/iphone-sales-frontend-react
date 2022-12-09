@@ -26,16 +26,16 @@ export default function Adminstatus() {
         getstatus()
     }, [])
     
-    const notifyadded = () => toast.success('✅ Added Successfully!', {
+    const notifyadded = () => toast.success(' Added Successfully!', {
         position: "top-center",
         });
-    const notifyupdated = () => toast.success('✅ Updated Successfully!', {
+    const notifyupdated = () => toast.success(' Updated Successfully!', {
         position: "top-center",
         });
     const notifyerror = () => toast.error(' Something went wrong', {
         position: "top-center",
         });
-    const notifydelete = () => toast.success('✅ deleted Successfully ', {
+    const notifydelete = () => toast.success('deleted Successfully ', {
         position: "top-center",
         });
 

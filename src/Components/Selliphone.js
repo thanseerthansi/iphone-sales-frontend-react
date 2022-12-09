@@ -28,7 +28,7 @@ export default function Selliphone() {
     getproductfull()
   }, [])
   
-  const successfullnotify = (sellid) => toast.success(`✅sell id : ${sellid} . Our Dealers will contact you shortly !`, {
+  const successfullnotify = (sellid) => toast.success(`sell id : ${sellid} . Our Dealers will contact you shortly !`, {
       position: "top-center",
       });
   const notifyerror = () => toast.error(' Something went wrong', {

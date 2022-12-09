@@ -33,7 +33,7 @@ export default function Phonedetail() {
   const [images,setimages]=useState([])
   const [review,setreview]=useState()
   const [reviename,setreviename]=useState()
-  const [starrating,setstarrating]=useState('')
+  const [starrating,setstarrating]=useState()
   const [reviewdata,setreviewdata]=useState()
   const [reviewnext,setreviewnext]=useState()
   // console.log("reviewdata",reviewdata)
@@ -303,15 +303,14 @@ const deletefromlist=(k)=>{
     <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
       <div className="lg:col-span-5 md:col-span-6">
         <div className="grid grid-cols-1 gap-[30px]">
-          {productdetail[0]?<>
-          {productdetail[0].images.map((itm,k)=>(
-            <>
+          {productdetail.length ? productdetail[0].images.map((itm,k)=>(
+            
             <div key={k}>
             <img  src={itm.image} className="rounded-lg" alt={''} />
             </div>
-            </>
-          ))}
-          </>:null}
+          
+          ))
+          :null}
           {/* <img src="https://www.apple.com/v/iphone-14-pro/c/images/overview/hero/hero_iphone_14_pro__e0act2165xqq_large.jpg" className="rounded-lg" alt={''} />
           <img src="https://media.wired.com/photos/632119a7f1e5c40d2b1bc647/master/pass/iPhone-14-Pro-Review-Gear.jpg" className="rounded-lg" alt={''} />
           <img src="https://www.digitaltrends.com/wp-content/uploads/2022/09/iPhone-14-Pro-Back-Purple-Hand.jpg?p=1" className="rounded-lg" alt={''} />
@@ -327,15 +326,16 @@ const deletefromlist=(k)=>{
                 <h4 className="text-xl font-semibold mb-3 border-b border-gray-100 dark:border-gray-700 text-black dark:text-white pb-3">iPhone 14</h4>
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Color :</h5>
                 <div className='flex '>
-                  {productdetail[0] ? <>
-                  {productdetail[0].colors ? <>
-                    {productdetail[0].colors.split(',').map((itm,k)=>
+                 
+                  {productdetail.length ? productdetail[0].colors ? 
+                    productdetail[0].colors.split(',').map((itm,k)=>(
                     <div key={k} className='p-2'>
-                      <button  onClick={()=>seticolor({itm})} className='rounded-full w-7 h-7  border-gray-900 hover:border-2 ' style={{backgroundColor:itm}}></button>
+                    
+                      <button  onClick={()=>seticolor(itm)} className={icolor === itm ?`rounded-full w-7 h-7  border-gray-900 border-2 brightness-50`:`rounded-full w-7 h-7  border-gray-900 hover:border-2 `} style={{backgroundColor:itm}}></button>
                     </div>
-                    )} 
-                    </> :null}
-                  </>:null}
+                    ))
+                     :null
+                  :null}
                   {/* <div className='p-2'><button className='rounded-full bg-[#ff0000] w-7 h-7  border-gray-900 hover:border-2 '></button></div>
                   <div className='p-2'><button className='rounded-full bg-[grey] w-7 h-7  border-gray-900 hover:border-2'></button></div>
                   <div className='p-2'><button className='rounded-full bg-[purple] w-7 h-7 border-black hover:border-2'></button></div>
@@ -344,13 +344,13 @@ const deletefromlist=(k)=>{
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Storage :</h5>
                 <div className='flex '>
         
-                  {storagelist?<>
-                    {storagelist.map((itm,k)=>(
-                      <>
+                  {storagelist ?
+                    storagelist.map((itm,k)=>(
+                      
                       <div key={k} className='p-2'><button onClick={()=>setistorage(itm) &seticondition('') &setiprice('') & setogprice('')} className={istorage === itm ? `bg-gray-700 font-semibold  py-2 px-4 border  text-white border-gray-400  hover:bg-gray-700  rounded`:`bg-gray font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  hover:bg-gray-700  rounded`} >{itm} GB</button></div>
-                      </>
-                    ))}
-                  </>:null}
+                      
+                    ))
+                  :null}
                   {/* <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 128 GB</button></div>
                   <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 256 GB</button></div>
                   <div className='p-2'><button className=" font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> 512 GB</button></div> */}
@@ -358,9 +358,9 @@ const deletefromlist=(k)=>{
                 </div></div>
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Condition :</h5>
                 <div className='flex '>
-                  {productdetail[0] ? <>
+                  {productdetail.length ? <>
                     {(productdetail[0].sellprice.split(',')).filter(name => name.includes(istorage)).map((itm,k) =>(
-                      <div key={k} className='p-2'><button onClick={()=>seticondition(itm.split('-')[1]) & setiprice(itm.split('-')[2]) &setogprice(itm.split('-')[2])} className={`font-semibold ${icondition=== itm.split('-')[1]? `text-white bg-gray-700`:`bg-gray text-gray-400`} px-4 border  hover:text-white border-gray-400   hover:bg-gray-700  rounded `}> {itm.split("-")[1]}<br/>AED {itm.split('-')[2]}</button></div>
+                      <div key={k} className='p-2'><button onClick={()=>seticondition(itm.split('-')[1]) & setiprice(itm.split('-')[2]) &setogprice(itm.split('-')[2])} className={`font-semibold ${icondition === itm.split('-')[1]? `text-white bg-gray-700`:`bg-gray text-gray-400`} px-4 border  hover:text-white border-gray-400   hover:bg-gray-700  rounded `}> {itm.split("-")[1]}<br/>AED {itm.split('-')[2]}</button></div>
                     ))}
                   </> :null}
                   {/* <div className='p-2'><button className=" font-semibold  px-4 border text-gray-400 hover:text-white border-gray-400  bg-gray  hover:bg-gray-700  rounded"> Good <br/>AED 3,100</button></div>
@@ -378,8 +378,8 @@ const deletefromlist=(k)=>{
                 <button className='border w-5 flex justify-center border-gray-500 cursor-pointer hover:text-white hover:bg-gray-700 ' onClick={()=>incrementhandler()} >+</button>
                </div></div>
               <div className='md:flex pt-5'>
-                <div><button onClick={()=>iprice ? addtocartfunction() :notifyerrorfill()} className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Add to Cart</button></div>
-                <div className='lg:px-1 md:pt-0 pt-3'><button onClick={()=>iprice ? setmybuymodal(!mybuymodal):notifyerrorfill()} className='w-64 p-2 bg-green-600 rounded-md text-white hover:brightness-[.7]'>buy now</button></div>
+                <div><button onClick={()=>iprice && icolor ? addtocartfunction() :notifyerrorfill()} className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Add to Cart</button></div>
+                <div className='lg:px-1 md:pt-0 pt-3'><button onClick={()=>iprice ? setmybuymodal(!mybuymodal) : notifyerrorfill()} className='w-64 p-2 bg-green-600 rounded-md text-white hover:brightness-[.7]'>buy now</button></div>
               </div>
             </div>{/*end col*/}     
             <div className="lg:col-span-3 col-span-3   ">
@@ -466,21 +466,14 @@ const deletefromlist=(k)=>{
     </div>
     {/* start review */}
     <div className="tiny-slide ">
-    {reviewdata ?<>
-    {reviewdata.map((itm,k)=>(
-    <div className="">
+    {reviewdata ? reviewdata.map((itm,k)=>(
+    <div key={k} className="">
       <div className="content  rounded shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
         <i className=" text-indigo-600" />
         <div className=" mt-1">
         
         <h6 className="mt-2 font-semibold">{itm.customer}</h6>
-        {/* <ul className="list-none mb-0 text-amber-400 mt-3">
-          <li className="inline"><i className="mdi mdi-star" /></li>
-          <li className="inline"><i className="mdi mdi-star" /></li>
-          <li className="inline"><i className="mdi mdi-star" /></li>
-          <li className="inline"><i className="mdi mdi-star" /></li>
-          <li className="inline"><i className="mdi mdi-star" /></li>
-        </ul>       */}
+       
         <ReactStars 
           value={itm.review_star}
           count={5}
@@ -493,19 +486,16 @@ const deletefromlist=(k)=>{
       <div className='grid grid-cols-2 gap-4'>
         <div className=''><p className="text-slate-400">{itm.description}</p></div>
         <div className='flex justify-end '>
-          {itm.images[0]? <>
-          {itm.images.map((itmimage,ki)=>(
-            <>
-          <img key={ki} src={itmimage.image} className="rounded  w-20 h-24 " alt={''} /><br/>
-          </>))}
-          </>:null}
+          {itm.images.length ? itm.images.map((itmimage,k2)=>(
+            <div key={k2}>
+          <img  src={itmimage.image} className="rounded  w-20 h-24 " alt={''} /><br/>
+          </div>)):null}
           </div>
       </div>
       </div>
       
     </div>
-    ))}
-    </>:null}
+    )):null}
  
 
 </div>
@@ -556,11 +546,11 @@ const deletefromlist=(k)=>{
                 <div className='grid grid-cols-3 bg-[#f2f2f2] p-5' >
                     <div className='col-span-2 flex '>
                       <div className='flex col-span-1'>
-                    <img src={productdetail[0] ? productdetail[0].images[0].image :null} className="rounded-lg w-28" alt={''} />&nbsp;&nbsp;
+                    <img src={productdetail.length ? productdetail[0].images[0].image :null} className="rounded-lg w-28" alt={''} />&nbsp;&nbsp;
                       </div>
                       <div className='col-span-1 '>
                  <div>
-                   <span ><b>{productdetail[0]? productdetail[0].model_name:null}</b></span><br/>
+                   <span ><b>{productdetail.length? productdetail[0].model_name:null}</b></span><br/>
                    <span className='capitalize' >{istorage} GB-{icondition}</span><br/>
                  </div>
                  <div className='pt-2'>
@@ -667,7 +657,6 @@ const deletefromlist=(k)=>{
                     {/* <button type="submit" id="submit" name="send" className="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center">Send Message</button> */}
                     <div><button type="submit" htmlFor="submit" className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Buy now</button></div>
                   </form>
-
                   {/* form end */}  
                         </div>{/*end col*/}     
                       
@@ -676,8 +665,7 @@ const deletefromlist=(k)=>{
                     </div>
                   </div>{/*end col*/}
                 </div>{/*end grid*/}
-              </div>{/*end container*/} 
-              
+              </div>{/*end container*/}               
               {/*end container*/}
               <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                       <button type="button" onClick={()=>setmybuymodal(!mybuymodal)} className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
@@ -688,19 +676,14 @@ const deletefromlist=(k)=>{
                       </button> */}
                     </div>
             </section>
-        {/* cart data end */}
-        
+        {/* cart data end */}        
       </div>
     </div>
   </div>
-
     {/* buy modal end */}
   {/*end container*/}
 </section>
-{/*end section*/}
-
-
-       
+{/*end section*/}  
     <Footer/>
     <Whatsappbutton/>
     </div>

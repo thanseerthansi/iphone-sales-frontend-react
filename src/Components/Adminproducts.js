@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import ReactStars from "react-rating-stars-component";
 
 export default function Adminproducts() {
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
@@ -40,7 +41,9 @@ export default function Adminproducts() {
     const [buystoragetolist,setbuystoragetolist]=useState('')
     const [buyconditiontolist,setbuyconditiontolist]=useState('')
     const [buypricetolist,setbuypricetolist]=useState('')
-    
+    const [colorsvalue,setcolorsvalue]=useState('')
+    const [reviewdata,setreviewdata]=useState('')
+    const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
     // console.log("product",products)
@@ -59,10 +62,10 @@ export default function Adminproducts() {
         
   
     }, [search])
-    const notifyproductadded = () => toast.success('✅ Product added Successfully!', {
+    const notifyproductadded = () => toast.success(' Product added Successfully!', {
         position: "top-center",
         });
-    const notifyupdated = () => toast.success('✅ Product updated Successfully!', {
+    const notifyupdated = () => toast.success(' Product updated Successfully!', {
         position: "top-center",
         });
     const notifyerror = () => toast.error(' Something went wrong', {
@@ -71,7 +74,7 @@ export default function Adminproducts() {
     const notifyaddfield = (msg) => toast.error(msg, {
         position: "top-center",
         });
-    const notifydelete = () => toast.success('✅ deleted Successfully ', {
+    const notifydelete = () => toast.success(' deleted Successfully ', {
         position: "top-center",
         });
    
@@ -203,10 +206,14 @@ export default function Adminproducts() {
     const deleteproduct =async(itmid,k)=>{
         let datalist ={"id":JSON.stringify([itmid])}
         let data = await Callaxios("delete","product/product/",datalist) 
+        console.log("delete",data.data)
         if (data.data.Status===200){
             getproduct()
             notifydelete()
-        }else{
+        }else if(data.data.Message==="FOREIGN KEY constraint failed"){
+            notifyaddfield("Can't delete this product .This product used some where else.")
+        }
+        else{
             notifyerror()
         }
     }
@@ -377,6 +384,58 @@ export default function Adminproducts() {
         setbuyprice(array.toString())
         // console.log("arrya",array.toString())
     }
+    const addcolorfctn=()=>{
+        console.log(colorsvalue)
+        if (colorsvalue){
+            let string = colors
+            // console.log("string",string)
+            let result =''
+            if (string){
+                // console.log("stryn")
+                result = string.concat(",",colorsvalue)
+            }else{
+                // console.log("not")
+                result = colorsvalue 
+            }
+            // console.log("string",result)
+            setcolors(result)
+            setcolorsvalue('')
+        }else{
+            notifyaddfield("Add Color Field ")
+        }
+    }
+    const deletecolorfunction =(k)=>{
+        let array =[]
+        let string = colors
+        // let slice = string.slice(k,1)
+        string.split(',').forEach(element=>
+            array.push(element)
+        )
+        array.splice(k,1)
+        setcolors(array.toString())
+        // console.log("arrya",array.toString())
+    }
+    const getreview=async(urlid)=>{
+        // console.log("urlid",urlid)
+        let data = await Callaxios("get","purchase/review/",{"product":urlid})
+        // console.log("data",data.data)
+        if(data.status===200){
+          // console.log("daatojk")
+          setreviewdata(data.data.results)
+          setreviewnext(data.data.next)
+        }
+      }
+      const reviewgetnext=async()=>{
+        let data = await Callaxios("next",reviewnext)
+        // console.log("nextinnextcall",next)
+        if (data.status===200){
+            // console.log("daatanext",data.data.next)
+            setreviewnext(data.data.next)
+            setreviewdata(reviewdata=>[...reviewdata,...data.data.results])
+        }else{
+            notifyerror()
+        }
+      }
   return (
     <div>
     <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
@@ -474,10 +533,13 @@ export default function Adminproducts() {
                                 <button onClick={()=>setstatus("buystatus",false,itm.id)} className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
                                 <button onClick={()=>setstatus("buystatus",true,itm.id)} className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
-                            <td className="px-4 py-4">${itm.colors}</td>
+                            <td className="px-4 py-4">{itm.colors.split(',').map((itm,k)=>(
+                                <ul key={k} className='list-outside list-disc flex pl-5 p-1'>
+                                <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li></ul>
+                            ))}</td>
                             <td className="px-4 py-4">${itm.oldfromprice}</td>
                             <td className="px-4 py-4">${itm.sellfromprice}</td>
-                            <td className='px-4 py-4 '> <button className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' onClick={()=>setshowreview(!showreview)}>Review<FaSortDown/></button></td>
+                            <td className='px-4 py-4 '> <button className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' onClick={()=>setshowreview(!showreview) & getreview(itm.id)}>Review<FaSortDown/></button></td>
                             <td className='px-4 py-4'> {itm.created_date.split('T')[0]}</td>
                             <td className='px-4 py-4'>
                                 <ul >
@@ -531,7 +593,7 @@ export default function Adminproducts() {
                                         
                                     <form  onSubmit={(e)=>addproduct(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
-                                        <div id="" />
+                                        <div id=""/>
                                         
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
@@ -587,7 +649,7 @@ export default function Adminproducts() {
                                                     <b>Sell Price :</b><br/> <input onChange={(e)=>setsellpricetolist(e.target.value)} value={sellpricetolist} className='border border-gray-500 rounded p-2' placeholder='Price'/> 
                                                     </div>
                                                     <div className=' col-span-2'><br/>
-                                                    <button type='button'  onClick={()=>addbuypricefctn()}  className='bg-blue-600 hover:bg-blue-400 text-white p-2 rounded '>Add Another</button>
+                                                    <button type='button'  onClick={()=>addbuypricefctn()}  className='bg-blue-600 hover:bg-blue-400 text-white p-2 rounded '>Add</button>
                                                     </div>
                                                 </div>
                                                 
@@ -657,9 +719,19 @@ export default function Adminproducts() {
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Colors</label>
+                                                {colors ? colors.split(',').map((itm,k)=>(
+                                                    <ul key={k} className='list-outside list-disc flex pl-5 p-1'>
+                                                    <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li>
+                                                    <button type='button' onClick={()=>deletecolorfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                    </ul>
+                                                )):null}
+                                                
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineFormatColorFill size={18} /></i>
-                                                <input name="text" id="text" type="text" onChange={(e)=>setcolors(e.target.value)} value={colors} className="form-input pl-11" placeholder="colors,eg:(red,blue,...)" />
+                                                <input name="Color" id="color" type="color" onChange={(e)=>setcolorsvalue(e.target.value)} value={colorsvalue} className="form-input pl-11" placeholder="colors,eg:(red,blue,...)" />
+                                                <div className='flex justify-end'>
+                                                <button type='button'  onClick={()=>addcolorfctn()} className='bg-blue-600 text-white p-2 rounded'>Add </button>
+                                                </div>
                                                 </div>
                                             </div>
                                             </div>
@@ -813,7 +885,7 @@ export default function Adminproducts() {
                                                     <b>Sell Price :</b><br/> <input onChange={(e)=>setsellpricetolist(e.target.value)} value={sellpricetolist} className='border border-gray-500 rounded p-2' placeholder='Price'/> 
                                                     </div>
                                                     <div className=' col-span-2'><br/>
-                                                    <button type='button'  onClick={()=>addbuypricefctn()}  className='bg-blue-600 hover:bg-blue-400 text-white p-2 rounded '>Add Another</button>
+                                                    <button type='button'  onClick={()=>addbuypricefctn()}  className='bg-blue-600 hover:bg-blue-400 text-white p-2 rounded '>Add </button>
                                                     </div>
                                                 </div>
                                                 
@@ -883,18 +955,26 @@ export default function Adminproducts() {
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Colors</label>
+                                                {colors ? colors.split(',').map((itm,k)=>(
+                                                    <ul key={k} className='list-outside list-disc flex pl-5 p-1'>
+                                                    <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li>
+                                                    <button type='button' onClick={()=>deletecolorfunction(k)} className='pl-4 hover:text-red-600'><RiDeleteBin6Line size={15}/></button>
+                                                    </ul>
+                                                )):null}                                                
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineFormatColorFill size={18} /></i>
-                                                <input name="text" id="text" type="text" onChange={(e)=>setcolors(e.target.value)} value={colors} className="form-input pl-11" placeholder="colors,eg:(red,blue,...)" />
+                                                <input name="Color" id="color" type="color" onChange={(e)=>setcolorsvalue(e.target.value)} value={colorsvalue} className="form-input pl-11" placeholder="colors,eg:(red,blue,...)" />
+                                                <div className='flex justify-end'>
+                                                <button type='button'  onClick={()=>addcolorfctn()} className='bg-blue-600 text-white p-2 rounded'>Add </button>
+                                                </div>
                                                 </div>
                                             </div>
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                             <div className='grid grid-cols-4'>
-                                            {/* {editimages ? 
-                                                <>
-                                                
+                                            {editimages ? 
+                                                <>                                              
                                                 {editimages.map((itm,k)=>(
                                                     <div key={k} className="col-span-2 pt-1"> 
                                                     <div className='col-span-1 flex w-20'>
@@ -903,12 +983,9 @@ export default function Adminproducts() {
                                                     </div>
                                                 </div> 
                                                 ))}
-                                                </>:null} */}
-                                                
-                                               
+                                                </>:null}                                                  
                                             {images[0]?
-                                                <>
-                                                
+                                                <>                                               
                                                 {images.map((itm,k)=>(
                                                     <div key={k} className="col-span-2 pt-1"> 
                                                     <div className='col-span-1 flex w-20'>
@@ -916,19 +993,17 @@ export default function Adminproducts() {
                                                     <button type='button' className='pl-2 hover:text-red-600 ' onClick={()=>deletefromlist(k)}>< RiDeleteBin6Line /></button>
                                                     </div>
                                                 </div> 
-                                                ))}
-                                                
+                                                ))}                                                
                                                 </>: null}
                                                 </div>
                                                 <label htmlFor="email" className="font-semibold">Add  Images</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
-                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} style={{color:"rgba(0,0,0,0)"}} name="file" id="file" type="file" className="form-input pl-11 " placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
-                                        </div>
-                                       
+                                        </div>                                       
                                         {/* <button type="submit" id="submit" name="send" className="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center">Send Message</button> */}
                                         <div className='flex justify-end' ><button type="submit" className='w-64 p-2 bg-green-700 rounded-md  text-white hover:bg-green-900'>Submit</button></div>
                                         </form>
@@ -936,16 +1011,13 @@ export default function Adminproducts() {
                                 </div>{/*end col*/}
                                 <div className="lg:col-span-6 md:col-span-6 ">
                                     <div className="sticky top-20 w-50">
-                                    <div className="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">
-                                    
-                                    
+                                    <div className="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">                                  
                                         {/*end col*/}
                                     </div>{/*end grid*/}
                                     </div>
                                 </div>{/*end col*/}
                                 </div>{/*end grid*/}
-                            </div>{/*end container*/}
-                            
+                            </div>{/*end container*/}                           
                             {/*end container*/}
                             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                                     <button type="button" onClick={()=>seteditmodal(!editmodal) & setallnull()} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
@@ -956,8 +1028,7 @@ export default function Adminproducts() {
                                     </button> */}
                                     </div>
                             </section>
-                                    {/* cart data end */}
-                                    
+                                    {/* cart data end */}                    
                     </div>
                     </div>
             </div>
@@ -977,23 +1048,62 @@ export default function Adminproducts() {
                         <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
                             <div className="container">
                            
-                                <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
-                                <div className="lg:col-span-12 md:col-span-12">
-                                    <div className="grid grid-cols-1 gap-[10px]">
-                                        
-                                   {/* content here*/}
-                                    </div>{/*end grid*/}
-                                </div>{/*end col*/}
-                                <div className="lg:col-span-6 md:col-span-6 ">
-                                    <div className="sticky top-20 w-50">
-                                    <div className="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">
-                                    
-                                    
-                                        {/*end col*/}
-                                    </div>{/*end grid*/}
+                            <div className="tiny-slide ">
+                                        {reviewdata ?<>
+                                        {reviewdata.map((itm,k)=>(
+                                        <div key={k} className="">
+                                        <div className="content  rounded shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
+                                            <i className=" text-indigo-600" />
+                                            <div className=" mt-1">
+                                            
+                                            <h6 className="mt-2 font-semibold">{itm.customer}</h6>
+                                            {/* <ul className="list-none mb-0 text-amber-400 mt-3">
+                                            <li className="inline"><i className="mdi mdi-star" /></li>
+                                            <li className="inline"><i className="mdi mdi-star" /></li>
+                                            <li className="inline"><i className="mdi mdi-star" /></li>
+                                            <li className="inline"><i className="mdi mdi-star" /></li>
+                                            <li className="inline"><i className="mdi mdi-star" /></li>
+                                            </ul>       */}
+                                            <ReactStars 
+                                            value={itm.review_star}
+                                            count={5}
+                                            size={25}
+                                            edit={false}
+                                            isHalf={false}
+                                            activeColor="#ffd700"
+                                        />
+                                        </div>
+                                        <div className='grid grid-cols-2 gap-4'>
+                                            <div className=''><p className="text-slate-400">{itm.description}</p></div>
+                                            <div className='flex justify-end '>
+                                            {itm.images.length ? <>
+                                            {itm.images.map((itmimage,ki)=>(
+                                                <>
+                                            <img key={ki} src={itmimage.image} className="rounded  w-20 h-24 " alt={''} /><br/>
+                                            </>))}
+                                            </>:null}
+                                            </div>
+                                        </div>
+                                        </div>                                       
+                                        </div>
+                                        ))}
+                                        </>:null}
                                     </div>
-                                </div>{/*end col*/}
-                                </div>{/*end grid*/}
+                                    <div className="flex justify-center pt-2">
+                                    <div className={reviewnext ? ``:`hidden`}>
+                                    {/* <button type="button" className="bg-gray-800 text-white  rounded-l-md border-r hover:brightness-[.3] border-gray-100 py-2 px-3">
+                                        <div className="flex flex-row align-middle">    
+                                        <p className="ml-2">Prev</p>
+                                        </div>
+                                    </button> */}
+                                    <button onClick={()=>reviewgetnext()} type="button" className="bg-blue-700 text-white rounded-r-lg border-r hover:brightness-[.5] border-gray-100 py-2  px-3">
+                                        <div on className="flex flex-row align-middle">    
+                                        <p  className="ml-2 flex">Load More>> </p>
+                                        </div>
+                                    </button>
+                                    </div>
+                                    </div>
+                                        {/* end review */}
                             </div>{/*end container*/}
                             
                             {/*end container*/}
@@ -1006,20 +1116,15 @@ export default function Adminproducts() {
                                     </button> */}
                                     </div>
                             </section>
-                                    {/* cart data end */}
-                                    
+                                    {/* cart data end */}                                 
                     </div>
                     </div>
             </div>
                     {/* review modal  end */}
                 </div>
             </div>
-
         </div>
-
     </div>
-
-
 </div>
   )
 }
