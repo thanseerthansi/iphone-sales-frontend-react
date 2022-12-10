@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar';
 import { GrAddCircle } from 'react-icons/gr';
 import { MdPhoneIphone } from 'react-icons/md';
@@ -6,14 +6,19 @@ import { ImPriceTags } from 'react-icons/im';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BiMenuAltLeft,BiText } from 'react-icons/bi';
 import { FaSearch,FaRegImage,FaRegImages,FaEdit } from 'react-icons/fa';
-
+import { Simplecontext } from './Simplecontext';
 export default function Adminselledphone() {
+    const {accesscheck} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [search,setsearch]=useState()
     const [cartmodal,setcartmodal]=useState(false)
     const [status,setstatus]=useState('')
-
+    useEffect(() => {
+        accesscheck()
+    }, [])
+    
+    
     const setallnull=()=>{
         setstatus('')
     }

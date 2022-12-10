@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar';
 import { GrAddCircle,GrStatusCritical } from 'react-icons/gr';
 import { MdPhoneIphone,MdOutlineFormatColorFill } from 'react-icons/md';
@@ -11,8 +11,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-
+import { Simplecontext } from './Simplecontext';
 export default function Adminstatus() {
+    const {accesscheck} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [search,setsearch]=useState()
@@ -23,6 +24,7 @@ export default function Adminstatus() {
     const [description,setdescription]=useState('')
     const [colorcode,setcolorcode]=useState('')
     useEffect(() => {
+        accesscheck()
         getstatus()
     }, [])
     

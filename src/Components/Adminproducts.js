@@ -535,7 +535,8 @@ export default function Adminproducts() {
                             </td>
                             <td className="px-4 py-4">{itm.colors.split(',').map((itm,k)=>(
                                 <ul key={k} className='list-outside list-disc flex pl-5 p-1'>
-                                <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li></ul>
+                                <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li>
+                                </ul>
                             ))}</td>
                             <td className="px-4 py-4">${itm.oldfromprice}</td>
                             <td className="px-4 py-4">${itm.sellfromprice}</td>

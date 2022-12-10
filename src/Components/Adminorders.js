@@ -1,77 +1,137 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar'
-// import { MdToday } from 'react-icons/md';
-import { GrAddCircle } from 'react-icons/gr';
-import { MdPhoneIphone } from 'react-icons/md';
-import { ImPriceTags } from 'react-icons/im';
+
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import { BiMenuAltLeft,BiText } from 'react-icons/bi';
-import { FaSearch,FaRegImage,FaRegImages,FaEdit } from 'react-icons/fa';
+import { BiMenuAltLeft,} from 'react-icons/bi';
+import { FaSearch,FaSortDown } from 'react-icons/fa';
 import Callaxios from './Callaxios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-
+import { Simplecontext } from './Simplecontext';
 export default function Adminorders() {
+    const {accesscheck} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [search,setsearch]=useState('')
     const [orders,setorders]= useState('')
+    const [nextorder,setnextorder]=useState('')
     const [orderproduct,setorderproduct]= useState('')
-    // const [cartmodal,setcartmodal]=useState(false)
-    const [status,setstatus]=useState('')
+    const [productmodal,setproductmodal]=useState(false)
+    const [statusdata,setstatusdata]=useState([])
 
     useEffect(() => {
         getorders()
-        getorderproduct()
-   
-    }, [])
+        getstatus()
+        accesscheck()
+        const getData = setTimeout(() => {    
+            searchproduct()
+            }, 1000)
+        return () => clearTimeout(getData)
+    }, [search]) 
     const notifyerror = () => toast.error(' Something went wrong', {
         position: "top-center",
         });
-    const notifydelete = () => toast.success('✅ deleted Successfully ', {
+    const notifydelete = (msg) => toast.success(msg, {
         position: "top-center",
         });
 
     const getorders=async()=>{
         let data = await Callaxios("get","/purchase/order/")
         if (data.status===200){
-            // console.log("statusdata",data)
-            setorders(data.data)
+            console.log("statusdata",data)
+            setorders(data.data.results)
+            setnextorder(data.data.next)
         }else{
             notifyerror()
         }
     }
-    const getorderproduct=async()=>{
-        let data = await Callaxios("get","/purchase/orderedproduct/")
+    const changestatus=async(itmid,value)=>{
+        let data = await Callaxios("post","/purchase/order/",[{"id":itmid,"status":value}])
+        if (data.data.Status===200){
+            // console.log("updatestatus",data)
+            // notifydelete("Updated Successfully")
+            getorders()
+            // setorders(data.data.results)
+            // setnextorder(data.data.next)
+        }else{
+            notifyerror()
+        }
+    }
+    const getnextorders=async()=>{
+        let data = await Callaxios("next",nextorder)
         if (data.status===200){
             // console.log("statusdata",data)
+            setnextorder(data.data.next)
+            setorders(orders=>[...orders,...data.data.results])
+        }else{
+            notifyerror()
+        }
+    }
+
+    const getorderproduct=async(order_id)=>{
+        let data = await Callaxios("get","/purchase/orderedproduct/",{"order_id":order_id})
+        if (data.status===200){
+            // console.log("orderproduct",data)
             setorderproduct(data.data)
+            setproductmodal(!productmodal)
+        }else{
+            notifyerror()
+        }
+    }
+    const searchproduct = async()=>{
+        let data = await Callaxios("get","/purchase/order/",{"id":search})
+        if (data.status===200){
+            setorders(data.data.results)
+            setnextorder(data.data.next)
+        }else{
+            notifyerror()
+        }
+    }
+    const deletefunction = async(itmid,k)=>{
+        let datalist ={"id":JSON.stringify([itmid])}
+        let data = await Callaxios("delete","/purchase/order/",datalist)
+        console.log("datdelete",data)
+        if(data.data.Status===200){
+           let splc = orders
+           splc.splice(k,1)
+           setorders(() => [ ...splc]);
+           notifydelete("Deleted Successfully")
+
         }else{
             notifyerror()
         }
     }
     const setallnull=()=>{
-        setstatus('')
+       
     }
-    // const submitdeleteproduct = (itemid,k) => {
-    //     confirmAlert({
-    //         title: "Confirmation",
-    //         message: `Are you sure to delete this ?`,
-    //         buttons: [
-    //         {
-    //             label: "Yes",           
-    //             onClick:()=>deletefunction(itemid,k),
-    //         },
-    //         {
-    //             label: "No"
-    //             // onClick: () => alert("Click No")
-    //         } 
-    //         ],
+    const getstatus = async()=>{
+        let data = await Callaxios("get","/product/status/")
+        if (data.status===200){
+            // console.log("statusdata",data)
+            setstatusdata(data.data)
+        }else{
+            notifyerror()
+        }
+    }
+    const submitdeleteorder = (itemid,k) => {
+        confirmAlert({
+            title: "Confirmation",
+            message: `Are you sure to delete this ?`,
+            buttons: [
+            {
+                label: "Yes",           
+                onClick:()=>deletefunction(itemid,k),
+            },
+            {
+                label: "No"
+                // onClick: () => alert("Click No")
+            } 
+            ],
             
-    //     });
-    //     };
+        });
+        };
   return (
     <div>
     <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
@@ -89,7 +149,7 @@ export default function Adminorders() {
             </div>
                 
                 <div className='md:p-8  pt-4'>
-                
+                <ToastContainer />
                     <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Orders</b>
                     {/* search start */}
@@ -99,7 +159,7 @@ export default function Adminorders() {
                                 <div className="form-icon relative mt-2 flex border border-gray-500 rounded-lg ">
                                     <i className="w-4 h-4 absolute top-3 left-4"><FaSearch size={18} color='grey'  /></i>
                                     <input name="text" id="search" type="search" onChange={(e)=>setsearch(e.target.value)} className="form-input pl-11 border-none" placeholder="Search here" />
-                                    <button  className='bg-blue-600 hover:bg-blue-400 px-3 rounded-r-md'><FaSearch size={20} color='white' /></button>
+                                    {/* <button  className='bg-blue-600 hover:bg-blue-400 px-3 rounded-r-md'><FaSearch size={20} color='white' /></button> */}
                                 </div>                      
                             </div>
                         </div>
@@ -114,6 +174,7 @@ export default function Adminorders() {
                         <thead >
                         <tr className="text-base font-bold text-left bg-gray-50">
                             <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
+                            <th className="px-4 py-3 border-b-2 border-cyan-500">Sn.No</th>
                             <th className="px-4 py-3 border-b-2 border-blue-500">Customer</th>
                             <th className="px-4 py-3 border-b-2 border-green-500">Contact</th>
                             <th className="px-4 py-3 border-b-2 border-red-500">Delivery Address</th>
@@ -124,32 +185,36 @@ export default function Adminorders() {
                         </tr>
                         </thead>
                         <tbody className="text-sm font-normal text-gray-700">
-                            
-                        <tr className="py-10 border-b border-gray-200 hover:bg-gray-100">
-                            
-                        <td className="px-4 py-4">
-                            1
-                            </td>
-                            <td className="flex flex-row items-center px-4 py-4">
-                            
-                            <div className="flex-1 ">
-                                <div className="font-medium dark:text-gray-500">Barbara Curtis</div>
-                                {/* <div className="text-sm text-blue-600 dark:text-gray-200">
-                                Account Deactivated
-                                </div> */}
-                            </div>
-                            </td>
-                            <td className="px-4 py-4">
-                            480-570-3413
-                            </td>
-                            <td className="px-4 py-4">
-                            MX-8523537435
-                            </td>
-                            <td className="px-4 py-4">
-                            Just Now
-                            </td>
-                        </tr>
-                        
+                        {orders ? orders.map((itm,k)=>(
+                            <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100 ">                               
+                                <td className="px-4 py-4">{k+1}</td>
+                                <td className="px-4 py-4 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
+                                <td className="  px-4 py-4">{itm. customer_name}</td>
+                                <td className="px-4 py-4">{itm.contact} </td>
+                                <td className="px-4 py-4">{itm.address}</td>
+                                <td className="px-4 py-4">
+                                    <div>
+                                    <span className='rounded p-1 ' style={{backgroundColor:itm.status[0].code}}><b className='text-white'>{itm.status[0].status}</b></span>
+                                    </div>
+                                    <div className='pt-1'>
+                                        <select onChange={(e)=>changestatus(itm.id,e.target.value)} className='border border-gray-500 rounded '>
+                                            <option value={''} hidden>Change Status</option>
+                                            {statusdata.length ? statusdata.map((statusitm,k1)=>(
+                                            <option key={k1} value={statusitm.status}>{statusitm.status}</option>
+                                            )) :null}
+                                        </select>
+                                    </div>    
+                                </td>
+                                <td className="px-4 py-4">{itm.created_date.split('T')[0]}</td>
+                                <td className="px-4 py-4"><button onClick={()=>getorderproduct(itm.id) } className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' >Products<FaSortDown/></button></td>
+                                <td className="px-4 py-4">
+                                <ul >
+                                    <li onClick={()=>submitdeleteorder(itm.id,k)} className='pt-1'><button className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
+                                </ul>
+                                </td>
+                            </tr>
+                                                    
+                         )) :null} 
 
                         </tbody>
                     </table>
@@ -158,7 +223,7 @@ export default function Adminorders() {
                     <div className="flex items-center justify-between space-x-2">
                         {/* <a href="#" className="hover:text-gray-600">Load More</a> */}
                         <div className="flex flex-row space-x-1">
-                        <button className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>
+                        <button onClick={()=>getnextorders()} className={nextorder ? `flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400`:` px-2 py-px text-white rounded-md hidden border bg-blue-600 hover:bg-blue-400 border-blue-400`}>Load More...</button>
                         
                         </div>
                         
@@ -172,6 +237,70 @@ export default function Adminorders() {
                     </div>
                    
                 </div>
+                {/* product modal start */}
+                <div className={`modal eas duration-300 fixed z-40 top-0  ${productmodal ? "-translate-y-0" : "-translate-y-full"} left-0  transition-all w-full  h-screen outline-none overflow-x-hidden overflow-y-auto`} id="exampleModalScrollable" tabIndex={-1} aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-scrollable h-full relative w-auto pointer-events-none">
+                    <div className="modal-content border-none h-full shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                        <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                        <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
+                            Reviews
+                        </h5>
+                        <button type="button" onClick={()=>setproductmodal(!productmodal) & setallnull()} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
+                        </div>
+                        {/* <input onChange={(e)=>setsearchcheck(e.target.value)} value={searchcheck} type='text' placeholder='search'/> */}
+                        {/* data start */}
+                        <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
+                            <div className="container">
+                           
+                            <div className="mt-6  rounded-md">
+                    <table className="w-full border border-collapse table-auto">
+                        <thead >
+                        <tr className="text-base font-bold text-left bg-gray-50">
+                            <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
+                            <th className="px-4 py-3 border-b-2 border-blue-500">Product</th>
+                            <th className="px-4 py-3 border-b-2 border-green-500">Price</th>
+                            <th className="px-4 py-3 border-b-2 border-red-500">Condition</th>
+                            <th className="px-4 py-3  border-b-2 border-yellow-500 ">Storage</th>
+                            <th className="px-4 py-3 border-b-2 border-cyan-500">Color</th>
+                            <th className="px-4 py-3 border-b-2 border-blue-500">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody className="text-sm font-normal text-gray-700">
+                        {orderproduct ? orderproduct.map((itm,k)=>(
+
+                        
+                        <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100 ">
+                            
+                        <td className="px-4 py-4 ">{k+1}</td>
+                            <td className="flex flex-row items-center px-4 py-4">{itm.product[0].model_name}</td>
+                            <td className="px-4 py-4">AED {itm.price}</td>
+                            <td className="px-4 py-4">{itm.condition}</td>
+                            <td className="px-4 py-4">{itm.storage} GB</td>
+                            <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p></td>
+                            <td className="px-4 py-4">{itm.quantity}</td>
+                        </tr>
+                        )) :null}
+
+                        </tbody>
+                    </table>
+                    </div>
+                            </div>{/*end container*/}
+                            
+                            {/*end container*/}
+                            <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                                    <button type="button" onClick={()=>setproductmodal(!productmodal) & setallnull()} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+                                        Save changes
+                                    </button> */}
+                                    </div>
+                            </section>
+                                    {/* cart data end */}                                 
+                    </div>
+                    </div>
+            </div>
+                {/* product modal end */}
             </div>
 
         </div>
