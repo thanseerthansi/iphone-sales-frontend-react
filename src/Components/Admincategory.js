@@ -17,7 +17,7 @@ export default function Admincategory() {
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const {accesscheck} =useContext(Simplecontext)
     const [showsidebar,setshowsidebar]=useState(false)
-    const [search,setsearch]=useState()
+    // const [search,setsearch]=useState()
     const [conditiondata,setconditiondata]=useState([])
     const [addmodal,setaddmodal]=useState(false)
     const [editcondition,seteditcondition]=useState('')
@@ -59,7 +59,7 @@ export default function Admincategory() {
     const addcondition=async(e)=>{
         e.preventDefault(); 
         if (descriptionstring){
-            console.log("datacondition",condition.toUpperCase())
+            // console.log("datacondition",condition.toUpperCase())
             let datalist={"condition":condition.toUpperCase(),"description":descriptionstring}
             if(editcondition){
                 // console.log("dfsdffs",editcondition)
@@ -265,7 +265,7 @@ export default function Admincategory() {
                     <div className="modal-content border-none h-full shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                         <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                         <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
-                            Add New Product
+                            Add New Condition
                         </h5>
                         <button type="button" onClick={()=>setaddmodal(!addmodal) & setallnull()} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
                         </div>
@@ -309,7 +309,7 @@ export default function Admincategory() {
                                                 </>:null}
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)}  value={description} name="text" id="text" type="text" className="form-input pl-11" placeholder="description" />
+                                                <textarea onChange={(e)=>setdescription(e.target.value)}  value={description} name="text" id="text" type="text" className="form-input pl-11" placeholder="description (Add one by one)" />
                                                 <div className='flex justify-end'>
                                                 <button type='button'  onClick={()=>adddescriptiofctn()} className='bg-blue-600 text-white p-2 rounded '>Add Another</button>
                                                 </div></div>

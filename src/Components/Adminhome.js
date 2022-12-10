@@ -1,11 +1,35 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AdminSidebar from './AdminSidebar'
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { MdToday } from 'react-icons/md';
-
+import { useEffect } from 'react';
+import Callaxios from './Callaxios';
+import { Simplecontext } from './Simplecontext';
 export default function Adminhome() {
+    const {accesscheck} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
+    const [orders,setorders]=useState([])
+    const [sellorders,sellsetorders]=useState([])
+    useEffect(()=>{
+        getorders()
+        getsellorders()
+        accesscheck()
+    },[])
+    const getorders = async()=>{
+        let data = await Callaxios("get","/purchase/orderfull/")
+        if (data.status===200){
+            // console.log("dta",data.data)
+            setorders(data.data)
+        }
+    }
+    const getsellorders = async()=>{
+        let data = await Callaxios("get","/selling/sellfullorder/")
+        if (data.status===200){
+            // console.log("dta",data.data)
+            sellsetorders(data.data)
+        }
+    }
   return (
     <div>
         <div className='bg-[#2e2e2e] fixed h-screen w-screen '>
@@ -38,7 +62,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'>{orders}</b>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +78,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'>{orders.length}</b>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +94,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'>{orders.length}</b>
                                     </div>
                                 </div>
                             </div>
@@ -82,11 +106,11 @@ export default function Adminhome() {
                                     <b>Total Product Sold</b>
                                     
                                     </div>
-                                    <div className="mt-4 flex items-end justify-between">
+                                    `<div className="mt-4 flex items-end justify-between">
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'></b>
                                     </div>
                                 </div>
                             </div>

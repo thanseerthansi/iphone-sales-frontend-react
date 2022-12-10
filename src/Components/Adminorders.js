@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AdminSidebar from './AdminSidebar'
-
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BiMenuAltLeft,} from 'react-icons/bi';
 import { FaSearch,FaSortDown } from 'react-icons/fa';
@@ -40,7 +39,7 @@ export default function Adminorders() {
     const getorders=async()=>{
         let data = await Callaxios("get","/purchase/order/")
         if (data.status===200){
-            console.log("statusdata",data)
+            // console.log("statusdata",data)
             setorders(data.data.results)
             setnextorder(data.data.next)
         }else{
@@ -81,18 +80,31 @@ export default function Adminorders() {
         }
     }
     const searchproduct = async()=>{
-        let data = await Callaxios("get","/purchase/order/",{"id":search})
-        if (data.status===200){
-            setorders(data.data.results)
-            setnextorder(data.data.next)
-        }else{
-            notifyerror()
-        }
+        if(search.includes('z')===true){
+            let searchdata = search.split('z')[1]
+            let data = await Callaxios("get","/purchase/order/",{"id":searchdata})
+            if (data.status===200){
+                setorders(data.data.results)
+                setnextorder(data.data.next)
+            }else{
+                notifyerror()
+            }
+       }
+    //    else{console.log("nosearcg")}
+    }
+    const searchorderbystatus = async(status)=>{
+            let data = await Callaxios("get","/purchase/order/",{"status":status})
+            if (data.status===200){
+                setorders(data.data.results)
+                setnextorder(data.data.next)
+            }else{
+                notifyerror()
+            }
     }
     const deletefunction = async(itmid,k)=>{
         let datalist ={"id":JSON.stringify([itmid])}
         let data = await Callaxios("delete","/purchase/order/",datalist)
-        console.log("datdelete",data)
+        // console.log("datdelete",data)
         if(data.data.Status===200){
            let splc = orders
            splc.splice(k,1)
@@ -158,12 +170,23 @@ export default function Adminorders() {
                             <div className="mb-3 xl:w-96 ">
                                 <div className="form-icon relative mt-2 flex border border-gray-500 rounded-lg ">
                                     <i className="w-4 h-4 absolute top-3 left-4"><FaSearch size={18} color='grey'  /></i>
-                                    <input name="text" id="search" type="search" onChange={(e)=>setsearch(e.target.value)} className="form-input pl-11 border-none" placeholder="Search here" />
+                                    <input name="text" id="search" type="search" onChange={(e)=>setsearch(e.target.value)} className="form-input pl-11 border-none" placeholder="Search by Sn.No" />
                                     {/* <button  className='bg-blue-600 hover:bg-blue-400 px-3 rounded-r-md'><FaSearch size={20} color='white' /></button> */}
                                 </div>                      
+                            </div>           
+                        </div>
+                        
+                        <div className='col-span-1'>
+                            <div className=''>
+                                <b>Sort by : </b>
+                                <select onChange={(e)=>searchorderbystatus(e.target.value)} className='border  border-gray-600 p-1 rounded'>
+                                    <option value={''} className=''>ALL</option>
+                                    {statusdata.map((itm,k)=>(
+                                        <option key={k} value={itm.id} style={{backgroundColor:itm.code}}>{itm.status}</option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
-                    
                     </div>
                     {/* search end */}
                     {/* Dashboard home start */}
@@ -189,7 +212,7 @@ export default function Adminorders() {
                             <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100 ">                               
                                 <td className="px-4 py-4">{k+1}</td>
                                 <td className="px-4 py-4 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
-                                <td className="  px-4 py-4">{itm. customer_name}</td>
+                                <td className="  px-4 py-4">{itm.customer_name}</td>
                                 <td className="px-4 py-4">{itm.contact} </td>
                                 <td className="px-4 py-4">{itm.address}</td>
                                 <td className="px-4 py-4">
@@ -200,7 +223,7 @@ export default function Adminorders() {
                                         <select onChange={(e)=>changestatus(itm.id,e.target.value)} className='border border-gray-500 rounded '>
                                             <option value={''} hidden>Change Status</option>
                                             {statusdata.length ? statusdata.map((statusitm,k1)=>(
-                                            <option key={k1} value={statusitm.status}>{statusitm.status}</option>
+                                            <option key={k1}  value={statusitm.status} >{statusitm.status}</option>
                                             )) :null}
                                         </select>
                                     </div>    
@@ -276,7 +299,7 @@ export default function Adminorders() {
                             <td className="px-4 py-4">AED {itm.price}</td>
                             <td className="px-4 py-4">{itm.condition}</td>
                             <td className="px-4 py-4">{itm.storage} GB</td>
-                            <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p></td>
+                            <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p   ></td>
                             <td className="px-4 py-4">{itm.quantity}</td>
                         </tr>
                         )) :null}

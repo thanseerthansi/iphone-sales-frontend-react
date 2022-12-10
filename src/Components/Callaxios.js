@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BaseURL } from './urlcall';
-let canceltoken;
+// let canceltoken;
 export default async function  Callaxios(method,url,datalist) { 
     // if(typeof canceltoken != typeof undefined){
     //     canceltoken.cancel("Cancelling Request")
@@ -70,7 +70,7 @@ export default async function  Callaxios(method,url,datalist) {
         // setvalue(data.data)
         
     } catch (error) {
-        console.log("error",error)
+        // console.log("error",error)
         // if (error.message==="Request failed with status code 401"){
         //     console.log("notoken")
         //     window.location.href = '/adminlogin';
