@@ -11,10 +11,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
-  const {accesscheck,next,setnext,products,setproducts,getproduct} =useContext(Simplecontext)
+  const {accesscheck,next,setnext,products,setproducts} =useContext(Simplecontext)
   const [search,setsearch]= useState('')
   useEffect(() => {
     const getData = setTimeout(() => {    
+      getproduct()
       searchproduct()
     }, 1000)
 
@@ -23,9 +24,20 @@ export default function Home() {
   const notifyproductadded = () => toast.success('✅ Product added Successfully!', {
     position: "top-center",
     });
-const notifyerror = () => toast.error(' Something went wrong', {
+  const notifyerror = () => toast.error(' Something went wrong', {
     position: "top-center",
     });
+    const getproduct = async()=>{
+      let data = await Callaxios("get","product/product/",{sellstatus:"True"})
+      console.log("dataresponsenwxt",data.data.results)
+      if (data.status===200){
+          setnext(data.data.next)  
+          setproducts(data.data.results) 
+
+      }else{
+          notifyerror()
+      }
+  }
   const searchproduct = async()=>{
     // console.log("search product",search)
     let data = await Callaxios("get","/product/product",{model_name:search})
@@ -36,8 +48,8 @@ const notifyerror = () => toast.error(' Something went wrong', {
     }else{
         notifyerror()
     }
-}
-const getnextproduct = async()=>{
+  }
+  const getnextproduct = async()=>{
     let data = await Callaxios("next",next)
     // console.log("nextinnextcall",next)
     if (data.status===200){

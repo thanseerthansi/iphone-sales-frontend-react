@@ -378,8 +378,8 @@ const deletefromlist=(k)=>{
                 <button className='border w-5 flex justify-center border-gray-500 cursor-pointer hover:text-white hover:bg-gray-700 ' onClick={()=>incrementhandler()} >+</button>
                </div></div>
               <div className='md:flex pt-5'>
-                <div><button onClick={()=>iprice && icolor ? addtocartfunction() :notifyerrorfill()} className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Add to Cart</button></div>
-                <div className='lg:px-1 md:pt-0 pt-3'><button onClick={()=>iprice ? setmybuymodal(!mybuymodal) : notifyerrorfill()} className='w-64 p-2 bg-green-600 rounded-md text-white hover:brightness-[.7]'>buy now</button></div>
+                <div><button onClick={()=>(iprice && icolor) ? addtocartfunction() :notifyerrorfill()} className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Add to Cart</button></div>
+                <div className='lg:px-1 md:pt-0 pt-3'><button onClick={()=>(iprice && icolor)? setmybuymodal(!mybuymodal) : notifyerrorfill()} className='w-64 p-2 bg-green-600 rounded-md text-white hover:brightness-[.7]'>buy now</button></div>
               </div>
             </div>{/*end col*/}     
             <div className="lg:col-span-3 col-span-3   ">

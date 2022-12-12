@@ -84,14 +84,14 @@ export default function AdminSidebar(show) {
         <span className="flex font-medium text-sm text-gray-400 px-4 my-4 uppercase">Account</span>
       </li>
       <li className="my-px">
-        <a href="/" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
+        <Link to="/adminprofile" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">
             <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
               <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </span>
           <span className="ml-3 ">Profile</span>
-        </a>
+        </Link>
       </li>
       
       {/* <li className="my-px">

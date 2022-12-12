@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import { json, Link} from 'react-router-dom';
-import { BiShoppingBag  } from 'react-icons/bi';
-import { FiShoppingCart ,FiSettings } from 'react-icons/fi';
-import { RiDeleteBin6Line,RiShoppingBag3Fill } from 'react-icons/ri';
+// import { BiShoppingBag  } from 'react-icons/bi';
+// import { FiShoppingCart ,FiSettings } from 'react-icons/fi';
+// import { RiDeleteBin6Line,RiShoppingBag3Fill } from 'react-icons/ri';
 import { MdPersonOutline,MdPhone,MdOutlineEmail,MdLocationCity,MdOutlineHome} from 'react-icons/md';
 import Whatsappbutton from './Whatsappbutton';
 // import { Simplecontext } from './Simplecontext';
@@ -46,7 +46,7 @@ export default function Selliphone() {
 //     }
 // }
   const getproductfull =async()=>{
-    let data = await Callaxios("get","product/productfull/")
+    let data = await Callaxios("get","product/productfull/",{"buystatus":"True"})
       // console.log("dataresponsenwxt",data)
       if (data.status===200){
           setproducts(data.data) 

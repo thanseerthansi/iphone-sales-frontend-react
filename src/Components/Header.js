@@ -64,7 +64,7 @@ export default function Header() {
   const cartproduct=()=>{
     let orderlist = window.localStorage.getItem('cart')
     // checkoutorder
-    // console.log("orderlis3",JSON.parse(orderlist))
+    console.log("orderlis3",JSON.parse(orderlist))
     try {
       if (orderlist.length){
         // console.log("listpresent")
@@ -463,7 +463,9 @@ export default function Header() {
                  <div>
                    <span ><b>{itm.product[0].model_name}</b></span><br/>
                    <span className='capitalize' >{itm.storage} GB-{itm.condition}</span><br/>
-                 </div>
+                   <div className='flex'>
+                   <b>Color : </b><p className='rounded-full w-7 h-7 ' style={{backgroundColor:itm.color}}></p>
+                 </div></div>
                  <div className='pt-2'>
                    <span ><b>Quantity :</b></span>
                    <div className=' pt-2 flex'>

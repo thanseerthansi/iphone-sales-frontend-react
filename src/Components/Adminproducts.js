@@ -47,12 +47,12 @@ export default function Adminproducts() {
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
     // console.log("product",products)
-    const {accesscheck,next,setnext,products,setproducts,getproduct} =useContext(Simplecontext)
+    const {accesscheck,next,setnext,products,setproducts} =useContext(Simplecontext)
 
     let navigate = useNavigate(); 
     // console.log("next",next) 
     useEffect(() => {        
-        
+        getproduct()
         accesscheck()
         getcondition()
         const getData = setTimeout(() => {    
@@ -77,6 +77,17 @@ export default function Adminproducts() {
     const notifydelete = () => toast.success(' deleted Successfully ', {
         position: "top-center",
         });
+        const getproduct = async()=>{
+            let data = await Callaxios("get","product/product/")
+            // console.log("dataresponsenwxt",data.data.results)
+            if (data.status===200){
+                setnext(data.data.next)  
+                setproducts(data.data.results) 
+      
+            }else{
+                notifyerror()
+            }
+        }
    
     const getcondition = async()=>{
         let data = await Callaxios("get","/product/condition/")
@@ -206,7 +217,7 @@ export default function Adminproducts() {
     const deleteproduct =async(itmid,k)=>{
         let datalist ={"id":JSON.stringify([itmid])}
         let data = await Callaxios("delete","product/product/",datalist) 
-        console.log("delete",data.data)
+        // console.log("delete",data.data)
         if (data.data.Status===200){
             getproduct()
             notifydelete()
@@ -351,7 +362,7 @@ export default function Adminproducts() {
                 // console.log("not")
                 list = cc 
             }
-            console.log("list",list)
+            // console.log("list",list)
             setsellprice(list)
             setsellpricetolist('')
             
@@ -385,7 +396,7 @@ export default function Adminproducts() {
         // console.log("arrya",array.toString())
     }
     const addcolorfctn=()=>{
-        console.log(colorsvalue)
+        // console.log(colorsvalue)
         if (colorsvalue){
             let string = colors
             // console.log("string",string)
@@ -559,7 +570,7 @@ export default function Adminproducts() {
                         {/* <a href="#" className="hover:text-gray-600">Load More</a> */}
                     
                         <div className="flex flex-row space-x-1">
-                        {next ===null ? null:
+                        {next === null ? null:
                         <button onClick={()=>getnextproduct()} className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>      
                          }
                         </div>
@@ -594,7 +605,7 @@ export default function Adminproducts() {
                                         
                                     <form  onSubmit={(e)=>addproduct(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
-                                        <div id=""/>
+                                        <div />
                                         
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
@@ -830,7 +841,7 @@ export default function Adminproducts() {
                                         
                                     <form  onSubmit={(e)=>addproduct(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
-                                        <div id="" />
+                                        <div />
                                         
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
@@ -1052,7 +1063,7 @@ export default function Adminproducts() {
                             <div className="tiny-slide ">
                                         {reviewdata ?<>
                                         {reviewdata.map((itm,k)=>(
-                                        <div key={k} className="">
+                                        <div key={k} >
                                         <div className="content  rounded shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
                                             <i className=" text-indigo-600" />
                                             <div className=" mt-1">
@@ -1091,14 +1102,14 @@ export default function Adminproducts() {
                                         </>:null}
                                     </div>
                                     <div className="flex justify-center pt-2">
-                                    <div className={reviewnext ? ``:`hidden`}>
+                                    <div className={reviewnext ? null:`hidden`}>
                                     {/* <button type="button" className="bg-gray-800 text-white  rounded-l-md border-r hover:brightness-[.3] border-gray-100 py-2 px-3">
                                         <div className="flex flex-row align-middle">    
                                         <p className="ml-2">Prev</p>
                                         </div>
                                     </button> */}
                                     <button onClick={()=>reviewgetnext()} type="button" className="bg-blue-700 text-white rounded-r-lg border-r hover:brightness-[.5] border-gray-100 py-2  px-3">
-                                        <div on className="flex flex-row align-middle">    
+                                        <div className="flex flex-row align-middle">    
                                         <p  className="ml-2 flex">Load More>> </p>
                                         </div>
                                     </button>

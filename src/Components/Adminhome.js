@@ -10,7 +10,10 @@ export default function Adminhome() {
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [orders,setorders]=useState([])
-    const [sellorders,sellsetorders]=useState([])
+    const [sellorders,setsellorders]=useState([])
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    let newdate = today.toISOString();
     useEffect(()=>{
         getorders()
         getsellorders()
@@ -21,13 +24,14 @@ export default function Adminhome() {
         if (data.status===200){
             // console.log("dta",data.data)
             setorders(data.data)
-        }
+            
+        }   
     }
     const getsellorders = async()=>{
         let data = await Callaxios("get","/selling/sellfullorder/")
         if (data.status===200){
             // console.log("dta",data.data)
-            sellsetorders(data.data)
+            setsellorders(data.data)
         }
     }
   return (
@@ -62,7 +66,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>{orders}</b>
+                                    <b className='text-stone-700 text-4xl'>{orders.filter(e => e.status[0].status.toUpperCase() === 'NEW').length}</b>
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +82,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>{orders.length}</b>
+                                    <b className='text-stone-700 text-4xl'>{orders.filter(e =>e.created_date.split('T')[0]===newdate.split('T')[0]).length}</b>
                                     </div>
                                 </div>
                             </div>
@@ -99,38 +103,8 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-6 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-green-400 to-green-900 p-[3px]">
-                                <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
-                                    <div className="flex items-center justify-between">
-                                    <b>Total Product Sold</b>
-                                    
-                                    </div>
-                                    `<div className="mt-4 flex items-end justify-between">
-                                    <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
-                                    <MdToday size={35} color=""/>
-                                    </p>
-                                    <b className='text-stone-700 text-4xl'></b>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div className='md:col-span-6 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-rose-400 to-red-900 p-[3px]">
-                                <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
-                                    <div className="flex items-center justify-between">
-                                    <b>Total Products</b>
-                                    
-                                    </div>
-                                    <div className="mt-4 flex items-end justify-between">
-                                    <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
-                                    <MdToday size={35} color=""/>
-                                    </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
+                            
+                            
                             <div className='md:col-span-6 p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
@@ -142,7 +116,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'>{sellorders.filter(e => e.status[0].status.toUpperCase() === 'NEW').length}</b>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +132,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'>{sellorders.filter(e =>e.created_date.split('T')[0]===newdate.split('T')[0]).length}</b>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +148,7 @@ export default function Adminhome() {
                                     <p className="text-xl font-medium text-slate-700 dark:text-navy-100">
                                     <MdToday size={35} color=""/>
                                     </p>
-                                    <b className='text-stone-700 text-4xl'>250</b>
+                                    <b className='text-stone-700 text-4xl'>{sellorders.length}</b>
                                     </div>
                                 </div>
                             </div>
