@@ -501,7 +501,7 @@ export default function Adminproducts() {
                             <th className="px-4 py-3  border-b-2 border-blue-500 ">Sell Status</th>
                             <th className="px-4 py-3  border-b-2 border-red-500  ">Buy Price</th>
                             <th className="px-4 py-3  border-b-2 border-cyan-500 ">Buy Status</th>
-                            <th className="px-4 py-3  border-b-2 border-blue-500 ">Colors</th>
+                            {/* <th className="px-4 py-3  border-b-2 border-blue-500 ">Colors</th> */}
                             <th className="px-4 py-3  border-b-2 border-green-500 ">Old Starting price</th>
                             <th className="px-4 py-3  border-b-2 border-yellow-500 ">New Starting price</th>
                             <th className="px-4 py-3  border-b-2 border-red-500">Review</th>
@@ -544,11 +544,11 @@ export default function Adminproducts() {
                                 <button onClick={()=>setstatus("buystatus",false,itm.id)} className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
                                 <button onClick={()=>setstatus("buystatus",true,itm.id)} className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
-                            <td className="px-4 py-4">{itm.colors.split(',').map((itm,k)=>(
+                            {/* <td className="px-4 py-4">{itm.colors.split(',').map((itm,k)=>(
                                 <ul key={k} className='list-outside list-disc flex pl-5 p-1'>
                                 <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li>
                                 </ul>
-                            ))}</td>
+                            ))}</td> */}
                             <td className="px-4 py-4">${itm.oldfromprice}</td>
                             <td className="px-4 py-4">${itm.sellfromprice}</td>
                             <td className='px-4 py-4 '> <button className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' onClick={()=>setshowreview(!showreview) & getreview(itm.id)}>Review<FaSortDown/></button></td>
@@ -677,7 +677,7 @@ export default function Adminproducts() {
                                                 <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
                                                 <div className='grid grid-cols-4'>
                                                     <div className=' col-span-2'>
-                                                    {buyprice ?  <b>Purchase Price</b>:null}
+                                                    {buyprice ?  <b>Price</b>:null}
                                                     {buyprice ? buyprice.split(',').map((itm,k)=>(
                                                         <ul key={k} className='list-outside list-disc flex pl-5'>
                                                         <li className='capitalize'>{itm}</li>
@@ -728,7 +728,7 @@ export default function Adminproducts() {
                                             </div>
                                         </div>
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
-                                            <div className="lg:col-span-6 mb-5">
+                                            {/* <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Colors</label>
                                                 {colors ? colors.split(',').map((itm,k)=>(
@@ -746,7 +746,7 @@ export default function Adminproducts() {
                                                 </div>
                                                 </div>
                                             </div>
-                                            </div>
+                                            </div> */}
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                             <div className='grid grid-cols-4'>
@@ -964,7 +964,7 @@ export default function Adminproducts() {
                                             </div>
                                         </div>
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
-                                            <div className="lg:col-span-6 mb-5">
+                                            {/* <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="contact" className="font-semibold">Colors</label>
                                                 {colors ? colors.split(',').map((itm,k)=>(
@@ -981,7 +981,7 @@ export default function Adminproducts() {
                                                 </div>
                                                 </div>
                                             </div>
-                                            </div>
+                                            </div> */}
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
                                             <div className='grid grid-cols-4'>

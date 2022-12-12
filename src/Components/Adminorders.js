@@ -284,7 +284,7 @@ export default function Adminorders() {
                             <th className="px-4 py-3 border-b-2 border-green-500">Price</th>
                             <th className="px-4 py-3 border-b-2 border-red-500">Condition</th>
                             <th className="px-4 py-3  border-b-2 border-yellow-500 ">Storage</th>
-                            <th className="px-4 py-3 border-b-2 border-cyan-500">Color</th>
+                            {/* <th className="px-4 py-3 border-b-2 border-cyan-500">Color</th> */}
                             <th className="px-4 py-3 border-b-2 border-blue-500">Quantity</th>
                         </tr>
                         </thead>
@@ -299,7 +299,7 @@ export default function Adminorders() {
                             <td className="px-4 py-4">AED {itm.price}</td>
                             <td className="px-4 py-4">{itm.condition}</td>
                             <td className="px-4 py-4">{itm.storage} GB</td>
-                            <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p   ></td>
+                            {/* <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p   ></td> */}
                             <td className="px-4 py-4">{itm.quantity}</td>
                         </tr>
                         )) :null}

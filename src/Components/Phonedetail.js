@@ -208,7 +208,7 @@ export default function Phonedetail() {
     
   }
   const setallnull=()=>{
-    setiquantity('')
+    setiquantity(1)
     seticolor('')
     setistorage('')
     seticondition('')
@@ -324,7 +324,7 @@ const deletefromlist=(k)=>{
             <div className="lg:col-span-12">
               <div className="work-details">
                 <h4 className="text-xl font-semibold mb-3 border-b border-gray-100 dark:border-gray-700 text-black dark:text-white pb-3">iPhone 14</h4>
-                <div><h5 className='font-semibold text-md text-dark dark:text-white' >Color :</h5>
+                {/* <div><h5 className='font-semibold text-md text-dark dark:text-white' >Color :</h5>
                 <div className='flex '>
                  
                   {productdetail.length ? productdetail[0].colors ? 
@@ -336,11 +336,8 @@ const deletefromlist=(k)=>{
                     ))
                      :null
                   :null}
-                  {/* <div className='p-2'><button className='rounded-full bg-[#ff0000] w-7 h-7  border-gray-900 hover:border-2 '></button></div>
-                  <div className='p-2'><button className='rounded-full bg-[grey] w-7 h-7  border-gray-900 hover:border-2'></button></div>
-                  <div className='p-2'><button className='rounded-full bg-[purple] w-7 h-7 border-black hover:border-2'></button></div>
-                  <div className='p-2'><button className='rounded-full bg-[pink] w-7 h-7   border-gray-900    hover:border-2'></button></div> */}
-                </div></div>
+                 
+                </div></div> */}
                 <div><h5 className='font-semibold text-md text-dark dark:text-white' >Storage :</h5>
                 <div className='flex '>
         
@@ -378,8 +375,8 @@ const deletefromlist=(k)=>{
                 <button className='border w-5 flex justify-center border-gray-500 cursor-pointer hover:text-white hover:bg-gray-700 ' onClick={()=>incrementhandler()} >+</button>
                </div></div>
               <div className='md:flex pt-5'>
-                <div><button onClick={()=>(iprice && icolor) ? addtocartfunction() :notifyerrorfill()} className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Add to Cart</button></div>
-                <div className='lg:px-1 md:pt-0 pt-3'><button onClick={()=>(iprice && icolor)? setmybuymodal(!mybuymodal) : notifyerrorfill()} className='w-64 p-2 bg-green-600 rounded-md text-white hover:brightness-[.7]'>buy now</button></div>
+                <div><button onClick={()=>iprice  ? addtocartfunction() :notifyerrorfill()} className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Add to Cart</button></div>
+                <div className='lg:px-1 md:pt-0 pt-3'><button onClick={()=>iprice? setmybuymodal(!mybuymodal) : notifyerrorfill()} className='w-64 p-2 bg-green-600 rounded-md text-white hover:brightness-[.7]'>buy now</button></div>
               </div>
             </div>{/*end col*/}     
             <div className="lg:col-span-3 col-span-3   ">
