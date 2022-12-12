@@ -46,7 +46,7 @@ export default function Adminproducts() {
     const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
-    // console.log("product",products)
+    // console.log("product",images)
     const {accesscheck,next,setnext,products,setproducts} =useContext(Simplecontext)
 
     let navigate = useNavigate(); 
@@ -996,7 +996,7 @@ export default function Adminproducts() {
                                                 </div> 
                                                 ))}
                                                 </>:null}                                                  
-                                                {images[0]?
+                                                {images.length?
                                                 <>
                                                 
                                                 {images.map((itm,k)=>(

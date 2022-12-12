@@ -108,14 +108,14 @@ export default function Home() {
     <div className=' flex justify-center test-center'>
 
     <div id="" className="grid md:grid-cols-4 grid-cols-2 lg:pl-28 pl-auto mt-4 ">
-      {products.map((itm,k)=>(
+      {products.length ? products.map((itm,k)=>(
     
       <div key={k} className=" p-3 lg:w-3/5 md:w-3/5 flex  items-center " data-groups="[&quot;branding&quot;]">
         <div className="group relative block  justify-center overflow-hidden rounded-md transition-all duration-500">
           {/* <Link to='/details'><img src="https://i.ebayimg.com/images/g/FjcAAOSwINJhQhsZ/s-l600.jpg" className="rounded-md" alt={''} /></Link> */}
-          <Link to={`/details/${itm.id}`}><img src={itm.images[0].image} className="rounded-md" alt={''} /></Link>
+          <Link to={`/details/${itm.id}`}><img src={itm.images.length?  itm.images[0].image:null} className="rounded-md" alt={''} /></Link>
           <div className="content pt-3">
-          <h5 className="mb-1 flex justify-center"><Link to="/details" className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">{itm.model_name}</Link></h5>
+          <h5 className="mb-1 flex justify-center"><Link to={`/details/${itm.id}`} className="hover:text-indigo-600 transition-all duration-500 font-semibold text-slate-900 dark:text-white">{itm.model_name}</Link></h5>
             <div className='flex justify-center '>
             <h6 className=" flex justify-center text-amber-700">From <span className=''>&nbsp; ${itm.sellfromprice}</span></h6>
             {/* <h6 className="text-slate-400 flex justify-center"> ${itm.sellfromprice}</h6> */}
@@ -123,7 +123,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      ))}
+      )):null}
       
      {next ? 
       <div className="lg:w-1/2 md:w-1/3 p-3 picture-item  " data-groups="[&quot;branding&quot;]">

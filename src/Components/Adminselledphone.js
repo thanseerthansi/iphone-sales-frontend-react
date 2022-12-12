@@ -80,8 +80,8 @@ export default function Adminselledphone() {
         }
     }
     const searchproduct = async()=>{
-        if(search.includes('z')===true){
-            let searchdata = search.split('z')[1]
+        if(search.includes('Z')===true){
+            let searchdata = search.split('Z')[1]
             let data = await Callaxios("get","/selling/sellorder/",{"id":searchdata})
             if (data.status===200){
                 setorders(data.data.results)
