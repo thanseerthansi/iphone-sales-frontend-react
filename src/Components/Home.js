@@ -14,8 +14,9 @@ export default function Home() {
   const {accesscheck,next,setnext,products,setproducts} =useContext(Simplecontext)
   const [search,setsearch]= useState('')
   useEffect(() => {
+    getproduct()
     const getData = setTimeout(() => {    
-      getproduct()
+      
       searchproduct()
     }, 1000)
 
@@ -29,7 +30,7 @@ export default function Home() {
     });
     const getproduct = async()=>{
       let data = await Callaxios("get","product/product/",{sellstatus:"True"})
-      console.log("dataresponsenwxt",data.data.results)
+      // console.log("dataresponsenwxt",data.data.results)
       if (data.status===200){
           setnext(data.data.next)  
           setproducts(data.data.results) 

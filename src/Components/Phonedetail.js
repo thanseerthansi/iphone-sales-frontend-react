@@ -42,7 +42,7 @@ export default function Phonedetail() {
   const  urlparam  = useParams()
   let urlid = urlparam.id
   let navigate = useNavigate();
-  // console.log("produ",istorage)
+  // console.log("produ",productdetail)
   const notifyproductadded = () => toast.success('Product added to cart !', {
     position: "top-center",
     });
@@ -210,7 +210,7 @@ export default function Phonedetail() {
   const setallnull=()=>{
     setiquantity(1)
     seticolor('')
-    setistorage('')
+    // setistorage('')
     seticondition('')
     setiprice('')
     setogprice('')
@@ -323,7 +323,7 @@ const deletefromlist=(k)=>{
           <div className="grid lg:grid-cols-12 grid-cols-1 gap-[30px]">
             <div className="lg:col-span-12">
               <div className="work-details">
-                <h4 className="text-xl font-semibold mb-3 border-b border-gray-100 dark:border-gray-700 text-black dark:text-white pb-3">iPhone 14</h4>
+                <h4 className="text-xl font-semibold mb-3 border-b border-gray-100 dark:border-gray-700 text-black dark:text-white pb-3">{productdetail.length ? productdetail[0].model_name :null}</h4>
                 {/* <div><h5 className='font-semibold text-md text-dark dark:text-white' >Color :</h5>
                 <div className='flex '>
                  
@@ -419,16 +419,18 @@ const deletefromlist=(k)=>{
     <div className={reviewview ? ``:`hidden`}>
     <form onSubmit={(e)=>starrating ? reviewadd(e):notifyerrorfill()}>
     <div className="form-outline">
+      <label className='font-bold'>Give star : <b className='text-red-600'>*</b></label>
     <ReactStars
     count={5}
     onChange={ratingChanged}
     size={24}
     activeColor="#ffd700"
   />
+  <label className='font-bold'>  Message : <b className='text-red-600'>*</b></label>
       <textarea onChange={(e)=>setreview(e.target.value)} required placeholder='Message' className="form-control w-full border rounded border-gray-600 p-2" id="textAreaExample1" rows="4"/>
       <div className='grid grid-cols-4'>
       <div className='md:col-span-2 col-span-4'>
-          <label>Customer Name :</label><br/>
+          <label className='font-bold'>Customer Name : <b className='text-red-600'>*</b></label><br/>
           <input type='name' htmlFor='name'  onChange={(e)=>setreviename(e.target.value)} placeholder='Name' required className='border border-gray-600 rounded p-1 ' />
         </div>
       <div className='md:col-span-2 col-span-4'>
@@ -446,7 +448,7 @@ const deletefromlist=(k)=>{
                                                 
       </>: null}
       
-          <label>Add Images :</label><br/>
+          <label className='font-bold'>Add Images :<b className='text-red-600'>*</b></label><br/>
         <input onChange={(e)=>imageaddtolist(e.target.files[0])}  type='file' className='border border-gray-600 rounded '/>
         </div>
         
@@ -505,7 +507,7 @@ const deletefromlist=(k)=>{
     </div>
   </button> */}
   <button onClick={()=>reviewgetnext()} type="button" className="bg-blue-700 text-white rounded-r-lg border-r hover:brightness-[.5] border-gray-100 py-2  px-3">
-    <div on className="flex flex-row align-middle">    
+    <div  className="flex flex-row align-middle">    
       <p  className="ml-2 flex">Load More>> </p>
     </div>
   </button>
@@ -600,7 +602,7 @@ const deletefromlist=(k)=>{
                     <div className="grid lg:grid-cols-12 lg:gap-6">
                       <div className="lg:col-span-6 mb-5">
                         <div className="text-left">
-                          <label htmlFor="name" className="font-semibold">Your Full Name:</label>
+                          <label htmlFor="name" className="font-semibold">Your Full Name: <b className='text-red-600'>*</b></label>
                           <div className="form-icon relative mt-2">
                             <i className="w-4 h-4 absolute top-3 left-4"><MdPersonOutline size={18} /></i>
                             <input required onChange={(e)=> setcustomerdetails({...customerdetails,customer_name:e.target.value})} name="name" id="name" type="text" className="form-input pl-11" placeholder="Name :" />
@@ -609,7 +611,7 @@ const deletefromlist=(k)=>{
                       </div>
                       <div className="lg:col-span-6 mb-5">
                         <div className="text-left">
-                          <label htmlFor="email" className="font-semibold">Your Email:</label>
+                          <label htmlFor="email" className="font-semibold">Your Email: <b className='text-red-600'>*</b></label>
                           <div className="form-icon relative mt-2">
                           <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineEmail size={18} /></i>
                             <input onChange={(e)=> setcustomerdetails({...customerdetails,email:e.target.value})} name="email" id="email" type="email" className="form-input pl-11" placeholder="Email :" />
@@ -620,7 +622,7 @@ const deletefromlist=(k)=>{
                     <div className="grid lg:grid-cols-12 lg:gap-6">
                       <div className="lg:col-span-6 mb-5">
                         <div className="text-left">
-                          <label htmlFor="contact" className="font-semibold">Contact:</label>
+                          <label htmlFor="contact" className="font-semibold">Contact: <b className='text-red-600'>*</b></label>
                           <div className="form-icon relative mt-2">
                             <i className="w-4 h-4 absolute top-3 left-4"><MdPhone size={18} /></i>
                             <input required onChange={(e)=> setcustomerdetails({...customerdetails,contact:e.target.value})} name="conact"  type="number" className="form-input pl-11" placeholder="Contact :" />
@@ -629,7 +631,7 @@ const deletefromlist=(k)=>{
                       </div>
                       <div className="lg:col-span-6 mb-5">
                         <div className="text-left">
-                          <label htmlFor="email" className="font-semibold">City:</label>
+                          <label htmlFor="email" className="font-semibold">City: <b className='text-red-600'>*</b></label>
                           <div className="form-icon relative mt-2">
                           <i className="w-4 h-4 absolute top-3 left-4"><MdLocationCity  size={18} /></i>
                             <input required onChange={(e)=> setcustomerdetails({...customerdetails,city:e.target.value})} name="city" id="city" type="city" className="form-input pl-11" placeholder="City :" />
@@ -640,7 +642,7 @@ const deletefromlist=(k)=>{
                     <div className="grid grid-cols-1">
                       <div className="mb-5">
                         <div className="text-left">
-                          <label htmlFor="address" className="font-semibold">Delivery Address:</label>
+                          <label htmlFor="address" className="font-semibold">Delivery Address: <b className='text-red-600'>*</b></label>
                           <div className="form-icon relative mt-2">
                           <i className="w-4 h-4 absolute top-3 left-4">< MdOutlineHome size={18} /></i>
                             <input required onChange={(e)=> setcustomerdetails({...customerdetails,address:e.target.value})} name="address" id="address" className="form-input pl-11" placeholder="Address :" />

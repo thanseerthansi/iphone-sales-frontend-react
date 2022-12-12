@@ -610,7 +610,7 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Model Name:</label>
+                                                <label htmlFor="name" className="font-semibold">Model Name: <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
@@ -631,7 +631,7 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Purchase Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
+                                                <label htmlFor="contact" className="font-bold">Price <b className='text-red-600'>*</b> <span className='text-gray-500'>(storage-condition-price,...)</span></label>
                                                 {/* <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setbuyprice(e.target.value)} value={buyprice} required  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
@@ -642,7 +642,7 @@ export default function Adminproducts() {
                                                 <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
                                                 <div className='grid grid-cols-4'>
                                                     <div className=' col-span-2'>
-                                                    <b>Storage :</b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value)} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/> 
+                                                    <b>Storage : </b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value)} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/> 
                                                     </div>
                                                     <div className=' col-span-2'>
                                                     <b>Condition :</b><br/> 
@@ -677,7 +677,7 @@ export default function Adminproducts() {
                                                 <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
                                                 <div className='grid grid-cols-4'>
                                                     <div className=' col-span-2'>
-                                                    {buyprice ?  <b>Price</b>:null}
+                                                    {buyprice ?  <b>Purchase Price</b>:null}
                                                     {buyprice ? buyprice.split(',').map((itm,k)=>(
                                                         <ul key={k} className='list-outside list-disc flex pl-5'>
                                                         <li className='capitalize'>{itm}</li>
@@ -709,7 +709,7 @@ export default function Adminproducts() {
                                            
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">New Starting Price</label>
+                                                <label htmlFor="email" className="font-semibold">New Starting Price <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setfromprice(e.target.value)} value={fromprice}   className='form-input pl-11' placeholder='new price eg:(1200)'/>
@@ -719,7 +719,7 @@ export default function Adminproducts() {
                                             <div className="lg:col-span-6 mb-5">
                                             
                                              <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Old Starting Price</label>
+                                                <label htmlFor="contact" className="font-semibold">Old Starting Price <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setoldprice(e.target.value)} value={oldprice} required  name="oldprice" id="oldprice" type="oldprice" className="form-input pl-11" placeholder="old price eg:(13000)" />
@@ -778,7 +778,7 @@ export default function Adminproducts() {
                                                 
                                                 </>: null}
                                                 </div>
-                                                <label htmlFor="email" className="font-semibold">Add  Images</label>
+                                                <label htmlFor="email" className="font-semibold">Add  Images <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
                                                 <input onChange={(e)=>imageaddtolist(e.target.files[0])} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
@@ -846,7 +846,7 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Model Name:</label>
+                                                <label htmlFor="name" className="font-semibold">Model Name: <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
@@ -867,7 +867,7 @@ export default function Adminproducts() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
+                                                <label htmlFor="contact" className="font-semibold">Price <b className='text-red-600'>*</b> <span className='text-gray-500'>(storage-condition-price,...)</span></label>
                                                 {/* <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setbuyprice(e.target.value)} value={buyprice} required  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
@@ -913,7 +913,7 @@ export default function Adminproducts() {
                                                 <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
                                                 <div className='grid grid-cols-4'>
                                                     <div className=' col-span-2'>
-                                                    {buyprice ?  <b>Price</b>:null}
+                                                    {buyprice ?  <b>Purchase Price </b>:null}
                                                     {buyprice ? buyprice.split(',').map((itm,k)=>(
                                                         <ul key={k} className='list-outside list-disc flex pl-5'>
                                                         <li className='capitalize'>{itm}</li>
@@ -945,7 +945,7 @@ export default function Adminproducts() {
                                            
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">New Starting Price</label>
+                                                <label htmlFor="email" className="font-semibold">New Starting Price <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setfromprice(e.target.value)} value={fromprice}   className='form-input pl-11' placeholder='new price eg:(1200)'/>
@@ -955,7 +955,7 @@ export default function Adminproducts() {
                                             <div className="lg:col-span-6 mb-5">
                                             
                                              <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Old Starting Price</label>
+                                                <label htmlFor="contact" className="font-semibold">Old Starting Price <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
                                                 <input onChange={(e)=>setoldprice(e.target.value)} value={oldprice} required  name="oldprice" id="oldprice" type="oldprice" className="form-input pl-11" placeholder="old price eg:(13000)" />
@@ -996,8 +996,9 @@ export default function Adminproducts() {
                                                 </div> 
                                                 ))}
                                                 </>:null}                                                  
-                                            {images[0]?
-                                                <>                                               
+                                                {images[0]?
+                                                <>
+                                                
                                                 {images.map((itm,k)=>(
                                                     <div key={k} className="col-span-2 pt-1"> 
                                                     <div className='col-span-1 flex w-20'>
@@ -1005,13 +1006,14 @@ export default function Adminproducts() {
                                                     <button type='button' className='pl-2 hover:text-red-600 ' onClick={()=>deletefromlist(k)}>< RiDeleteBin6Line /></button>
                                                     </div>
                                                 </div> 
-                                                ))}                                                
+                                                ))}
+                                                
                                                 </>: null}
                                                 </div>
-                                                <label htmlFor="email" className="font-semibold">Add  Images</label>
+                                                <label htmlFor="email" className="font-semibold">Add  Images <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
-                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} style={{color:"rgba(0,0,0,0)"}} name="file" id="file" type="file" className="form-input pl-11 " placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>

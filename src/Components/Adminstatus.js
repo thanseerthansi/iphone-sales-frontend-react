@@ -233,7 +233,7 @@ export default function Adminstatus() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Model Name:</label>
+                                                <label htmlFor="name" className="font-semibold">Status Name: <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><GrStatusCritical size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
@@ -254,7 +254,7 @@ export default function Adminstatus() {
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Add Color</label>
+                                                <label htmlFor="contact" className="font-semibold">Add Color <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineFormatColorFill size={18} /></i>
                                                 <input onChange={(e)=>setcolorcode(e.target.value)} value={colorcode} name="color" id="color" type="color" className="form-input pl-11" placeholder="color" />
