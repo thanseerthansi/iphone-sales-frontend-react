@@ -137,7 +137,8 @@ export default function Selliphone() {
         <Header/>
         <ToastContainer />
         <section className="relative table w-full py-32 lg:py-40   bg-no-repeat    bg-center">
-  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black" />
+        <div className="absolute inset-0 bg-[url('https://cdn.thewirecutter.com/wp-content/media/2022/10/whichiphone-2048px-2681-3x2-1.jpg?auto=webp&quality=60&crop=1.91:1&width=1200')]  from-black/60 via-black/80 to-black" />
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
   <div className="container">
     <div className="grid grid-cols-1 pb-8 text-center mt-10">
       <h3 className="mb-3 text-3xl leading-normal font-medium text-white">iPhone Store</h3>

@@ -155,7 +155,7 @@ export default function Phonedetail() {
     setviewcart(cart)
     window.localStorage.setItem('cart',JSON.stringify(cart))
     notifyproductadded()
-    return navigate('/')
+    // return navigate('/')
     
   }
   const checkout=async(e)=>{
@@ -183,7 +183,7 @@ export default function Phonedetail() {
     }
     // console.log("data",data)
     let postdata = await Callaxios('post',"purchase/order/",[data])
-    console.log("data",postdata)
+    // console.log("data",postdata)
     if (postdata.data.Status===200){
       successfull()
       let mybag = {
@@ -283,7 +283,8 @@ const deletefromlist=(k)=>{
       <Header/>
       <ToastContainer />
       <section className="relative table w-full py-32 lg:py-40   bg-no-repeat    bg-center">
-  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black" />
+      <div className="absolute inset-0 bg-[url('https://cdn.thewirecutter.com/wp-content/media/2022/10/whichiphone-2048px-2681-3x2-1.jpg?auto=webp&quality=60&crop=1.91:1&width=1200')]  from-black/60 via-black/80 to-black" />
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
   <div className="container">
     <div className="grid grid-cols-1 pb-8 text-center mt-10">
       <h3 className="mb-3 text-3xl leading-normal font-medium text-white">iPhone Store</h3>
@@ -486,8 +487,8 @@ const deletefromlist=(k)=>{
         <div className=''><p className="text-slate-400">{itm.description}</p></div>
         <div className='flex justify-end '>
           {itm.images.length ? itm.images.map((itmimage,k2)=>(
-            <div key={k2}>
-          <img  src={itmimage.image} className="rounded  w-20 h-24 " alt={''} /><br/>
+            <div key={k2} className=''>
+          <img  src={itmimage.image} className="rounded  w-20 h-24 object-cover" alt={''} /><br/>
           </div>)):null}
           </div>
       </div>
@@ -508,7 +509,7 @@ const deletefromlist=(k)=>{
   </button> */}
   <button onClick={()=>reviewgetnext()} type="button" className="bg-blue-700 text-white rounded-r-lg border-r hover:brightness-[.5] border-gray-100 py-2  px-3">
     <div  className="flex flex-row align-middle">    
-      <p  className="ml-2 flex">Load More>> </p>
+      <p  className="ml-2 flex">Load More.. </p>
     </div>
   </button>
  

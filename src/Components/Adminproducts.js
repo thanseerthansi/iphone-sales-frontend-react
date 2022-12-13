@@ -449,7 +449,7 @@ export default function Adminproducts() {
       }
   return (
     <div>
-    <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
+    <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
         <div className='grid md:grid-cols-8 '>
         <div className='md:col-span-1'>
             <div className={isMobileDevice ? `${showsidebar ? '-translate-x-0':'-translate-x-full'}  modal eas duration-300  z-40 top-0 fixed  overflow-y-auto `:' modal eas top-0 fixed overflow-y-auto -translate-x-0 z-40 '}>
@@ -466,7 +466,7 @@ export default function Adminproducts() {
                 
                 <div className='md:p-8  pt-4'>
                 <ToastContainer />
-                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]   w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
+                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%] shadow-md   w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Products</b>
                     {/* search start */}
                     <div className='grid grid-cols-2'>
@@ -491,15 +491,15 @@ export default function Adminproducts() {
                     <div className=" mx-auto ">
 
                     <div className="mt-6     rounded-md">
-                    <table className="w-full border  ">
+                    <table className="w-full border   ">
                         <thead >
                         <tr className="text-base font-bold text-left bg-gray-50">
                             <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
-                            <th className="px-4 py-3 border-b-2 border-blue-500">Model</th>
+                            <th className="px-4 py-3 border-b-2 border-blue-500 ">Model</th>
                             <th className="px-4 py-3 border-b-2 border-green-500">Images</th>
                             <th className="px-4 py-3 border-b-2 border-yellow-500 " >Sell Price</th>
                             <th className="px-4 py-3  border-b-2 border-blue-500 ">Sell Status</th>
-                            <th className="px-4 py-3  border-b-2 border-red-500  ">Buy Price</th>
+                            <th className="px-4 py-3  border-b-2 border-red-500 ">Buy Price</th>
                             <th className="px-4 py-3  border-b-2 border-cyan-500 ">Buy Status</th>
                             {/* <th className="px-4 py-3  border-b-2 border-blue-500 ">Colors</th> */}
                             <th className="px-4 py-3  border-b-2 border-green-500 ">Old Starting price</th>
@@ -536,7 +536,7 @@ export default function Adminproducts() {
                                 <button onClick={()=>setstatus("sellstatus",true,itm.id)} className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
                             <td className="px-2 py-4">{itm.buyprice.split(',').map((sellp,k2)=>(
-                              <ul key={k2} className='list-outside list-disc'>
+                              <ul key={k2} className='list-outside list-disc flex'>
                                 <li className=''>{sellp}</li></ul>  
                             ))} </td>
                             <td className="px-4 py-4">
@@ -1002,7 +1002,7 @@ export default function Adminproducts() {
                                                 {images.map((itm,k)=>(
                                                     <div key={k} className="col-span-2 pt-1"> 
                                                     <div className='col-span-1 flex w-20'>
-                                                    <img  className='rounded '  src={ URL.createObjectURL(itm)} alt='img' />
+                                                    <img  className='rounded '  src={itm ? URL.createObjectURL(itm) :null} alt='img' />
                                                     <button type='button' className='pl-2 hover:text-red-600 ' onClick={()=>deletefromlist(k)}>< RiDeleteBin6Line /></button>
                                                     </div>
                                                 </div> 

@@ -64,7 +64,7 @@ export default function Header() {
   const cartproduct=()=>{
     let orderlist = window.localStorage.getItem('cart')
     // checkoutorder
-    console.log("orderlis3",JSON.parse(orderlist))
+    // console.log("orderlis3",JSON.parse(orderlist))
     try {
       if (orderlist.length){
         // console.log("listpresent")
@@ -76,7 +76,7 @@ export default function Header() {
   
   const bagproduct=()=>{
     let baglist = window.localStorage.getItem('bag')
-    console.log("bfr",JSON.parse(baglist))
+    // console.log("bfr",JSON.parse(baglist))
     try {
       if (baglist.length){
         // console.log("listpresent",baglist)
@@ -104,7 +104,7 @@ export default function Header() {
     let checdata = []
     viewcart.map((itm)=>{
       // let price=viewcart.reduce((n, {price}) => n + parseInt(price), 0)
-      console.log("price",price)
+      // console.log("price",price)
       let data = {
         "product":itm.product[0].id,
         "price":itm.price,
@@ -442,6 +442,7 @@ export default function Header() {
           <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
             My Cart
           </h5>
+          <ToastContainer />
           <button type="button" onClick={()=>setcartmodal(!cartmodal)} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
         </div>
         {/* cart data start */}
