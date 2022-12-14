@@ -432,7 +432,7 @@ const deletefromlist=(k)=>{
       <div className='grid grid-cols-4'>
       <div className='md:col-span-2 col-span-4'>
           <label className='font-bold'>Customer Name : <b className='text-red-600'>*</b></label><br/>
-          <input type='name' htmlFor='name'  onChange={(e)=>setreviename(e.target.value)} placeholder='Name' required className='border border-gray-600 rounded p-1 ' />
+          <input name="name"  type="name"   onChange={(e)=>setreviename(e.target.value)} placeholder='Name' required className='border border-gray-600 rounded p-1 ' />
         </div>
       <div className='md:col-span-2 col-span-4'>
       {images ?

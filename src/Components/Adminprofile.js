@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import AdminSidebar from './AdminSidebar';
 // import { GrAddCircle } from 'react-icons/gr';
-import { MdPhoneIphone } from 'react-icons/md';
-import { ImPriceTags } from 'react-icons/im';
-// import { RiDeleteBin6Line } from 'react-icons/ri';
+import { MdPhone ,MdPersonOutline,MdOutlineEmail} from 'react-icons/md';
+// import { ImPriceTags } from 'react-icons/im';
+import { RiLockPasswordLine } from 'react-icons/ri';
 import { BiMenuAltLeft,BiText } from 'react-icons/bi';
 import { FaUserAlt} from 'react-icons/fa';
 import { Simplecontext } from './Simplecontext';
@@ -11,33 +11,66 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 import jwt_decode from "jwt-decode";
 import Callaxios from './Callaxios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Adminprofile() {
     const {accesscheck} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
-    const [search,setsearch]=useState()
+    const [username,setusername]=useState()
+    const [contact,setcontact]=useState()
     const [cartmodal,setcartmodal]=useState(false)
-    const [status,setstatus]=useState('')
+    const [changepassword,setchangepassword]=useState(false)
+    const [newpassword,setnewpassword]=useState('')
+    const [oldpassword,setoldpassword]=useState('')
+    const [email,setemail]=useState('')
     const [profiledata,setprofiledata]=useState([])
     var token = window.localStorage.getItem('access_token')
   // var refresh_token = window.localStorage.getItem('refresh_token')
 //   console.log("data",profiledata[0].username)
   var decoded = jwt_decode(token);
   let userid = decoded.user_id
+  const notifyerror = (msg) => toast.error(msg, {
+    position: "top-center",
+    });
     useEffect(() => {
             accesscheck()
             getuser()
         }, [])
-    const setallnull=()=>{
-        setstatus('')
-    }
+    // const setallnull=()=>{
+    //     // setstatus('')
+    // }
     const getuser=async()=>{
         let data = await Callaxios("get","user/user/",{user:userid})
         if (data.status===200){
             // console.log("data",data.data)
             setprofiledata(data.data)
+            
 
         }
+    }
+    const setvaluefunction = ()=>{
+        setusername(profiledata[0].username)
+        setcontact(profiledata[0].contact)
+        setemail(profiledata[0].email)
+    }
+    const notifyerrorfunction = (e,msg)=>{
+        e.preventDefault();
+        notifyerror(msg)
+    }
+    const editfunction =(e)=>{
+        e.preventDefault();
+        console.log("edit")
+    }
+    const setnull=()=>{
+        console.log("ok")
+        setoldpassword('')
+        setnewpassword('')
+        setusername('')
+        setcontact('')
+        setemail('')
+
     }
   return (
     <div>
@@ -56,7 +89,7 @@ export default function Adminprofile() {
             </div>
                 
                 <div className='md:p-8  pt-4'>
-                
+                <ToastContainer/>
                     <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto shadow-md  bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Profile</b>
                     
@@ -68,7 +101,13 @@ export default function Adminprofile() {
                         <div className='pt-10'>
                             <div className='grid grid-cols-6'>
                                 <div className='md:col-span-2'>
-                                <FaUserAlt size={100} />
+                                <FaUserAlt size={100} /><br/>
+                                <div className='flex p-3'>
+                                        <div className=''>
+                                            <button onClick={()=>setcartmodal(!cartmodal) & setvaluefunction()} className='rounded p-2 bg-green-700 hover:bg-green-600 text-white'>Edit User</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div className='md:col-span-4 pt-5'>
                                     <div className='grid grid-cols-7 pt-1'>
@@ -104,6 +143,7 @@ export default function Adminprofile() {
                                             <b>{profiledata.length ?  profiledata[0].contact :null}</b>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             
@@ -117,15 +157,18 @@ export default function Adminprofile() {
                     {/* Dashboard home end */}
 
                     </div>
-                     {/* add modal  start */}
-                     <div className={`modal eas duration-300 fixed z-40 top-0  ${cartmodal ? "-translate-x-0" : "translate-x-full"} left-0  transition-all w-full  h-screen outline-none overflow-x-hidden overflow-y-auto`} id="exampleModalScrollable" tabIndex={-1} aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+                   
+                </div>
+            </div>
+                 {/* add modal  start */}
+                 <div className={`modal eas duration-300 fixed z-40 top-0  ${cartmodal ? "-translate-x-0" : "translate-x-full"} right-0 transition-all w-[40%] shadow-md h-screen outline-none overflow-x-hidden overflow-y-auto`} id="exampleModalScrollable" tabIndex={-1} aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-scrollable h-full relative w-auto pointer-events-none">
                     <div className="modal-content border-none h-full shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                         <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                         <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
-                            Add New Product
+                        Edit Profile 
                         </h5>
-                        <button type="button" onClick={()=>setcartmodal(!cartmodal) & setallnull()} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
+                        <button type="button" onClick={()=>setcartmodal(!cartmodal) & setnull() } className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
                         </div>
                         {/* <input onChange={(e)=>setsearchcheck(e.target.value)} value={searchcheck} type='text' placeholder='search'/> */}
                         {/* data start */}
@@ -136,66 +179,61 @@ export default function Adminprofile() {
                                 <div className="lg:col-span-12 md:col-span-12">
                                     <div className="grid grid-cols-1 gap-[10px]">
                                     
-                                    <form   className='pt-5' >
+                                    <form onSubmit={(e)=>(newpassword===oldpassword) ? notifyerrorfunction(e,"Old and New password Can't be Same") : editfunction(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
-                                        <div id="" />
-                                        
-                                        <div className="grid lg:grid-cols-12 lg:gap-6">
-                                            <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Model Name:</label>
-                                                <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
-                                                {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
-                                                <input type='text' onChange={(e)=>setstatus(e.target.value)} value={status} className='form-input pl-11' placeholder='status'/>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Sell Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
-                                                <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input   name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
-                                                </div>
-                                            </div>
-                                            </div>
+                                        <div className="lg:col-span-6 mb-5 ">
+                                        <div className="text-left">
+                                        <label htmlFor="contact" className="font-semibold">Username: </label>
+                                        <div className="form-icon relative mt-2">
+                                            <i className="w-4 h-4 absolute top-3 left-4"><MdPersonOutline size={18} /></i>
+                                            <input  onChange={(e)=>setusername(e.target.value)} value={username} name="name"  type="name" className="form-input pl-11" placeholder="username :" />
                                         </div>
-                                        <div className="grid lg:grid-cols-12 lg:gap-6">
-                                            <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Purchase Price <span className='text-gray-500'>(storage-condition-price,...)</span></label>
-                                                <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><ImPriceTags size={18} /></i>
-                                                <input  name="buyprice" id="buyprice" type="buyprice" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" />
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Description</label>
-                                                <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea   className='form-input pl-11' placeholder='description'/>
-                                                </div>
-                                            </div>
-                                            </div>
                                         </div>
-                                        <div className="grid lg:grid-cols-12 lg:gap-6">
-                                            {/* <div className="lg:col-span-6 mb-5">
-                                            <div className="text-left">
-                                                <label htmlFor="contact" className="font-semibold">Add Image</label>
-                                                <div className="form-icon relative mt-2">
-                                                <i className="w-4 h-4 absolute top-3 left-4"><FaRegImage size={18} /></i>
-                                                <input name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
-                                                </div>
-                                            </div>
-                                            </div> */}
-                                            
+                                    </div>
+                                        <div className="lg:col-span-6 mb-5 ">
+                                        <div className="text-left">
+                                        <label htmlFor="contact" className="font-semibold">Contact: </label>
+                                        <div className="form-icon relative mt-2">
+                                            <i className="w-4 h-4 absolute top-3 left-4"><MdPhone size={18} /></i>
+                                            <input onChange={(e)=>setcontact(e.target.value)} value={contact} name="conact"  type="number" className="form-input pl-11" placeholder="Contact :" />
                                         </div>
+                                        </div>
+                                        </div>
+                                        <div className="lg:col-span-6 mb-5 ">
+                                        <div className="text-left">
+                                        <label htmlFor="email" className="font-semibold">Email: </label>
+                                        <div className="form-icon relative mt-2">
+                                            <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineEmail size={18} /></i>
+                                            <input onChange={(e)=>setcontact(e.target.value)}  name="email"  type="email" className="form-input pl-11" placeholder="Email :" />
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div className={changepassword ? 'lg:col-span-6 mb-5 hidden':'lg:col-span-6 mb-5 '}>
+                                        <button type='button' onClick={()=>setchangepassword(!changepassword) & setchangepassword(!changepassword)} className='border border-gray-500 rounded bg-blue-600 text-white p-1'>Change Password</button>
+                                        </div>
+                                    
+                                        <div className={changepassword ? `lg:col-span-6 mb-5`:`lg:col-span-6 mb-5 hidden`}>
+                                        <div className="text-left">
+                                        <label htmlFor="password" className="font-semibold">New Password </label>
+                                        <div className="form-icon relative mt-2">
+                                            <i className="w-4 h-4 absolute top-3 left-4"><RiLockPasswordLine size={18} /></i>
+                                            <input  name="password" onChange={(e)=>setnewpassword(e.target.value)} value={newpassword} type="password" className="form-input pl-11" placeholder="Password :" />
+                                        </div>
+                                        </div>
+                                    </div>
+                                        <div className={(username || contact || newpassword) ? `lg:col-span-6 mb-5`:`lg:col-span-6 mb-5 hidden`}>
+                                        <div className="text-left">
+                                        <label htmlFor="password" className="font-semibold">{ changepassword ? <p> Old Password :</p>: <p> Password :</p>} </label>
+                                        <div className="form-icon relative mt-2">
+                                            <i className="w-4 h-4 absolute top-3 left-4"><RiLockPasswordLine size={18} /></i>
+                                            <input required name="password" onChange={(e)=>setoldpassword(e.target.value)} value={oldpassword} type="password" className="form-input pl-11" placeholder="Password :" />
+                                        </div>
+                                        </div>
+                                    </div>
+
                                        
                                         {/* <button type="submit" id="submit" name="send" className="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center">Send Message</button> */}
-                                        <div className='flex justify-end' ><button type="submit" className='w-64 p-2 bg-green-700 rounded-md  text-white hover:bg-green-900'>Submit</button></div>
+                                        <div className='flex justify-end' ><button type="submit" className='w-40 p-2 bg-green-700 rounded-md  text-white hover:bg-green-900'>Submit</button></div>
                                         </form>
                                     </div>{/*end grid*/}
                                 </div>{/*end col*/}
@@ -213,7 +251,7 @@ export default function Adminprofile() {
                             
                             {/*end container*/}
                             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                    <button type="button" onClick={()=>setcartmodal(!cartmodal) } className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
+                                    <button type="button" onClick={()=>setcartmodal(!cartmodal) & setchangepassword(!changepassword) & setnull() } className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
                                         Close
                                     </button>
                                     {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
@@ -226,10 +264,7 @@ export default function Adminprofile() {
                     </div>
                     </div>
             </div>
-                    {/* add modal  end */}
-                </div>
-            </div>
-
+                    {/* add modal  end */} 
         </div>
 
     </div>
