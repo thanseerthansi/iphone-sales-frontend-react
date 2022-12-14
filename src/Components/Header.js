@@ -63,6 +63,7 @@ export default function Header() {
     }
   const cartproduct=()=>{
     let orderlist = window.localStorage.getItem('cart')
+    bagproduct()
     // checkoutorder
     // console.log("orderlis3",JSON.parse(orderlist))
     try {
@@ -76,7 +77,7 @@ export default function Header() {
   
   const bagproduct=()=>{
     let baglist = window.localStorage.getItem('bag')
-    // console.log("bfr",JSON.parse(baglist))
+    // console.log("bf/r",JSON.parse(baglist))
     try {
       if (baglist.length){
         // console.log("listpresent",baglist)
@@ -134,6 +135,7 @@ export default function Header() {
     // console.log("data",postdata)
     if (postdata.data.Status===200){
       successfull()
+      
       let baglist = [];
       {viewcart.map((itm)=>{
         // let price=viewcart.reduce((n, {price}) => n + parseInt(price), 0)

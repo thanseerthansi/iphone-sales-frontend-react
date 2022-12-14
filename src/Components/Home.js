@@ -252,9 +252,9 @@ export default function Home() {
                         <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
                             <div className=" p-2 grid ">
                             <label><b>From Price : </b><span className='border border-gray-500 rounded p-1'>{fromprice}</span></label>
-                            <input type="range" min="0" onChange={(e)=>setfromprice(e.target.value)} value={fromprice} max="10000"  className="range" /><br/>
+                            <input type="range" min="0" onChange={(e)=>setfromprice(e.target.value)} value={fromprice} max="10000"  className="range  py-1" /><br/>
                             <label><b>To Price : </b><span className='border border-gray-500 rounded p-1'>{toprice}</span></label> 
-                            <input type="range" min="10000" onChange={(e)=>settoprice(e.target.value)} value={toprice} max="100000"  className="range" /><br/>
+                            <input type="range" min="10000" onChange={(e)=>settoprice(e.target.value)} value={toprice} max="100000"  className="range py-1" /><br/>
                             <label><b>Select condition :</b></label>
                             <select onChange={(e)=>setcondition(e.target.value)} className='rounded border bordre-gray-500 p-2'>
                               <option hidden>Select Condition</option>
@@ -263,6 +263,7 @@ export default function Home() {
                                 <option  key={k} value={itm.condition}>{itm.condition}</option>
                               ))}
                             </select><br/>
+                            <label><b>Select Storage :</b></label>
                             <select onChange={(e)=>setstorage(e.target.value)} className='rounded border bordre-gray-500 p-2'>
                               <option hidden>Select Storage</option>
                               <option value={''}>ALL</option>
