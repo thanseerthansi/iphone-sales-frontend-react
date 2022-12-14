@@ -163,7 +163,7 @@ export default function Admincategory() {
     }
   return (
     <div>
-    <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
+    <div className='bg-[#f2f2f2]  fixed h-screen w-screen'>
         <div className='grid md:grid-cols-8 '>
         <div className='md:col-span-1'>
             <div className={isMobileDevice? `${showsidebar ? 'translate-x-0':'-translate-x-full'}  modal eas duration-300  z-40 top-0 fixed  overflow-y-auto `:' modal eas top-0 fixed overflow-y-auto -translate-x-0 z-40 '}>
@@ -172,14 +172,14 @@ export default function Admincategory() {
             <div className='md:col-span-7 md:pl-12 md:pt-4 container'>
             <div className='flex justify-start'> 
             {isMobileDevice? 
-            <button onClick={()=>setshowsidebar(!showsidebar) & setallnull()} className='text-white pl-2  pt-4 '><BiMenuAltLeft size={26} />
+            <button onClick={()=>setshowsidebar(!showsidebar) & setallnull()} className='text-black pl-2  pt-4 '><BiMenuAltLeft size={26} />
             </button>
             :null} 
             </div>
                 
                 <div className='md:p-8  pt-4'>
                 <ToastContainer />
-                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
+                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto  shadow-md bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Phone Conditions</b>
                     {/* search start */}
                     <div className='grid grid-cols-2'>
@@ -207,11 +207,11 @@ export default function Admincategory() {
                     <table className="w-full border border-collapse table-auto">
                         <thead >
                         <tr className="text-base font-bold text-left bg-gray-50">
-                            <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
-                            <th className="px-4 py-3 border-b-2 border-blue-500">Condition</th>
+                            <th className="px-4 py-3 border border-gray-300">#</th>
+                            <th className="px-4 py-3 border border-gray-300">Condition</th>
                             {/* <th className="px-4 py-3 border-b-2 border-green-500">Color</th> */}
-                            <th className="px-4 py-3 border-b-2 border-red-500"> Description</th>
-                            <th className="px-4 py-3 border-b-2 border-yellow-500">Action</th>
+                            <th className="px-4 py-3 border border-gray-300"> Description</th>
+                            <th className="px-4 py-3 border border-gray-300">Action</th>
                            
                         </tr>
                         </thead>
@@ -219,17 +219,17 @@ export default function Admincategory() {
                         {conditiondata.map((itm,k)=>(
                             <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">
                                 
-                                <td className="px-4 py-4">{k+1}</td>
-                                    <td className="px-4 py-4 capitalize">{itm.condition}
+                                <td className="px-4 py-4 border border-gray-300">{k+1}</td>
+                                    <td className="px-4 py-4 border border-gray-300 capitalize">{itm.condition}
                                     </td>
                                     {/* <td className="px-4 py-4 "><span  className = {`rounded p-1 text-white`} style={{backgroundColor: `${itm.code}` }}>{itm.code}</span></td> */}
-                                    <td className="px-4 py-4 ">
+                                    <td className="px-4 py-4 border border-gray-300 ">
                                     {itm.description.split(',').map((citem,k1)=>(
-                                        <ul key={k1} className='list-outside list-disc flex'>
+                                        <ul key={k1} className='list-outside list-disc flex pl-3'>
                                         <li className='capitalize'>{citem}</li></ul>
                                     ))}
                                     </td>
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 border border-gray-300">
                                     <ul >
                                             <li><button onClick={()=>functioneditcondition(itm) }  className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>
                                             <li onClick={()=>submitdeleteproduct(itm.id,k)} className='pt-1'><button className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
