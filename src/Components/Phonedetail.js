@@ -284,7 +284,7 @@ const deletefromlist=(k)=>{
       <ToastContainer />
       <section className="relative table w-full py-32 lg:py-40   bg-no-repeat    bg-center">
       <div className="absolute inset-0 bg-[url('https://cdn.thewirecutter.com/wp-content/media/2022/10/whichiphone-2048px-2681-3x2-1.jpg?auto=webp&quality=60&crop=1.91:1&width=1200')]  from-black/60 via-black/80 to-black" />
-  <div class="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
+  <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
   <div className="container">
     <div className="grid grid-cols-1 pb-8 text-center mt-10">
       <h3 className="mb-3 text-3xl leading-normal font-medium text-white">iPhone Store</h3>
@@ -345,7 +345,7 @@ const deletefromlist=(k)=>{
                   {storagelist ?
                     storagelist.map((itm,k)=>(
                       
-                      <div key={k} className='p-2'><button onClick={()=>setistorage(itm) &seticondition('') &setiprice('') & setogprice('')} className={istorage === itm ? `bg-gray-700 font-semibold  py-2 px-4 border  text-white border-gray-400  hover:bg-gray-700  rounded`:`bg-gray font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  hover:bg-gray-700  rounded`} >{itm} GB</button></div>
+                      <div key={k} className='p-2'><button onClick={()=>setistorage(itm) &seticondition('') &setiprice('') & setogprice('')} className={istorage === itm ? `bg-gray-700 font-semibold  py-2 px-4 border  text-white border-gray-400  hover:bg-gray-700  rounded`:`bg-gray font-semibold  py-2 px-4 border text-gray-400 hover:text-white border-gray-400  hover:bg-gray-700  rounded`} >{itm}</button></div>
                       
                     ))
                   :null}
@@ -465,10 +465,10 @@ const deletefromlist=(k)=>{
     
     </div>
     {/* start review */}
-    <div className="tiny-slide ">
+    <div className="tiny-slide grid grid-cols-2">
     {reviewdata ? reviewdata.map((itm,k)=>(
-    <div key={k} className="">
-      <div className="content  rounded shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
+    <div key={k} className="col-span-1">
+      <div className="content  rounded shadow-sm dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
         <i className=" text-indigo-600" />
         <div className=" mt-1">
         

@@ -41,7 +41,7 @@ export default function Adminprofile() {
     }
   return (
     <div>
-    <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
+    <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
         <div className='grid md:grid-cols-8 '>
         <div className='md:col-span-1'>
             <div className={isMobileDevice? `${showsidebar ? 'translate-x-0':'-translate-x-full'}  modal eas duration-300  z-40 top-0 fixed  overflow-y-auto `:' modal eas top-0 fixed overflow-y-auto -translate-x-0 z-40 '}>
@@ -50,14 +50,14 @@ export default function Adminprofile() {
             <div className='md:col-span-7 md:pl-12 md:pt-4 container'>
             <div className='flex justify-start'> 
             {isMobileDevice? 
-            <button onClick={()=>setshowsidebar(!showsidebar)} className='text-white pl-2  pt-4 '><BiMenuAltLeft size={26} />
+            <button onClick={()=>setshowsidebar(!showsidebar)} className='text-black pl-2  pt-4 '><BiMenuAltLeft size={26} />
             </button>
             :null} 
             </div>
                 
                 <div className='md:p-8  pt-4'>
                 
-                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
+                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto shadow-md  bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Profile</b>
                     
                     {/* search end */}

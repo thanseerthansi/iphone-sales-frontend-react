@@ -34,7 +34,14 @@ export default function AdminSidebar(show) {
           
         </Link>
       </li>
-      
+      <li className="my-px">
+        <Link to="/adminproducts" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
+          <span className="flex items-center justify-center text-lg text-gray-500">
+            <FaProductHunt size={20}/>
+          </span>
+          <span className="ml-3 ">Products</span>
+        </Link>
+      </li>
       <li className="my-px">
         <Link to="/adminorder" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">
@@ -55,14 +62,7 @@ export default function AdminSidebar(show) {
           <span className="ml-3">Selled Orders</span>
         </Link>
       </li>
-      <li className="my-px">
-        <Link to="/adminproducts" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
-          <span className="flex items-center justify-center text-lg text-gray-500">
-            <FaProductHunt size={20}/>
-          </span>
-          <span className="ml-3 ">Products</span>
-        </Link>
-      </li>
+      <span className="flex font-medium text-sm text-gray-400 px-4 my-4 uppercase">Settings</span>
       <li className="my-px">
         <Link to="/adminstatus" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700  hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">

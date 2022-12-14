@@ -49,6 +49,22 @@ export default function Home() {
           notifyerror()
       }
   }
+    const filterproductfnctn = async()=>{
+      let data = await Callaxios("get","product/product/",{sellstatus:"True",condition:condition,storage:storage,fromprice:fromprice,toprice:toprice})
+      // console.log("dataresponsenwxt",data)
+      if (data.status===200){
+          setnext(data.data.next)  
+          setproducts(data.data.results) 
+          setfiltermodal(!filtermodal)
+          setfromprice(0)
+          settoprice(100000)
+          setcondition('')
+          setstorage('')
+
+      }else{
+          notifyerror()
+      }
+  }
   const getcondition = async()=>{
     let data = await Callaxios("get","/product/condition/")
     if (data.status===200){
@@ -85,7 +101,7 @@ export default function Home() {
         <Header/>
         <section className="relative table w-full py-32 lg:py-40   bg-no-repeat    bg-center">
   <div className="absolute inset-0 bg-[url('https://cdn.thewirecutter.com/wp-content/media/2022/10/whichiphone-2048px-2681-3x2-1.jpg?auto=webp&quality=60&crop=1.91:1&width=1200')]  from-black/60 via-black/80 to-black" />
-  <div class="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
+  <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
   
   {/* <div class="relative">
   <img src="http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/back05.jpg" alt="BannerImage" class="absolute h-[70vh] lg:h-[80vh] w-full object-cover object-right opacity-30 " />
@@ -171,13 +187,13 @@ export default function Home() {
         <div id="grid" className="md:flex w-full justify-center mx-auto mt-4 ">
           <div className='grid md:grid-cols-4 grid-cols-2'>
           {products.length ? products.map((itm,k)=>(
-            <div className='col-span-1 pt-5 flex justify-center'>  
+            <div key={k} className='col-span-1 pt-5 flex justify-center'>  
           <div className="lg:w-5/6 md:w-5/6 p-4 picture-item border border-gray-200 rounded hover:text-blue-600 shadow-md cursor-pointer  " >
             <div className=''>
               <Link to={`/details/${itm.id}`}>
               <div className="relative bg-indigo-600 overflow-hidden rounded-md transform    transition duration-500 hover:scale-110">
-                <p  className="lightbox transition-all duration-700 ease-in-out group-hover:p-[10px] bg-indigo-300" title>
-                  <img src={itm.images.length?  itm.images[0].image:null} className="rounded-md h-48 w-96 object-cover" alt />
+                <p  className="lightbox transition-all duration-700 ease-in-out group-hover:p-[10px] bg-indigo-300" >
+                  <img src={itm.images.length?  itm.images[0].image:null} className="rounded-md h-48 w-96 object-cover" alt={''} />
                 </p>
               </div>
               <div>
@@ -207,8 +223,8 @@ export default function Home() {
               
             
               <div className="relative flex items-center justify-center overflow-hidden rounded-md transform    transition  hover:scale-110">
-                <p  className="lightbox transition-all  duration-700 ease-in-out group-hover:p-[10px] pt-24 " title>
-                 <h2>Load More..</h2>
+                <p  className="lightbox transition-all  duration-700 ease-in-out group-hover:p-[10px] pt-24 " >
+                 Load More..
                 </p>
               </div>
               
@@ -235,16 +251,16 @@ export default function Home() {
                         {/* data start */}
                         <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
                             <div className=" p-2 grid ">
-                            <label><b>From Price : </b>{fromprice}</label>
+                            <label><b>From Price : </b><span className='border border-gray-500 rounded p-1'>{fromprice}</span></label>
                             <input type="range" min="0" onChange={(e)=>setfromprice(e.target.value)} value={fromprice} max="10000"  className="range" /><br/>
-                            <label><b>To Price : </b>{toprice}</label> 
+                            <label><b>To Price : </b><span className='border border-gray-500 rounded p-1'>{toprice}</span></label> 
                             <input type="range" min="10000" onChange={(e)=>settoprice(e.target.value)} value={toprice} max="100000"  className="range" /><br/>
                             <label><b>Select condition :</b></label>
                             <select onChange={(e)=>setcondition(e.target.value)} className='rounded border bordre-gray-500 p-2'>
                               <option hidden>Select Condition</option>
                               <option value={''}>ALL</option>
                               {conditiondata.map((itm,k)=>(
-                                <option value={itm.condition}>{itm.condition}</option>
+                                <option  key={k} value={itm.condition}>{itm.condition}</option>
                               ))}
                             </select><br/>
                             <select onChange={(e)=>setstorage(e.target.value)} className='rounded border bordre-gray-500 p-2'>
@@ -253,10 +269,11 @@ export default function Home() {
                               <option value ={'128'}>128 GB</option>
                               <option value ={'256'}>256 GB</option>
                               <option value ={'512'}>512 GB</option>
+                              <option value ={'1TB'}>1 TB</option>
                               {/* <option value ={'1'}>1 TB</option> */}
                             </select><br/>
                               <div className='flex justify-end'>
-                                <button className='bg-amber-500 text-white rounded p-2'>Apply</button>
+                                <button onClick={()=>filterproductfnctn()} className='bg-amber-400 text-white rounded p-2 hover:bg-amber-500'>Apply</button>
                               </div>
                                     <div className="flex justify-center pt-2">
                                     

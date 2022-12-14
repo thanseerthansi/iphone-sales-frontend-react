@@ -36,7 +36,7 @@ export default function Adminhome() {
     }
   return (
     <div>
-        <div className='bg-[#2e2e2e] fixed h-screen w-screen '>
+        <div className='bg-[#f2f2f2] fixed h-screen w-screen '>
             <div className='grid md:grid-cols-8 '>
             <div className='md:col-span-1'>
                 <div className={isMobileDevice? `${showsidebar ? 'translate-x-0':'-translate-x-full'}  modal eas duration-300  z-40 top-0 fixed  overflow-y-auto `:' modal eas top-0 fixed overflow-y-auto -translate-x-0 z-40 '}>
@@ -45,17 +45,17 @@ export default function Adminhome() {
                 <div className='md:col-span-7 md:pl-12 md:pt-4 container'>
                 <div className='flex justify-start'> 
                 {isMobileDevice? 
-                <button onClick={()=>setshowsidebar(!showsidebar)} className='text-white pl-2  pt-4 '><BiMenuAltLeft size={26} />
+                <button onClick={()=>setshowsidebar(!showsidebar)} className='text-black pl-2  pt-4 '><BiMenuAltLeft size={26} />
                 </button>
                 :null} 
                 </div>
                     
                     <div className='md:p-8  pt-4'>
                     
-                        <div className='container rounded-lg h-[90vh]   overflow-y-auto bg-[#f9f8f6]'>
+                        <div className='container rounded-lg h-[90vh]   overflow-y-auto shadow-md bg-[#f9f8f6]'>
                         {/* Dashboard home start */}
                         <div className='grid grid-cols-12 mb-8'>
-                            <div className='md:col-span-6 p-5 col-span-12'>
+                            <div className='md:col-span-4 p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
@@ -71,7 +71,7 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-6 p-5 col-span-12'>
+                            <div className='md:col-span-4 p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
@@ -87,7 +87,7 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-6 p-5 col-span-12'>
+                            <div className='md:col-span-4 p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-400 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
@@ -105,7 +105,7 @@ export default function Adminhome() {
                             </div>
                             
                             
-                            <div className='md:col-span-6 p-5 col-span-12'>
+                            <div className='md:col-span-4 p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
@@ -121,7 +121,7 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-6 p-5 col-span-12'>
+                            <div className='md:col-span-4 p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
@@ -137,7 +137,7 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-6 p-5 col-span-12'>
+                            <div className='md:col-span-4    p-5 col-span-12'>
                             <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">

@@ -459,7 +459,7 @@ export default function Adminproducts() {
             <div className='md:col-span-7 md:pl-12 md:pt-4 container'>
             <div className='flex justify-start'> 
             {isMobileDevice? 
-            <button onClick={()=>setshowsidebar(!showsidebar)} className='text-white pl-2  pt-4 '><BiMenuAltLeft size={26} />
+            <button onClick={()=>setshowsidebar(!showsidebar)} className='text-black pl-2  pt-4 '><BiMenuAltLeft size={26} />
             </button>
             :null} 
             </div>
@@ -491,32 +491,32 @@ export default function Adminproducts() {
                     <div className=" mx-auto ">
 
                     <div className="mt-6     rounded-md">
-                    <table className="w-full border   ">
-                        <thead >
+                    <table className="w-full border table-auto   ">
+                        <thead className='' >
                         <tr className="text-base font-bold text-left bg-gray-50">
-                            <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
-                            <th className="px-4 py-3 border-b-2 border-blue-500 ">Model</th>
-                            <th className="px-4 py-3 border-b-2 border-green-500">Images</th>
-                            <th className="px-4 py-3 border-b-2 border-yellow-500 " >Sell Price</th>
-                            <th className="px-4 py-3  border-b-2 border-blue-500 ">Sell Status</th>
-                            <th className="px-4 py-3  border-b-2 border-red-500 ">Buy Price</th>
-                            <th className="px-4 py-3  border-b-2 border-cyan-500 ">Buy Status</th>
+                            <th className="px-4 py-3 border border-gray-300">#</th>
+                            <th className="px-4 py-3 border border-gray-300 ">Model</th>
+                            <th className="px-4 py-3 border border-gray-300">Images</th>
+                            <th className="px-4 py-3 border border-gray-300 w-32 " >Sell Price</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Sell Status</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Buy Price</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Buy Status</th>
                             {/* <th className="px-4 py-3  border-b-2 border-blue-500 ">Colors</th> */}
-                            <th className="px-4 py-3  border-b-2 border-green-500 ">Old Starting price</th>
-                            <th className="px-4 py-3  border-b-2 border-yellow-500 ">New Starting price</th>
-                            <th className="px-4 py-3  border-b-2 border-red-500">Review</th>
-                            <th className="px-4 py-3  border-b-2 border-cyan-500">Date</th>
-                            <th className="px-4 py-3  border-b-2 border-blue-500 ">Action</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Old Starting price</th>
+                            <th className="px-4 py-3  border border-gray-300 ">New Starting price</th>
+                            <th className="px-4 py-3  border border-gray-300">Review</th>
+                            <th className="px-4 py-3  border border-gray-300">Date</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Action</th>
                         </tr>
                         </thead>
                         <tbody className="text-sm font-normal text-gray-700">
                         {products.map((itm,k)=>(  
                         <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">                            
-                            <td className="px-4 py-4">{k+1}</td>
-                            <td className=" px-4 py-4  " >                      
+                            <td className="px-4 py-4  border border-gray-300">{k+1}</td>
+                            <td className=" px-4 py-4  border border-gray-300 " >                      
                                 <div className="flex font-medium dark:text-gray-700">{itm.model_name}</div>
                             </td>
-                            <td className="px-4 py-4"> 
+                            <td className="px-4 py-4 border border-gray-300"> 
                                 {itm.images ?  
                                 <>
                                     {itm.images.map((imag,k1)=>(
@@ -526,20 +526,20 @@ export default function Adminproducts() {
                                     ))}
                                 </>:null}
                             </td>
-                            <td className="px-2 py-4">{itm.sellprice.split(',').map((sellp,k2)=>(
-                              <ul key={k2} className='list-outside list-disc'>
+                            <td className="px-2 py-4 border border-gray-300">{itm.sellprice.split(',').map((sellp,k2)=>(
+                              <ul key={k2} className='list-outside list-disc pl-3'>
                                 <li className=''>{sellp}</li></ul>  
                             ))} </td>
-                            <td className="px-4 py-4">
+                            <td className="px-4 py-4 border border-gray-300">
                                 {itm.sellstatus ?
                                 <button onClick={()=>setstatus("sellstatus",false,itm.id)} className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
                                 <button onClick={()=>setstatus("sellstatus",true,itm.id)} className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
-                            <td className="px-2 py-4">{itm.buyprice.split(',').map((sellp,k2)=>(
-                              <ul key={k2} className='list-outside list-disc flex'>
+                            <td className="px-2 py-4 border border-gray-300">{itm.buyprice.split(',').map((sellp,k2)=>(
+                              <ul key={k2} className='list-outside list-disc flex pl-3'>
                                 <li className=''>{sellp}</li></ul>  
                             ))} </td>
-                            <td className="px-4 py-4">
+                            <td className="px-4 py-4 border border-gray-300">
                                 {itm.buystatus ?
                                 <button onClick={()=>setstatus("buystatus",false,itm.id)} className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
                                 <button onClick={()=>setstatus("buystatus",true,itm.id)} className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
@@ -549,12 +549,12 @@ export default function Adminproducts() {
                                 <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li>
                                 </ul>
                             ))}</td> */}
-                            <td className="px-4 py-4">${itm.oldfromprice}</td>
-                            <td className="px-4 py-4">${itm.sellfromprice}</td>
-                            <td className='px-4 py-4 '> <button className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' onClick={()=>setshowreview(!showreview) & getreview(itm.id)}>Review<FaSortDown/></button></td>
-                            <td className='px-4 py-4'> {itm.created_date.split('T')[0]}</td>
-                            <td className='px-4 py-4'>
-                                <ul >
+                            <td className="px-4 py-4 border border-gray-300">${itm.oldfromprice}</td>
+                            <td className="px-4 py-4 border border-gray-300">${itm.sellfromprice}</td>
+                            <td className='px-4 py-4 border border-gray-300 '> <button className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' onClick={()=>setshowreview(!showreview) & getreview(itm.id)}>Review<FaSortDown/></button></td>
+                            <td className='px-4 py-4 border border-gray-300'> {itm.created_date.split('T')[0]}</td>
+                            <td className='px-4 py-4 border border-gray-300'>
+                                <ul className=''>
                                     <li><button onClick={()=>editfunction(itm)} className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>
                                     <li className='pt-1'><button onClick={()=>submitdeleteproduct(itm.id,k)} className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
                                 </ul>
@@ -642,12 +642,12 @@ export default function Adminproducts() {
                                                 <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
                                                 <div className='grid grid-cols-4'>
                                                     <div className=' col-span-2'>
-                                                    <b>Storage : </b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value)} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/> 
+                                                    <b>Storage : </b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value.toUpperCase())} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128GB)'/> 
                                                     </div>
                                                     <div className=' col-span-2'>
                                                     <b>Condition :</b><br/> 
                                                     {/* <input onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/>  */}
-                                                    <select onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
+                                                    <select onChange={(e)=>setbuyconditiontolist(e.target.value.toUpperCase())} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
                                                         <option value='' hidden>Select storage</option>
                                                         {conditiondata.map((itm,k)=>(
                                                             <option className='capitalize' key={k} value={itm.condition}>{itm.condition}</option>
@@ -878,12 +878,12 @@ export default function Adminproducts() {
                                                 <input onChange={(e)=> setsellprice(e.target.value) } value={sellprice} required  name="price" id="price" type="price" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128 GB-good-13000,..)" /> */}
                                                 <div className='grid grid-cols-4'>
                                                     <div className=' col-span-2'>
-                                                    <b>Storage :</b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value)} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/> 
+                                                    <b>Storage :</b><br/> <input onChange={(e)=>setbuystoragetolist(e.target.value.toUpperCase())} value={buystoragetolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128GB)'/> 
                                                     </div>
                                                     <div className=' col-span-2'>
                                                     <b>Condition :</b><br/> 
                                                     {/* <input onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/>  */}
-                                                    <select onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
+                                                    <select onChange={(e)=>setbuyconditiontolist(e.target.value.toUpperCase())} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
                                                         <option value='' hidden>Select storage</option>
                                                         {conditiondata.map((itm,k)=>(
                                                             <option className='capitalize' key={k} value={itm.condition}>{itm.condition}</option>

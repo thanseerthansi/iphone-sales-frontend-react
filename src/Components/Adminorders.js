@@ -146,7 +146,7 @@ export default function Adminorders() {
         };
   return (
     <div>
-    <div className='bg-[#2e2e2e] fixed h-screen w-screen'>
+    <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
         <div className='grid md:grid-cols-8 '>
         <div className='md:col-span-1'>
             <div className={isMobileDevice? `${showsidebar ? 'translate-x-0':'-translate-x-full'}  modal eas duration-300  z-40 top-0 fixed  overflow-y-auto `:' modal eas top-0 fixed overflow-y-auto -translate-x-0 z-40 '}>
@@ -155,14 +155,14 @@ export default function Adminorders() {
             <div className='md:col-span-7 md:pl-12 md:pt-4 container'>
             <div className='flex justify-start'> 
             {isMobileDevice? 
-            <button onClick={()=>setshowsidebar(!showsidebar)} className='text-white pl-2  pt-4 '><BiMenuAltLeft size={26} />
+            <button onClick={()=>setshowsidebar(!showsidebar)} className='text-black pl-2  pt-4 '><BiMenuAltLeft size={26} />
             </button>
             :null} 
             </div>
                 
                 <div className='md:p-8  pt-4'>
                 <ToastContainer />
-                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
+                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto shadow-md bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Orders</b>
                     {/* search start */}
                     <div className='grid grid-cols-2'>
@@ -182,7 +182,7 @@ export default function Adminorders() {
                                 <select onChange={(e)=>searchorderbystatus(e.target.value)} className='border  border-gray-600 p-1 rounded'>
                                     <option value={''} className=''>ALL</option>
                                     {statusdata.map((itm,k)=>(
-                                        <option key={k} value={itm.id} style={{backgroundColor:itm.code}}>{itm.status}</option>
+                                        <option key={k} value={itm.id} className='uppercase' >{itm.status}</option>
                                     ))}
                                 </select>
                             </div>
@@ -196,41 +196,41 @@ export default function Adminorders() {
                     <table className="w-full border border-collapse table-auto">
                         <thead >
                         <tr className="text-base font-bold text-left bg-gray-50">
-                            <th className="px-4 py-3 border-b-2 border-cyan-500">#</th>
-                            <th className="px-4 py-3 border-b-2 border-cyan-500">Sn.No</th>
-                            <th className="px-4 py-3 border-b-2 border-blue-500">Customer</th>
-                            <th className="px-4 py-3 border-b-2 border-green-500">Contact</th>
-                            <th className="px-4 py-3 border-b-2 border-red-500">Delivery Address</th>
-                            <th className="px-4 py-3  border-b-2 border-yellow-500 ">Status</th>
-                            <th className="px-4 py-3  border-b-2 border-blue-500 ">Purchased On</th>
-                            <th className="px-4 py-3  border-b-2 border-cyan-500 ">Products</th>
-                            <th className="px-4 py-3  border-b-2 border-green-500 ">Delete</th>
+                            <th className="px-4 py-3 border border-gray-300">#</th>
+                            <th className="px-4 py-3 border border-gray-300">Sn.No</th>
+                            <th className="px-4 py-3 border border-gray-300">Customer</th>
+                            <th className="px-4 py-3 border border-gray-300">Contact</th>
+                            <th className="px-4 py-3 border border-gray-300">Delivery Address</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Status</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Purchased On</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Products</th>
+                            <th className="px-4 py-3  border border-gray-300 ">Delete</th>
                         </tr>
                         </thead>
                         <tbody className="text-sm font-normal text-gray-700">
                         {orders ? orders.map((itm,k)=>(
                             <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100 ">                               
-                                <td className="px-4 py-4">{k+1}</td>
-                                <td className="px-4 py-4 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
-                                <td className="  px-4 py-4">{itm.customer_name}</td>
-                                <td className="px-4 py-4">{itm.contact} </td>
-                                <td className="px-4 py-4">{itm.address}</td>
-                                <td className="px-4 py-4">
+                                <td className="px-4 py-4 border border-gray-300">{k+1}</td>
+                                <td className="px-4 py-4 border border-gray-300 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
+                                <td className="  px-4 py-4 border border-gray-300">{itm.customer_name}</td>
+                                <td className="px-4 py-4 border border-gray-300">{itm.contact} </td>
+                                <td className="px-4 py-4 border border-gray-300">{itm.address}</td>
+                                <td className="px-4 py-4 border border-gray-300">
                                     <div>
-                                    <span className='rounded p-1 ' style={{backgroundColor:itm.status[0].code}}><b className='text-white'>{itm.status[0].status}</b></span>
+                                    <span className='rounded p-1 uppercase ' style={{backgroundColor:itm.status[0].code}}><b className='text-white '>{itm.status[0].status}</b></span>
                                     </div>
-                                    <div className='pt-1'>
+                                    <div className='pt-2'>
                                         <select onChange={(e)=>changestatus(itm.id,e.target.value)} className='border border-gray-500 rounded '>
                                             <option value={''} hidden>Change Status</option>
                                             {statusdata.length ? statusdata.map((statusitm,k1)=>(
-                                            <option key={k1}  value={statusitm.status} >{statusitm.status}</option>
+                                            <option key={k1} className='uppercase'  value={statusitm.status} >{statusitm.status}</option>
                                             )) :null}
                                         </select>
                                     </div>    
                                 </td>
-                                <td className="px-4 py-4">{itm.created_date.split('T')[0]}</td>
-                                <td className="px-4 py-4"><button onClick={()=>getorderproduct(itm.id) } className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' >Products<FaSortDown/></button></td>
-                                <td className="px-4 py-4">
+                                <td className="px-4 py-4 border border-gray-300">{itm.created_date.split('T')[0]}</td>
+                                <td className="px-4 py-4 border border-gray-300"><button onClick={()=>getorderproduct(itm.id) } className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' >Products<FaSortDown/></button></td>
+                                <td className="px-4 py-4 border border-gray-300">
                                 <ul >
                                     <li onClick={()=>submitdeleteorder(itm.id,k)} className='pt-1'><button className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
                                 </ul>
