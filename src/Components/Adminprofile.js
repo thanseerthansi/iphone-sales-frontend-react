@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode";
 import Callaxios from './Callaxios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Adminprofile() {
     const {accesscheck} =useContext(Simplecontext)
@@ -27,13 +28,17 @@ export default function Adminprofile() {
     const [email,setemail]=useState('')
     const [profiledata,setprofiledata]=useState([])
     var token = window.localStorage.getItem('access_token')
-  // var refresh_token = window.localStorage.getItem('refresh_token')
-//   console.log("data",profiledata[0].username)
-  var decoded = jwt_decode(token);
-  let userid = decoded.user_id
-  const notifyerror = (msg) => toast.error(msg, {
-    position: "top-center",
-    });
+    // var refresh_token = window.localStorage.getItem('refresh_token')
+    //   console.log("data",profiledata[0].username)
+    var decoded = jwt_decode(token);
+    let userid = decoded.user_id
+    let navigate = useNavigate();
+    const notifyerror = (msg) => toast.error(msg, {
+        position: "top-center",
+        });
+    const notifyadded = (msg) => toast.success(msg, {
+        position: "top-center",
+        });
     useEffect(() => {
             accesscheck()
             getuser()
@@ -41,6 +46,14 @@ export default function Adminprofile() {
     // const setallnull=()=>{
     //     // setstatus('')
     // }
+    
+    const logout =()=>{
+      window.localStorage.removeItem("access_token")
+      window.localStorage.removeItem("refresh_token")
+      // console.log("okdelete")
+      return navigate('/adminlogin');
+      
+  }
     const getuser=async()=>{
         let data = await Callaxios("get","user/user/",{user:userid})
         if (data.status===200){
@@ -59,12 +72,40 @@ export default function Adminprofile() {
         e.preventDefault();
         notifyerror(msg)
     }
-    const editfunction =(e)=>{
+    const editfunction =async(e)=>{
         e.preventDefault();
-        console.log("edit")
+        // console.log("edit")
+        let datalist = {
+            "id":profiledata[0].id,
+            "username":username,
+            "oldpassword":oldpassword
+        }
+        if (contact){datalist.contact = contact}
+        if (email){datalist.email = email}
+        if (newpassword){datalist.password = newpassword}
+        // console.log("datalisr",datalist)
+        try {
+            let data = await Callaxios("post","user/user/",datalist)
+            console.log("data",data)
+            if(data.data.Status===200){
+                console.log("true",data.data)
+                notifyadded(data.data.Message)
+                getuser()
+                setcartmodal(!cartmodal)
+                if(username && newpassword ){
+                    logout()
+                }
+                
+
+            }else{notifyerror(data.data.Message)}
+            
+        } catch (error) {
+            
+        }
+        
     }
     const setnull=()=>{
-        console.log("ok")
+        // console.log("ok")
         setoldpassword('')
         setnewpassword('')
         setusername('')
@@ -179,7 +220,7 @@ export default function Adminprofile() {
                                 <div className="lg:col-span-12 md:col-span-12">
                                     <div className="grid grid-cols-1 gap-[10px]">
                                     
-                                    <form onSubmit={(e)=>(newpassword===oldpassword) ? notifyerrorfunction(e,"Old and New password Can't be Same") : editfunction(e)}  className='pt-5' >
+                                    <form onSubmit={(e)=>editfunction(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
                                         <div className="lg:col-span-6 mb-5 ">
                                         <div className="text-left">
@@ -204,7 +245,7 @@ export default function Adminprofile() {
                                         <label htmlFor="email" className="font-semibold">Email: </label>
                                         <div className="form-icon relative mt-2">
                                             <i className="w-4 h-4 absolute top-3 left-4"><MdOutlineEmail size={18} /></i>
-                                            <input onChange={(e)=>setcontact(e.target.value)}  name="email"  type="email" className="form-input pl-11" placeholder="Email :" />
+                                            <input onChange={(e)=>setemail(e.target.value)} value={email}  name="email"  type="email" className="form-input pl-11" placeholder="Email :" />
                                         </div>
                                         </div>
                                         </div>

@@ -144,7 +144,7 @@ export default function Home() {
 
       {/* search end */}
       </div>
-      <div className=''>
+      <div className='lg:pl-6'>
         <button onClick={()=>setfiltermodal(!filtermodal)} className='border border-gray-600 p-1 pl-3 rounded font-medium   hover:text-blue-800 flex items-center'><span>filter </span><FaFilter/></button>  </div>
     </div>{/*grid*/}
     
@@ -241,15 +241,15 @@ export default function Home() {
           <div className={`modal eas duration-300 fixed z-40 top-0  ${filtermodal ? "-translate-x-0" : "-translate-x-full"} left-0 shadow-md transition-all sm:w-full md:w-60 h-screen outline-none overflow-x-hidden overflow-y-auto`} id="exampleModalScrollable" tabIndex={-1} aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-scrollable h-full relative w-auto pointer-events-none">
                     <div className="modal-content border-none h-full shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-                        <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                        <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
+                        <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 bg-gray-600 bg-gradient-to-t from-gray-500 via-gray-500 to-black-50 rounded-t-md">
+                        <h5 className="text-xl font-medium leading-normal text-gray-800 " id="exampleModalScrollableLabel">
                             Filter
                         </h5>
-                        <button type="button" onClick={()=>setfiltermodal(!filtermodal) } className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
+                        <button type="button" onClick={()=>setfiltermodal(!filtermodal) } className="btn-close box-content w-4 h-4 p-1 text-gray-100    hover:text-red-600 "><b>X</b></button>
                         </div>
                         {/* <input onChange={(e)=>setsearchcheck(e.target.value)} value={searchcheck} type='text' placeholder='search'/> */}
                         {/* data start */}
-                        <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
+                        <section className="relative md:pt-10 pt-16  bg-white dark:bg-slate-900">
                             <div className=" p-2 grid ">
                             <label><b>From Price : </b><span className='border border-gray-500 rounded p-1'>{fromprice}</span></label>
                             <input type="range" min="0" onChange={(e)=>setfromprice(e.target.value)} value={fromprice} max="10000"  className="range  py-1" /><br/>
@@ -274,7 +274,8 @@ export default function Home() {
                               {/* <option value ={'1'}>1 TB</option> */}
                             </select><br/>
                               <div className='flex justify-end'>
-                                <button onClick={()=>filterproductfnctn()} className='bg-amber-400 text-white rounded p-2 hover:bg-amber-500'>Apply</button>
+                                <button onClick={()=>filterproductfnctn()} className='bg-amber-5
+                                00 text-white rounded p-2 bg-amber-400 hover:bg-amber-500'>Apply</button>
                               </div>
                                     <div className="flex justify-center pt-2">
                                     

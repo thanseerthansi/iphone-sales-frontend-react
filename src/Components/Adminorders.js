@@ -176,10 +176,10 @@ export default function Adminorders() {
                             </div>           
                         </div>
                         
-                        <div className='col-span-1'>
+                        <div className='col-span-1 flex items-center'>
                             <div className=''>
                                 <b>Sort by : </b>
-                                <select onChange={(e)=>searchorderbystatus(e.target.value)} className='border  border-gray-600 p-1 rounded'>
+                                <select onChange={(e)=>searchorderbystatus(e.target.value)} className='border  border-gray-600 p-2 rounded'>
                                     <option value={''} className=''>ALL</option>
                                     {statusdata.map((itm,k)=>(
                                         <option key={k} value={itm.id} className='uppercase' >{itm.status}</option>

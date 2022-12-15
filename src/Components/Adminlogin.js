@@ -44,7 +44,9 @@ export default function Adminlogin() {
     <div>
         <section className="md:h-screen py-36 flex items-center  bg-no-repeat bg-center">
         <ToastContainer />
-  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
+        <div className="absolute inset-0 bg-[url('https://cdn.thewirecutter.com/wp-content/media/2022/10/whichiphone-2048px-2681-3x2-1.jpg?auto=webp&quality=60&crop=1.91:1&width=1200')]  from-black/60 via-black/80 to-black" />
+  <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-black-50 h-full lg:h-full w-full" />
+  {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" /> */}
   <div className="container">
     <div className="flex justify-center">
       <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
@@ -67,10 +69,12 @@ export default function Adminlogin() {
               </div>
               <p className="text-slate-400 mb-0"><a href="auth-re-password.html" className="text-slate-400">Forgot password ?</a></p>
             </div> */}
-            <div className="mb-4">
+            <div className='flex justify-end'><Link to='/repassword'><button className='text-gray-500 cursor-pointer hover:text-gray-600'>Forgot Password ?</button></Link></div>
+            <div className="mb-4 pt-2">
               <button type="Submit" className="btn bg-indigo-600 cursor-pointer hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" defaultValue="Login" >Login</button>
                          
             </div>
+            
             {/* <div className="text-center">
               <span className="text-slate-400 me-2">Don't have an account ?</span> <a href="auth-signup.html" className="text-black dark:text-white font-bold">Sign Up</a>
             </div> */}

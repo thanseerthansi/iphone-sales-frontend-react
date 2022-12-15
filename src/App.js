@@ -14,6 +14,8 @@ import Selliphone from "./Components/Selliphone";
 import Simplecontextprovider from "./Components/Simplecontext";
 import Admincontact from "./Components/Admincontact";
 import Adminprofile from "./Components/Adminprofile";
+import Repassword from "./Components/Repassword";
+import Passwordchage from "./Components/Passwordchage";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
         <Route exact path="adminstatus" element={<Adminstatus/>}/>
         <Route exact path="admincontact" element={<Admincontact/>}/>
         <Route exact path="adminprofile" element={<Adminprofile/>}/>
+        <Route exact path="repassword" element={<Repassword/>}/>
+        <Route exact path="passwordchange/:id" element={<Passwordchage/>}/>
         
       </Routes>
       </Simplecontextprovider>

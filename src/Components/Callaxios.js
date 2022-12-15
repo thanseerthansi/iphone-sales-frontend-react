@@ -70,7 +70,7 @@ export default async function  Callaxios(method,url,datalist) {
         // setvalue(data.data)
         
     } catch (error) {
-        // console.log("error",error)
+        console.log(error)
         // if (error.message==="Request failed with status code 401"){
         //     console.log("notoken")
         //     window.location.href = '/adminlogin';
