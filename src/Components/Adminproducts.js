@@ -1062,11 +1062,11 @@ export default function Adminproducts() {
                         <section className="relative md:py-10 py-16  bg-white dark:bg-slate-900">
                             <div className="container">
                            
-                            <div className="tiny-slide ">
+                            <div className="tiny-slide grid grid-cols-2 ">
                                         {reviewdata ?<>
                                         {reviewdata.map((itm,k)=>(
-                                        <div key={k} >
-                                        <div className="content  rounded shadow dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
+                                        <div key={k} className='col-span-1'>
+                                        <div className="content  rounded shadow-md dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
                                             <i className=" text-indigo-600" />
                                             <div className=" mt-1">
                                             
