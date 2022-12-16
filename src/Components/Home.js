@@ -40,7 +40,7 @@ export default function Home() {
     });
     const getproduct = async()=>{
       let data = await Callaxios("get","product/product/",{sellstatus:"True"})
-      // console.log("dataresponsenwxt",data.data.results)
+      console.log("dataresponsenwxt",data.data.results)
       if (data.status===200){
           setnext(data.data.next)  
           setproducts(data.data.results) 
@@ -76,7 +76,7 @@ export default function Home() {
 }
   const searchproduct = async()=>{
     // console.log("search product",search)
-    let data = await Callaxios("get","/product/product",{model_name:search})
+    let data = await Callaxios("get","/product/product",{model_name:search,sellstatus:"True"})
     // console.log("data",data)
     if (data.status===200){
         setnext(data.data.next)  
