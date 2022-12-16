@@ -286,7 +286,7 @@ export default function Selliphone() {
                       </div>
                     </div>
                     {/* <button type="submit" id="submit" name="send" className="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md justify-center flex items-center">Send Message</button> */}
-                    <div><button type="submit" htmlFor="submit" className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Buy now</button></div>
+                    <div><button type="submit" htmlFor="submit" className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Sell now</button></div>
                   </form>
             </div>
             {/* <div className='flex justify-center pt-5'><button type="submit" className='w-64 p-2 bg-gray-800 rounded-md text-white hover:brightness-[.5]'>Sell now</button></div> */}

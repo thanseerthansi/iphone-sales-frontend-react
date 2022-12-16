@@ -648,7 +648,7 @@ export default function Adminproducts() {
                                                     <b>Condition :</b><br/> 
                                                     {/* <input onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/>  */}
                                                     <select onChange={(e)=>setbuyconditiontolist(e.target.value.toUpperCase())} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
-                                                        <option value='' hidden>Select storage</option>
+                                                        <option value='' hidden>Select Condition</option>
                                                         {conditiondata.map((itm,k)=>(
                                                             <option className='capitalize' key={k} value={itm.condition}>{itm.condition}</option>
                                                         ))}
@@ -884,7 +884,7 @@ export default function Adminproducts() {
                                                     <b>Condition :</b><br/> 
                                                     {/* <input onChange={(e)=>setbuyconditiontolist(e.target.value)} value={buyconditiontolist} className='border border-gray-500 rounded p-2' placeholder='storage(eg:128)'/>  */}
                                                     <select onChange={(e)=>setbuyconditiontolist(e.target.value.toUpperCase())} value={buyconditiontolist} className='border border-gray-500 rounded p-2'>
-                                                        <option value='' hidden>Select storage</option>
+                                                        <option value='' hidden>Select Condition</option>
                                                         {conditiondata.map((itm,k)=>(
                                                             <option className='capitalize' key={k} value={itm.condition}>{itm.condition}</option>
                                                         ))}
