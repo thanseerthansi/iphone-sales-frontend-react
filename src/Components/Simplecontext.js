@@ -2,14 +2,14 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import React, { createContext, useEffect, useState } from 'react'
 import {useNavigate } from 'react-router-dom';
-// import Callaxios from './Callaxios';
+import Callaxios from './Callaxios';
 import { BaseURL } from './urlcall';
 export const Simplecontext = createContext();
 
 
 
 export default function Simplecontextprovider({children}) {
-  const [next,setnext]=useState(null)
+  // const [next,setnext]=useState(null)
   const [products,setproducts]=useState([])
   
   let navigate = useNavigate();
@@ -19,24 +19,24 @@ export default function Simplecontextprovider({children}) {
       if (window.localStorage.getItem('refresh_token')!==null){
           // console.log("login both token ")
           
-          // getproduct()
+          getproduct()
       }
       else{
-        // getproduct()
+        getproduct()
       }
          
     }, [])
-  //   const getproduct = async()=>{
-  //     let data = await Callaxios("get","product/product/",{"sellstatus":"True"})
-  //     // console.log("dataresponsenwxt",data.data.results)
-  //     if (data.status===200){
-  //         setnext(data.data.next)  
-  //         setproducts(data.data.results) 
+    const getproduct = async()=>{
+      let data = await Callaxios("get","product/product/")
+      // console.log("dataresponsenwxt",data.data.results)
+      if (data.status===200){
+          // setnext(data.data.next)  
+          setproducts(data.data) 
 
-  //     }else{
-  //         // notifyerror()
-  //     }
-  // }
+      }else{
+          // notifyerror()
+      }
+  }
   
   const accesscheck = async()=>{
     
@@ -81,7 +81,7 @@ export default function Simplecontextprovider({children}) {
 }
   return (
     <Simplecontext.Provider value={{
-        accesscheck,next,setnext,products,setproducts
+        accesscheck,products,setproducts,getproduct
     }}>{children}</Simplecontext.Provider>
   )
 }

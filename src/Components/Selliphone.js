@@ -217,8 +217,7 @@ export default function Selliphone() {
                    <ul key={k} className='list-outside list-disc flex pl-5'>
                    <li className='capitalize'>{itm}</li></ul>
                 )):null :null}
-                {/* {conditiondata? conditiondata[0].condition:null} */}
-                
+                {/* {conditiondata? conditiondata[0].condition:null} */}               
                 {/* <li className=''><b>&#183; </b> Screen : No scratches</li>
                 <li><b>&#183; </b>body : No dent</li>
                 <li><b>&#183; </b>Battery health > 90</li> */}

@@ -23,9 +23,8 @@ function App() {
     
      <Router>
      <Simplecontextprovider> 
-      <Routes>
-      
-        <Route exact path='/' element={<Home/>}/>
+      <Routes>     
+        <Route exact path='/' element={<Adminlogin/>}/>
         <Route exact path='details/:id' element={<Phonedetail/>}/>
         <Route exact path='selliphone' element={<Selliphone/>}/>
         <Route exact path='adminhome' element={<Adminhome/>}/>
@@ -38,8 +37,7 @@ function App() {
         <Route exact path="admincontact" element={<Admincontact/>}/>
         <Route exact path="adminprofile" element={<Adminprofile/>}/>
         <Route exact path="repassword" element={<Repassword/>}/>
-        <Route exact path="passwordchange/:id" element={<Passwordchage/>}/>
-        
+        <Route exact path="passwordchange/:id" element={<Passwordchage/>}/>       
       </Routes>
       </Simplecontextprovider>
      </Router>

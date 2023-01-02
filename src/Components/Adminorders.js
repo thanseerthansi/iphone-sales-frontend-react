@@ -72,7 +72,7 @@ export default function Adminorders() {
     const getorderproduct=async(order_id)=>{
         let data = await Callaxios("get","/purchase/orderedproduct/",{"order_id":order_id})
         if (data.status===200){
-            // console.log("orderproduct",data)
+            console.log("orderproduct",data.data)
             setorderproduct(data.data)
             setproductmodal(!productmodal)
         }else{

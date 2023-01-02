@@ -16,6 +16,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import ReactStars from "react-rating-stars-component";
 
 export default function Adminproducts() {
+    const {accesscheck,products,setproducts,getproduct} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [showreview,setshowreview]=useState(false)
@@ -42,12 +43,12 @@ export default function Adminproducts() {
     const [buyconditiontolist,setbuyconditiontolist]=useState('')
     const [buypricetolist,setbuypricetolist]=useState('')
     const [colorsvalue,setcolorsvalue]=useState('')
-    const [reviewdata,setreviewdata]=useState('')
+    const [reviewdata,setreviewdata]=useState([])
     const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
     // console.log("product",images)
-    const {accesscheck,next,setnext,products,setproducts} =useContext(Simplecontext)
+    
 
     let navigate = useNavigate(); 
     // console.log("next",next) 
@@ -77,17 +78,17 @@ export default function Adminproducts() {
     const notifydelete = () => toast.success(' deleted Successfully ', {
         position: "top-center",
         });
-        const getproduct = async()=>{
-            let data = await Callaxios("get","product/product/")
-            // console.log("dataresponsenwxt",data.data.results)
-            if (data.status===200){
-                setnext(data.data.next)  
-                setproducts(data.data.results) 
+        // const getproduct = async()=>{
+        //     let data = await Callaxios("get","product/product/")
+        //     // console.log("dataresponsenwxt",data.data.results)
+        //     if (data.status===200){
+        //         setnext(data.data.next)  
+        //         setproducts(data.data.results) 
       
-            }else{
-                notifyerror()
-            }
-        }
+        //     }else{
+        //         notifyerror()
+        //     }
+        // }
    
     const getcondition = async()=>{
         let data = await Callaxios("get","/product/condition/")
@@ -111,25 +112,26 @@ export default function Adminproducts() {
     // }
     const searchproduct = async()=>{
 
-        let data = await Callaxios("get","/product/product",{model_name:search})
+        let data = await Callaxios("get","/product/product",{title:search})
         if (data.status===200){
-            setnext(data.data.next)  
-            setproducts(data.data.results) 
+            console.log("datasearcfhg",data)
+            // setnext(data.data.next)  
+            setproducts(data.data) 
         }else{
             notifyerror()
         }
     }
-    const getnextproduct = async()=>{
-        let data = await Callaxios("next",next)
-        // console.log("nextinnextcall",next)
-        if (data.status===200){
-            // console.log("daatanext",data.data.next)
-            setnext(data.data.next)
-            setproducts(products=>[...products,...data.data.results])
-        }else{
-            notifyerror()
-        }
-    }
+    // const getnextproduct = async()=>{
+    //     let data = await Callaxios("next",next)
+    //     // console.log("nextinnextcall",next)
+    //     if (data.status===200){
+    //         // console.log("daatanext",data.data.next)
+    //         setnext(data.data.next)
+    //         setproducts(products=>[...products,...data.data.results])
+    //     }else{
+    //         notifyerror()
+    //     }
+    // }
     const imageaddtolist = (img)=>{
         let imagelist = images.concat(img)
         setimages(imagelist)
@@ -294,7 +296,7 @@ export default function Adminproducts() {
         setfromprice('')
         setoldprice('')
         setdescription('')
-        setcolors('')
+        // setcolors('')
         // setsellstoragetolist('')
         // setsellconditiontolist('')
         setsellpricetolist('')
@@ -429,24 +431,24 @@ export default function Adminproducts() {
     const getreview=async(urlid)=>{
         // console.log("urlid",urlid)
         let data = await Callaxios("get","purchase/review/",{"product":urlid})
-        // console.log("data",data.data)
+        console.log("reviewdata",data.data)
         if(data.status===200){
           // console.log("daatojk")
-          setreviewdata(data.data.results)
-          setreviewnext(data.data.next)
+          setreviewdata(data.data)
+        //   setreviewnext(data.data.next)
         }
       }
-      const reviewgetnext=async()=>{
-        let data = await Callaxios("next",reviewnext)
-        // console.log("nextinnextcall",next)
-        if (data.status===200){
-            // console.log("daatanext",data.data.next)
-            setreviewnext(data.data.next)
-            setreviewdata(reviewdata=>[...reviewdata,...data.data.results])
-        }else{
-            notifyerror()
-        }
-      }
+    //   const reviewgetnext=async()=>{
+    //     let data = await Callaxios("next",reviewnext)
+    //     // console.log("nextinnextcall",next)
+    //     if (data.status===200){
+    //         // console.log("daatanext",data.data.next)
+    //         setreviewnext(data.data.next)
+    //         setreviewdata(reviewdata=>[...reviewdata,...data.data.results])
+    //     }else{
+    //         notifyerror()
+    //     }
+    //   }
   return (
     <div>
     <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
@@ -514,7 +516,7 @@ export default function Adminproducts() {
                         <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">                            
                             <td className="px-4 py-4  border border-gray-300">{k+1}</td>
                             <td className=" px-4 py-4  border border-gray-300 " >                      
-                                <div className="flex font-medium dark:text-gray-700">{itm.model_name}</div>
+                                <div className="flex font-medium dark:text-gray-700">{itm.title}</div>
                             </td>
                             <td className="px-4 py-4 border border-gray-300"> 
                                 {itm.images ?  
@@ -569,11 +571,11 @@ export default function Adminproducts() {
                     <div className="flex items-center justify-between space-x-2">
                         {/* <a href="#" className="hover:text-gray-600">Load More</a> */}
                     
-                        <div className="flex flex-row space-x-1">
+                        {/* <div className="flex flex-row space-x-1">
                         {next === null ? null:
                         <button onClick={()=>getnextproduct()} className="flex px-2 py-px text-white rounded-md  border bg-blue-600 hover:bg-blue-400 border-blue-400">Load More...</button>      
                          }
-                        </div>
+                        </div> */}
                     
                         
                     </div>
@@ -1055,7 +1057,7 @@ export default function Adminproducts() {
                         <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
                             Reviews
                         </h5>
-                        <button type="button" onClick={()=>setshowreview(!showreview) & setallnull()} className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
+                        <button type="button" onClick={()=>setshowreview(!showreview) } className="btn-close box-content w-4 h-4 p-1 text-gray-500    hover:text-red-600 "><b>X</b></button>
                         </div>
                         {/* <input onChange={(e)=>setsearchcheck(e.target.value)} value={searchcheck} type='text' placeholder='search'/> */}
                         {/* data start */}
@@ -1063,13 +1065,20 @@ export default function Adminproducts() {
                             <div className="container">
                            
                             <div className="tiny-slide grid grid-cols-2 ">
-                                        {reviewdata ?<>
-                                        {reviewdata.map((itm,k)=>(
-                                        <div key={k} className='col-span-1'>
+                                        {reviewdata.length ?<>
+                                        {reviewdata.map((itm,r)=>(
+                                        <div key={r} className='col-span-2'>
                                         <div className="content  rounded shadow-md dark:shadow-gray-800 m-2 p-6 bg-white dark:bg-slate-900">
                                             <i className=" text-indigo-600" />
                                             <div className=" mt-1">
-                                            
+                                            <div className=' flex  '>
+                                            {itm.images.length ? <>
+                                            {itm.images.map((itmimage,im)=>(
+                                                <p key={im}>
+                                            <img  src={itmimage.image} className="rounded  w-20 h-24 " alt={''} /><br/>
+                                            </p>))}
+                                            </>:null}
+                                            </div>
                                             <h6 className="mt-2 font-semibold">{itm.customer}</h6>
                                             {/* <ul className="list-none mb-0 text-amber-400 mt-3">
                                             <li className="inline"><i className="mdi mdi-star" /></li>
@@ -1087,42 +1096,36 @@ export default function Adminproducts() {
                                             activeColor="#ffd700"
                                         />
                                         </div>
-                                        <div className='grid grid-cols-2 gap-4'>
-                                            <div className=''><p className="text-slate-400">{itm.description}</p></div>
-                                            <div className='flex justify-end '>
-                                            {itm.images.length ? <>
-                                            {itm.images.map((itmimage,ki)=>(
-                                                <>
-                                            <img key={ki} src={itmimage.image} className="rounded  w-20 h-24 " alt={''} /><br/>
-                                            </>))}
-                                            </>:null}
-                                            </div>
+                                        
+                                        <div className='grid grid-cols-2'>
+                                            <div className='col-span-2'><p className="text-slate-400">{itm.description}</p></div>
+                                           
                                         </div>
                                         </div>                                       
                                         </div>
                                         ))}
                                         </>:null}
                                     </div>
-                                    <div className="flex justify-center pt-2">
+                                    {/* <div className="flex justify-center pt-2">
                                     <div className={reviewnext ? null:`hidden`}>
-                                    {/* <button type="button" className="bg-gray-800 text-white  rounded-l-md border-r hover:brightness-[.3] border-gray-100 py-2 px-3">
+                                    <button type="button" className="bg-gray-800 text-white  rounded-l-md border-r hover:brightness-[.3] border-gray-100 py-2 px-3">
                                         <div className="flex flex-row align-middle">    
                                         <p className="ml-2">Prev</p>
                                         </div>
-                                    </button> */}
+                                    </button>
                                     <button onClick={()=>reviewgetnext()} type="button" className="bg-blue-700 text-white rounded-r-lg border-r hover:brightness-[.5] border-gray-100 py-2  px-3">
                                         <div className="flex flex-row align-middle">    
                                         <p  className="ml-2 flex">Load More>> </p>
                                         </div>
                                     </button>
                                     </div>
-                                    </div>
+                                    </div> */}
                                         {/* end review */}
                             </div>{/*end container*/}
                             
                             {/*end container*/}
                             <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                    <button type="button" onClick={()=>setshowreview(!showreview) & setallnull()} className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
+                                    <button type="button" onClick={()=>setshowreview(!showreview) } className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
                                         Close
                                     </button>
                                     {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">

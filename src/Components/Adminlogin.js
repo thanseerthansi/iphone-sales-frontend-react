@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Callaxios from './Callaxios';
 import { BaseURL } from './urlcall';
 export default function Adminlogin() {
   const [username,setusername]=useState();
@@ -13,32 +14,46 @@ export default function Adminlogin() {
   const notifyerror = () => toast.error('! Invalid Password or Username', {
     position: "top-center",
     });
-  const login=(e)=>{
+  const login=async(e)=>{
     e.preventDefault();
     const data={
         "username":username,
         "password":password,
-      }   
-    axios({
-        method: 'post',
-        url: BaseURL+'/api/token/',
-        data:data,
-    }).then(response => {
-        // console.log("response",response);
-        if (response.status === 200){
-            // console.log("pk")
-            window.localStorage.setItem('access_token', response.data.access)
-            window.localStorage.setItem('refresh_token', response.data.refresh) 
-            return navigate('/adminhome');
-        }
+      }
+      try {
+        let logdata = await Callaxios("get",'user/user/',{admin:"admin",username:username}) 
+        console.log("datalog",logdata)
+        if (logdata.data.length){
+          console.log("is admin")
+          axios({
+            method: 'post',
+            url: BaseURL+'/api/token/',
+            data:data,
+          }).then(response => {
+              // console.log("response",response);
+              if (response.status === 200){
+                  // console.log("pk")
+                  window.localStorage.setItem('access_token', response.data.access)
+                  window.localStorage.setItem('refresh_token', response.data.refresh) 
+                  return navigate('/adminhome');
+              }
+              else{
+                notifyerror()
+                alert(response.data.Message) }
+              })
+          .catch((error) => {
+            console.log(error)
+            notifyerror()
+          })
+          }
         else{
           notifyerror()
-          alert(response.data.Message) }
-        })
-    .catch((error) => {
-    console.log(error)
-    notifyerror()
-    })
+        }
+      } catch (error) {
+        
+      } 
+    
+    
     }
   return (
     <div>
