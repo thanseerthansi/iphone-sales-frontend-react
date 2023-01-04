@@ -16,14 +16,17 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import ReactStars from "react-rating-stars-component";
 
 export default function Adminproducts() {
-    const {accesscheck,products,setproducts,getproduct} =useContext(Simplecontext)
+    const {accesscheck,products,setproducts,getproduct,modeldata,categorydata} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
     const [showsidebar,setshowsidebar]=useState(false)
     const [showreview,setshowreview]=useState(false)
     const [cartmodal,setcartmodal]=useState(false)
     const [editmodal,seteditmodal]=useState(false)
+    
     // const [productvalue,setproductvalue]=useState([''])
-    const [model_name,setmodel_name]=useState()
+    const [model_name,setmodel_name]=useState('')
+    const [category,setcategory]=useState('')
+    const [title,settitle]=useState('')
     const [buyprice,setbuyprice]=useState('')
     const [sellprice,setsellprice]=useState('')
     const [fromprice,setfromprice]=useState('')
@@ -44,7 +47,7 @@ export default function Adminproducts() {
     const [buypricetolist,setbuypricetolist]=useState('')
     const [colorsvalue,setcolorsvalue]=useState('')
     const [reviewdata,setreviewdata]=useState([])
-    const [reviewnext,setreviewnext]=useState('')
+    // const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
     // console.log("product",images)
@@ -159,6 +162,8 @@ export default function Adminproducts() {
         //     form_data.append(`${key}`, `${value}`)
         //   }
         form_data.append("model_name",model_name)
+        form_data.append("title",title)
+        form_data.append("category",category)
         form_data.append("buyprice",buyprice)
         form_data.append("sellprice",sellprice)
         form_data.append("description",description)
@@ -187,6 +192,8 @@ export default function Adminproducts() {
     }
     const editfunction = (itm)=>{
         seteditproduct(itm)
+        settitle(itm.title)
+        setcategory(itm.category)
         seteditimages(itm.images)
         setmodel_name(itm.model_name)
         setbuyprice(itm.buyprice)
@@ -291,6 +298,8 @@ export default function Adminproducts() {
         seteditproduct('')
         setsearchcheck('')
         setmodel_name('')
+        setcategory('')
+        settitle('')
         setbuyprice('')
         setsellprice('')
         setfromprice('')
@@ -449,6 +458,7 @@ export default function Adminproducts() {
     //         notifyerror()
     //     }
     //   }
+   
   return (
     <div>
     <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
@@ -497,8 +507,10 @@ export default function Adminproducts() {
                         <thead className='' >
                         <tr className="text-base font-bold text-left bg-gray-50">
                             <th className="px-4 py-3 border border-gray-300">#</th>
+                            <th className="px-4 py-3 border border-gray-300 ">Title</th>
                             <th className="px-4 py-3 border border-gray-300 ">Model</th>
                             <th className="px-4 py-3 border border-gray-300">Images</th>
+                            <th className="px-4 py-3 border border-gray-300">Category</th>
                             <th className="px-4 py-3 border border-gray-300 w-32 " >Sell Price</th>
                             <th className="px-4 py-3  border border-gray-300 ">Sell Status</th>
                             <th className="px-4 py-3  border border-gray-300 ">Buy Price</th>
@@ -518,6 +530,9 @@ export default function Adminproducts() {
                             <td className=" px-4 py-4  border border-gray-300 " >                      
                                 <div className="flex font-medium dark:text-gray-700">{itm.title}</div>
                             </td>
+                            <td className=" px-4 py-4  border border-gray-300 " >                      
+                                <div className="flex font-medium dark:text-gray-700">{itm.model_name}</div>
+                            </td>
                             <td className="px-4 py-4 border border-gray-300"> 
                                 {itm.images ?  
                                 <>
@@ -527,6 +542,9 @@ export default function Adminproducts() {
                                     </div>
                                     ))}
                                 </>:null}
+                            </td>
+                            <td className=" px-4 py-4  border border-gray-300 " >                      
+                                <div className="flex font-medium dark:text-gray-700">{itm.category}</div>
                             </td>
                             <td className="px-2 py-4 border border-gray-300">{itm.sellprice.split(',').map((sellp,k2)=>(
                               <ul key={k2} className='list-outside list-disc pl-3'>
@@ -610,13 +628,46 @@ export default function Adminproducts() {
                                         <div />
                                         
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
+                                            <div className="lg:col-span-6 ">
+                                            <div className="text-left">
+                                                <label htmlFor="name" className="font-semibold">Model Name : <b className='text-red-600'>*</b></label>
+                                                <div className="form-icon relative mt-2">
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i> */}
+                                                {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
+                                                {/* <input onChange={(e)=> setmodel_name(e.target.value) } value={model_name} required  name="phone"  type="text"  className="form-input pl-11" placeholder="Model Name :" /> */}
+                                                <select required onChange={(e)=>setmodel_name(e.target.value)} value={model_name} className='border uppercase border-gray-500 rounded w-full p-2'>
+                                                        <option  value='' hidden>Select model</option>
+                                                        {modeldata.length ? modeldata[0].model_name.split(',').map((itm,k)=>(
+                                                            <option  key={k} value={itm} >{itm}</option>
+                                                        )) :null}
+                                                </select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div className="lg:col-span-6 ">
+                                            <div className="text-left">
+                                                <label htmlFor="email" className="font-semibold">Category <b className='text-red-500'>*</b></label>
+                                                <div className="form-icon relative mt-2">
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/> */}
+                                                <select required onChange={(e)=>setcategory(e.target.value)} value={category} className='border uppercase border-gray-500 rounded w-full p-2'>
+                                                        <option value='' hidden>Select category</option>
+                                                        {categorydata.length ? categorydata[0].category.split(',').map((itm,k)=>(
+                                                            <option key={k} value={itm} className='uppercase' >{itm}</option>
+                                                        )) :null}
+                                                </select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Model Name: <b className='text-red-600'>*</b></label>
+                                                <label htmlFor="name" className="font-semibold">Title : <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
-                                                <input onChange={(e)=> setmodel_name(e.target.value) } value={model_name} required  name="phone"  type="text"  className="form-input pl-11" placeholder="phone model :" />
+                                                <input onChange={(e)=> settitle(e.target.value) } value={title} required  name="phone"  type="text"  className="form-input pl-11" placeholder="Title :" />
                                                 </div>
                                             </div>
                                             </div>
@@ -783,7 +834,7 @@ export default function Adminproducts() {
                                                 <label htmlFor="email" className="font-semibold">Add  Images <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
-                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} value={''} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
@@ -844,15 +895,47 @@ export default function Adminproducts() {
                                     <form  onSubmit={(e)=>addproduct(e)}  className='pt-5' >
                                         <p className="mb-0" id="error-msg" />
                                         <div />
-                                        
+                                        <div className="grid lg:grid-cols-12 lg:gap-6">
+                                            <div className="lg:col-span-6 ">
+                                            <div className="text-left">
+                                                <label htmlFor="name" className="font-semibold">Model Name : <b className='text-red-600'>*</b></label>
+                                                <div className="form-icon relative mt-2">
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i> */}
+                                                {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
+                                                {/* <input onChange={(e)=> setmodel_name(e.target.value) } value={model_name} required  name="phone"  type="text"  className="form-input pl-11" placeholder="Model Name :" /> */}
+                                                <select required onChange={(e)=>setmodel_name(e.target.value)} value={model_name} className='border uppercase border-gray-500 rounded w-full p-2'>
+                                                        <option  value='' hidden>Select model</option>
+                                                        {modeldata.length ? modeldata[0].model_name.split(',').map((itm,k)=>(
+                                                            <option  key={k} value={itm} >{itm}</option>
+                                                        )) :null}
+                                                </select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div className="lg:col-span-6 ">
+                                            <div className="text-left">
+                                                <label htmlFor="email" className="font-semibold">Category <b className='text-red-500'>*</b></label>
+                                                <div className="form-icon relative mt-2">
+                                                {/* <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/> */}
+                                                <select required onChange={(e)=>setcategory(e.target.value)} value={category} className='border uppercase border-gray-500 rounded w-full p-2'>
+                                                        <option value='' hidden>Select category</option>
+                                                        {categorydata.length ? categorydata[0].category.split(',').map((itm,k)=>(
+                                                            <option key={k} value={itm} className='uppercase' >{itm}</option>
+                                                        )) :null}
+                                                </select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
                                         <div className="grid lg:grid-cols-12 lg:gap-6">
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="name" className="font-semibold">Model Name: <b className='text-red-600'>*</b></label>
+                                                <label htmlFor="name" className="font-semibold">Title <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><MdPhoneIphone size={18} /></i>
                                                 {/* <input onChange={(e)=> setproductdata({...productdata,model_name:e.target.value}) } className="form-input pl-11"  type='text' placeholder='search'/> */}
-                                                <input onChange={(e)=> setmodel_name(e.target.value) } value={model_name} required  name="phone"  type="text"  className="form-input pl-11" placeholder="phone model :" />
+                                                <input onChange={(e)=> settitle(e.target.value) } value={title} required  name="phone"  type="text"  className="form-input pl-11" placeholder="phone model :" />
                                                 </div>
                                             </div>
                                             </div>
@@ -1015,7 +1098,7 @@ export default function Adminproducts() {
                                                 <label htmlFor="email" className="font-semibold">Add  Images <b className='text-red-600'>*</b></label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><FaRegImages  size={18} /></i>
-                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
+                                                <input onChange={(e)=>imageaddtolist(e.target.files[0])} value={''} name="file" id="file" type="file" className="form-input pl-11" placeholder="Storage-condition-price,eg:(128-good-13000,..)" />
                                                 </div>
                                             </div>
                                             </div>
