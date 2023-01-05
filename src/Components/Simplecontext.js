@@ -109,7 +109,7 @@ export default function Simplecontextprovider({children}) {
   }
   return (
     <Simplecontext.Provider value={{
-        accesscheck,products,setproducts,getproduct,modeldata,setmodeldata,categorydata,setcategorydata
+        accesscheck,products,setproducts,getproduct,modeldata,getmodel,categorydata,getcategory
     }}>{children}</Simplecontext.Provider>
   )
 }

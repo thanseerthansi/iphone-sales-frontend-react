@@ -58,6 +58,23 @@ export default function Adminorders() {
             notifyerror()
         }
     }
+    const changeproductstatus=async(itmid,value)=>{
+        try {
+            let data = await Callaxios("post","/purchase/orderedproduct/",[{"id":itmid,"status":value}])
+            console.log("updatestatus",data)
+            if (data.data.Status===200){
+                // console.log("data",orderproduct[0].order_id[0].id)
+                // notifydelete("Updated Successfully")
+                getorderproduct(orderproduct[0].order_id[0].id,"not")
+                // setorders(data.data.results)
+                // setnextorder(data.data.next)
+            }else{
+                notifyerror()
+            }
+        } catch (error) {
+            
+        }
+    }
     const getnextorders=async()=>{
         let data = await Callaxios("next",nextorder)
         if (data.status===200){
@@ -69,12 +86,17 @@ export default function Adminorders() {
         }
     }
 
-    const getorderproduct=async(order_id)=>{
+    const getorderproduct=async(order_id,model)=>{
+        // console.log("orderid",order_id)
         let data = await Callaxios("get","/purchase/orderedproduct/",{"order_id":order_id})
         if (data.status===200){
-            console.log("orderproduct",data.data)
+            // console.log("orderproduct",data.data)
             setorderproduct(data.data)
-            setproductmodal(!productmodal)
+            if (model!=="not"){
+                // console.log("entered")
+                setproductmodal(!productmodal)
+            }
+            
         }else{
             notifyerror()
         }
@@ -214,7 +236,7 @@ export default function Adminorders() {
                                 <td className="px-4 py-4 border border-gray-300 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
                                 <td className="  px-4 py-4 border border-gray-300">{itm.customer_name}</td>
                                 <td className="px-4 py-4 border border-gray-300">{itm.contact} </td>
-                                <td className="px-4 py-4 border border-gray-300">{itm.address}</td>
+                                <td className="px-4 py-4 border border-gray-300">{itm.address}, {itm.city}, {itm.postcode}, {itm.state}, {itm.country}</td>
                                 <td className="px-4 py-4 border border-gray-300">
                                     <div>
                                     <span className='rounded p-1 uppercase ' style={{backgroundColor:itm.status[0].code}}><b className='text-white '>{itm.status[0].status}</b></span>
@@ -284,7 +306,7 @@ export default function Adminorders() {
                             <th className="px-4 py-3 border-b-2 border-green-500">Price</th>
                             <th className="px-4 py-3 border-b-2 border-red-500">Condition</th>
                             <th className="px-4 py-3  border-b-2 border-yellow-500 ">Storage</th>
-                            {/* <th className="px-4 py-3 border-b-2 border-cyan-500">Color</th> */}
+                            <th className="px-4 py-3 border-b-2 border-cyan-500">Status</th>
                             <th className="px-4 py-3 border-b-2 border-blue-500">Quantity</th>
                         </tr>
                         </thead>
@@ -299,6 +321,19 @@ export default function Adminorders() {
                             <td className="px-4 py-4">AED {itm.price}</td>
                             <td className="px-4 py-4">{itm.condition}</td>
                             <td className="px-4 py-4">{itm.storage} GB</td>
+                            <td className="px-4 py-4 ">
+                                    <div>
+                                    <span className='rounded p-1 uppercase ' style={itm.status ? {backgroundColor:itm.status[0].code}:{}}><b className='text-white '>{itm.status ?  itm.status[0].status : null}</b></span>
+                                    </div>
+                                    <div className='pt-2'>
+                                        <select onChange={(e)=>changeproductstatus(itm.id,e.target.value)} className='border border-gray-500 rounded '>
+                                            <option value={''} hidden>Change Status</option>
+                                            {statusdata.length ? statusdata.map((statusitm,k1)=>(
+                                            <option key={k1} className='uppercase'  value={statusitm.status} >{statusitm.status}</option>
+                                            )) :null}
+                                        </select>
+                                    </div>    
+                                </td>
                             {/* <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p   ></td> */}
                             <td className="px-4 py-4">{itm.quantity}</td>
                         </tr>

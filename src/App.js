@@ -12,10 +12,11 @@ import Home from './Components/Home';
 import Phonedetail from "./Components/Phonedetail";
 import Selliphone from "./Components/Selliphone";
 import Simplecontextprovider from "./Components/Simplecontext";
-import Admincontact from "./Components/Admincontact";
+// import Admincontact from "./Components/Adminsetting";
 import Adminprofile from "./Components/Adminprofile";
 import Repassword from "./Components/Repassword";
 import Passwordchage from "./Components/Passwordchage";
+import Adminsetting from "./Components/Adminsetting";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
         <Route exact path="adminproducts" element={<Adminproducts/>}/>
         <Route exact path="admincategory" element={<Admincategory/>}/>
         <Route exact path="adminstatus" element={<Adminstatus/>}/>
-        <Route exact path="admincontact" element={<Admincontact/>}/>
+        <Route exact path="adminsetting" element={<Adminsetting/>}/>
         <Route exact path="adminprofile" element={<Adminprofile/>}/>
         <Route exact path="repassword" element={<Repassword/>}/>
         <Route exact path="passwordchange/:id" element={<Passwordchage/>}/>       
