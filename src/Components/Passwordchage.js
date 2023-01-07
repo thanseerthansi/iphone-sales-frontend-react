@@ -47,7 +47,7 @@ export default function Passwordchage() {
   <div className="container">
   <div className="flex justify-center">
     <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
-      <a href="index.html"><img src="assets/images/logo-icon-64.png" className="mx-auto" alt={''} /></a>
+      <a href="index.html"><img src="/assets/images/logo/logo.png" className="mx-auto w-[200px]" alt={''} /></a>
       <h5 className="my-6 text-xl font-semibold">Reset Your Password</h5>
       <div className="grid grid-cols-1">
         <form onSubmit={(e)=>changepasswordfnctn(e)} className="text-left">
@@ -61,7 +61,7 @@ export default function Passwordchage() {
               <input required onChange={(e)=>setpassword1(e.target.value)} type="Password" className="form-input mt-3" placeholder="password" />
             </div>
             <div className="mb-4">
-              <button type="submit" className="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" > Send</button>
+              <button type="submit" className="btn bg-[#13b5e1] hover:bg-[#108fb3] border-[#13b5e1]  text-white rounded-md w-full" >Reset</button>
             </div>
             <div className="text-center">
               <span className="text-slate-400 me-2">Remember your password ? </span><Link to="/adminlogin" className="text-black dark:text-white font-bold">Sign in</Link>
