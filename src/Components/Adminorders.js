@@ -317,7 +317,7 @@ export default function Adminorders() {
                         <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100 ">
                             
                         <td className="px-4 py-4 ">{k+1}</td>
-                            <td className="px-4 py-4">{itm.product[0].model_name}</td>
+                            <td className="px-4 py-4">{itm.product[0].title}</td>
                             <td className="px-4 py-4">AED {itm.price}</td>
                             <td className="px-4 py-4">{itm.condition}</td>
                             <td className="px-4 py-4">{itm.storage} GB</td>

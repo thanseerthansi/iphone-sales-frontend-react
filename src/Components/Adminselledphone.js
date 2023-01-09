@@ -214,7 +214,7 @@ export default function Adminselledphone() {
                                 <td className="px-4 py-4 border border-gray-300 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
                                 <td className="  px-4 py-4 border border-gray-300">{itm.customer_name}</td>
                                 <td className="px-4 py-4 border border-gray-300">{itm.contact} </td>
-                                <td className="px-4 py-4 border border-gray-300">{itm.address}</td>
+                                <td className="px-4 py-4 border border-gray-300">{itm.address}, {itm.city}, {itm.postcode}, {itm.state}, {itm.country}</td>
                                 <td className="px-4 py-4 border border-gray-300">
                                     <div>
                                     <span className='rounded p-1 uppercase' style={{backgroundColor:itm.status[0].code}}><b className='text-white'>{itm.status[0].status}</b></span>
