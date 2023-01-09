@@ -42,7 +42,7 @@ export default function Simplecontextprovider({children}) {
   }
   
   const accesscheck = async()=>{
-    
+    // console.log("entereted")
     const token = localStorage.getItem('access_token');
     var refresh_token = window.localStorage.getItem('refresh_token')
     // console.log("valid1",refresh_token)

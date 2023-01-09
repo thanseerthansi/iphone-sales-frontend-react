@@ -22,9 +22,9 @@ export default function Adminlogin() {
       }
       try {
         let logdata = await Callaxios("get",'user/user/',{admin:"admin",username:username}) 
-        console.log("datalog",logdata)
+        // console.log("datalog",logdata)
         if (logdata.data.length){
-          console.log("is admin")
+          // console.log("is admin")
           axios({
             method: 'post',
             url: BaseURL+'/api/token/',

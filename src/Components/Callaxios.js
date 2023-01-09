@@ -1,11 +1,15 @@
 import axios from 'axios';
+import { useContext } from 'react';
 import { BaseURL } from './urlcall';
+// import { Simplecontext } from './Simplecontext';
 // let canceltoken;
 export default async function  Callaxios(method,url,datalist) { 
+    // const {accesscheck} =useContext(Simplecontext)
     // if(typeof canceltoken != typeof undefined){
     //     canceltoken.cancel("Cancelling Request")
     // }
     // canceltoken = axios.CancelToken.source()
+    // accesscheck()
     const token = localStorage.getItem('access_token');
     // console.log("token",token)
     let body = {

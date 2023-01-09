@@ -86,9 +86,9 @@ export default function Adminprofile() {
         // console.log("datalisr",datalist)
         try {
             let data = await Callaxios("post","user/user/",datalist)
-            console.log("data",data)
+            // console.log("data",data)
             if(data.data.Status===200){
-                console.log("true",data.data)
+                // console.log("true",data.data)
                 notifyadded(data.data.Message)
                 getuser()
                 setcartmodal(!cartmodal)

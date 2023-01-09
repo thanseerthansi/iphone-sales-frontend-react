@@ -61,7 +61,7 @@ export default function Adminorders() {
     const changeproductstatus=async(itmid,value)=>{
         try {
             let data = await Callaxios("post","/purchase/orderedproduct/",[{"id":itmid,"status":value}])
-            console.log("updatestatus",data)
+            // console.log("updatestatus",data)
             if (data.data.Status===200){
                 // console.log("data",orderproduct[0].order_id[0].id)
                 // notifydelete("Updated Successfully")

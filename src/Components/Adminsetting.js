@@ -70,7 +70,7 @@ export default function Adminsetting() {
                 datalist.id=categorynames.id
             }
             let data =  await Callaxios("post","product/category/",datalist)
-            console.log("data",data)
+            // console.log("data",data)
             if (data.data.Status===200){
                 notify("Successfully Added")
                 setcategory('')

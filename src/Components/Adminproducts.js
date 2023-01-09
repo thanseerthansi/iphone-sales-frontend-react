@@ -117,7 +117,7 @@ export default function Adminproducts() {
 
         let data = await Callaxios("get","/product/product",{title:search})
         if (data.status===200){
-            console.log("datasearcfhg",data)
+            // console.log("datasearcfhg",data)
             // setnext(data.data.next)  
             setproducts(data.data) 
         }else{
@@ -440,7 +440,7 @@ export default function Adminproducts() {
     const getreview=async(urlid)=>{
         // console.log("urlid",urlid)
         let data = await Callaxios("get","purchase/review/",{"product":urlid})
-        console.log("reviewdata",data.data)
+        // console.log("reviewdata",data.data)
         if(data.status===200){
           // console.log("daatojk")
           setreviewdata(data.data)
