@@ -20,7 +20,7 @@ export default function Adminhome() {
         accesscheck()
     },[])
     const getorders = async()=>{
-        let data = await Callaxios("get","/purchase/orderfull/")
+        let data = await Callaxios("get","purchase/orderfull/")
         if (data.status===200){
             // console.log("dta",data.data)
             setorders(data.data)
@@ -28,7 +28,7 @@ export default function Adminhome() {
         }   
     }
     const getsellorders = async()=>{
-        let data = await Callaxios("get","/selling/sellfullorder/")
+        let data = await Callaxios("get","selling/sellfullorder/")
         if (data.status===200){
             // console.log("dta",data.data)
             setsellorders(data.data)

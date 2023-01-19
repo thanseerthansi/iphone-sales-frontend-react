@@ -48,7 +48,7 @@ export default function Admincategory() {
         });
 
     const getcondition = async()=>{
-        let data = await Callaxios("get","/product/condition/")
+        let data = await Callaxios("get","product/condition/")
         if (data.status===200){
             // console.log("conditiondata",data)
             setconditiondata(data.data)
@@ -66,7 +66,7 @@ export default function Admincategory() {
                 datalist.id=editcondition.id
             }
             // console.log("dataaaaaaaaaaalist",datalist)
-            let data = await Callaxios("post","/product/condition/",datalist)
+            let data = await Callaxios("post","product/condition/",datalist)
             // console.log("dataresponse",data)
             if (data.data.Status===200){
                 if(editcondition){
@@ -94,7 +94,7 @@ export default function Admincategory() {
     }
     const deletefunction = async(itmid,k)=>{
         // console.log("idddddd",itmid)
-        let data = await Callaxios("delete","/product/condition/",{"id":JSON.stringify([itmid])})
+        let data = await Callaxios("delete","product/condition/",{"id":JSON.stringify([itmid])})
         if(data.data.Status===200){
            let splc = conditiondata
            splc.splice(k,1)

@@ -23,6 +23,7 @@ export default function Adminstatus() {
     const [status,setstatus]=useState('')
     const [description,setdescription]=useState('')
     const [colorcode,setcolorcode]=useState('')
+    console.log("status",status)
     useEffect(() => {
         accesscheck()
         getstatus()
@@ -42,7 +43,7 @@ export default function Adminstatus() {
         });
 
     const getstatus = async()=>{
-        let data = await Callaxios("get","/product/status/")
+        let data = await Callaxios("get","product/status/")
         if (data.status===200){
             // console.log("statusdata",data)
             setstatusdata(data.data)
@@ -57,8 +58,8 @@ export default function Adminstatus() {
             // console.log("dfsdffs",editstatus)
             datalist.id=editstatus.id
         }
-        // console.log("dataaaaaaaaaaalist",datalist)
-        let data = await Callaxios("post","/product/status/",datalist)
+        console.log("dataaaaaaaaaaalist",datalist)
+        let data = await Callaxios("post","product/status/",datalist)
         // console.log("dataresponse",data)
         if (data.data.Status===200){
             if(editstatus){
@@ -81,7 +82,7 @@ export default function Adminstatus() {
         setcartmodal(!cartmodal)
     }
     const deletefunction = async(itmid,k)=>{
-        let data = await Callaxios("delete","/product/status/",{"id":itmid})
+        let data = await Callaxios("delete","product/status/",{"id":itmid})
         if(data.data.Status===200){
            let splc = statusdata
            splc.splice(k,1)

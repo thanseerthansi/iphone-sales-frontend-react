@@ -37,7 +37,7 @@ export default function Adminselledphone() {
         });
 
     const getorders=async()=>{
-        let data = await Callaxios("get","/selling/sellorder/")
+        let data = await Callaxios("get","selling/sellorder/")
         if (data.status===200){
             // console.log("statusdata",data)
             setorders(data.data.results)
@@ -47,7 +47,7 @@ export default function Adminselledphone() {
         }
     }
     const changestatus=async(itmid,value)=>{
-        let data = await Callaxios("post","/selling/sellorder/",[{"id":itmid,"status":value}])
+        let data = await Callaxios("post","selling/sellorder/",[{"id":itmid,"status":value}])
         if (data.data.Status===200){
             // console.log("updatestatus",data)
             // notifydelete("Updated Successfully")
@@ -70,7 +70,7 @@ export default function Adminselledphone() {
     }
 
     const getorderproduct=async(order_id)=>{
-        let data = await Callaxios("get","/selling/sellproduct/",{"order_id":order_id})
+        let data = await Callaxios("get","selling/sellproduct/",{"order_id":order_id})
         if (data.status===200){
             // console.log("orderproduct",data)
             setorderproduct(data.data)
@@ -82,7 +82,7 @@ export default function Adminselledphone() {
     const searchproduct = async()=>{
         if(search.includes('Z')===true){
             let searchdata = search.split('Z')[1]
-            let data = await Callaxios("get","/selling/sellorder/",{"id":searchdata})
+            let data = await Callaxios("get","selling/sellorder/",{"id":searchdata})
             if (data.status===200){
                 setorders(data.data.results)
                 setnextorder(data.data.next)
@@ -93,7 +93,7 @@ export default function Adminselledphone() {
     //    else{console.log("nosearcg")}
     }
     const searchorderbystatus = async(status)=>{
-            let data = await Callaxios("get","/selling/sellorder/",{"status":status})
+            let data = await Callaxios("get","selling/sellorder/",{"status":status})
             if (data.status===200){
                 setorders(data.data.results)
                 setnextorder(data.data.next)
@@ -103,7 +103,7 @@ export default function Adminselledphone() {
     }
     const deletefunction = async(itmid,k)=>{
         let datalist ={"id":JSON.stringify([itmid])}
-        let data = await Callaxios("delete","/selling/sellorder/",datalist)
+        let data = await Callaxios("delete","selling/sellorder/",datalist)
         // console.log("datdelete",data)
         if(data.data.Status===200){
            let splc = orders
@@ -119,7 +119,7 @@ export default function Adminselledphone() {
        
     }
     const getstatus = async()=>{
-        let data = await Callaxios("get","/product/status/")
+        let data = await Callaxios("get","product/status/")
         if (data.status===200){
             // console.log("statusdata",data)
             setstatusdata(data.data)

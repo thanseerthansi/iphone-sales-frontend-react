@@ -37,7 +37,7 @@ export default function Adminorders() {
         });
 
     const getorders=async()=>{
-        let data = await Callaxios("get","/purchase/order/")
+        let data = await Callaxios("get","purchase/order/")
         if (data.status===200){
             // console.log("statusdata",data)
             setorders(data.data.results)
@@ -47,7 +47,7 @@ export default function Adminorders() {
         }
     }
     const changestatus=async(itmid,value)=>{
-        let data = await Callaxios("post","/purchase/order/",[{"id":itmid,"status":value}])
+        let data = await Callaxios("post","purchase/order/",[{"id":itmid,"status":value}])
         if (data.data.Status===200){
             // console.log("updatestatus",data)
             // notifydelete("Updated Successfully")
@@ -60,7 +60,7 @@ export default function Adminorders() {
     }
     const changeproductstatus=async(itmid,value)=>{
         try {
-            let data = await Callaxios("post","/purchase/orderedproduct/",[{"id":itmid,"status":value}])
+            let data = await Callaxios("post","purchase/orderedproduct/",[{"id":itmid,"status":value}])
             // console.log("updatestatus",data)
             if (data.data.Status===200){
                 // console.log("data",orderproduct[0].order_id[0].id)
@@ -88,7 +88,7 @@ export default function Adminorders() {
 
     const getorderproduct=async(order_id,model)=>{
         // console.log("orderid",order_id)
-        let data = await Callaxios("get","/purchase/orderedproduct/",{"order_id":order_id})
+        let data = await Callaxios("get","purchase/orderedproduct/",{"order_id":order_id})
         if (data.status===200){
             // console.log("orderproduct",data.data)
             setorderproduct(data.data)
@@ -104,7 +104,7 @@ export default function Adminorders() {
     const searchproduct = async()=>{
         if(search.includes('Z')===true){
             let searchdata = search.split('Z')[1]
-            let data = await Callaxios("get","/purchase/order/",{"id":searchdata})
+            let data = await Callaxios("get","purchase/order/",{"id":searchdata})
             if (data.status===200){
                 setorders(data.data.results)
                 setnextorder(data.data.next)
@@ -115,7 +115,7 @@ export default function Adminorders() {
     //    else{console.log("nosearcg")}
     }
     const searchorderbystatus = async(status)=>{
-            let data = await Callaxios("get","/purchase/order/",{"status":status})
+            let data = await Callaxios("get","purchase/order/",{"status":status})
             if (data.status===200){
                 setorders(data.data.results)
                 setnextorder(data.data.next)
@@ -125,7 +125,7 @@ export default function Adminorders() {
     }
     const deletefunction = async(itmid,k)=>{
         let datalist ={"id":JSON.stringify([itmid])}
-        let data = await Callaxios("delete","/purchase/order/",datalist)
+        let data = await Callaxios("delete","purchase/order/",datalist)
         // console.log("datdelete",data)
         if(data.data.Status===200){
            let splc = orders
@@ -141,7 +141,7 @@ export default function Adminorders() {
        
     }
     const getstatus = async()=>{
-        let data = await Callaxios("get","/product/status/")
+        let data = await Callaxios("get","product/status/")
         if (data.status===200){
             // console.log("statusdata",data)
             setstatusdata(data.data)

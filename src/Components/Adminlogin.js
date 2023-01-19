@@ -27,7 +27,7 @@ export default function Adminlogin() {
           // console.log("is admin")
           axios({
             method: 'post',
-            url: BaseURL+'/api/token/',
+            url: BaseURL+'api/token/',
             data:data,
           }).then(response => {
               // console.log("response",response);

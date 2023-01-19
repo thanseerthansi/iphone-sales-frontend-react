@@ -66,7 +66,7 @@ export default function Home() {
       }
   }
   const getcondition = async()=>{
-    let data = await Callaxios("get","/product/condition/")
+    let data = await Callaxios("get","product/condition/")
     if (data.status===200){
         // console.log("conditiondata",data)
         setconditiondata(data.data)
@@ -76,7 +76,7 @@ export default function Home() {
 }
   const searchproduct = async()=>{
     // console.log("search product",search)
-    let data = await Callaxios("get","/product/product",{model_name:search,sellstatus:"True"})
+    let data = await Callaxios("get","product/product",{model_name:search,sellstatus:"True"})
     // console.log("data",data)
     if (data.status===200){
         setnext(data.data.next)  

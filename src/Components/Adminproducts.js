@@ -94,7 +94,7 @@ export default function Adminproducts() {
         // }
    
     const getcondition = async()=>{
-        let data = await Callaxios("get","/product/condition/")
+        let data = await Callaxios("get","product/condition/")
         if (data.status===200){
             // console.log("conditiondata",data)
             setconditiondata(data.data)
@@ -115,7 +115,7 @@ export default function Adminproducts() {
     // }
     const searchproduct = async()=>{
 
-        let data = await Callaxios("get","/product/product",{title:search})
+        let data = await Callaxios("get","product/product",{title:search})
         if (data.status===200){
             // console.log("datasearcfhg",data)
             // setnext(data.data.next)  
