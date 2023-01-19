@@ -50,7 +50,7 @@ export default function Adminproducts() {
     // const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
-    console.log("images",images)
+    // console.log("images",images)
     
 
     let navigate = useNavigate(); 
