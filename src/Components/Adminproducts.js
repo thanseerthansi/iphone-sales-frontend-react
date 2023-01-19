@@ -31,12 +31,12 @@ export default function Adminproducts() {
     const [sellprice,setsellprice]=useState('')
     const [fromprice,setfromprice]=useState('')
     const [oldprice,setoldprice]=useState('')
-    const [description,setdescription]=useState([''])
-    const [conditiondata,setconditiondata]=useState([''])
+    const [description,setdescription]=useState([])
+    const [conditiondata,setconditiondata]=useState([])
     const [colors,setcolors]=useState('')
     const [editproduct,seteditproduct]=useState('');
     const [editimages,seteditimages]=useState('');
-    const [images,setimages]=useState([''])
+    const [images,setimages]=useState([])
     const [search,setsearch]=useState('')
     const [searchcheck,setsearchcheck]=useState('')
     // const [sellstoragetolist,setsellstoragetolist]=useState('')
@@ -50,7 +50,7 @@ export default function Adminproducts() {
     // const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
     // console.log("editprduct",editproduct)
-    // console.log("product",images)
+    console.log("images",images)
     
 
     let navigate = useNavigate(); 
@@ -673,10 +673,10 @@ export default function Adminproducts() {
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Description</label>
+                                                <label htmlFor="email" className="font-semibold">Details</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='details seppearte by , eg:-camera-64mp,...'/>
                                                 </div>
                                             </div>
                                             </div>
@@ -941,10 +941,10 @@ export default function Adminproducts() {
                                             </div>
                                             <div className="lg:col-span-6 mb-5">
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Description</label>
+                                                <label htmlFor="email" className="font-semibold">Details</label>
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><BiText  size={18} /></i>
-                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='description'/>
+                                                <textarea onChange={(e)=>setdescription(e.target.value)} value={description}   className='form-input pl-11' placeholder='details seppearte by , eg:-camera-64mp,..'/>
                                                 </div>
                                             </div>
                                             </div>
