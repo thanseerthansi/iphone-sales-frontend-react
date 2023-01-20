@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AdminSidebar from './AdminSidebar';
 import { GrAddCircle } from 'react-icons/gr';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdPhoneIphone } from 'react-icons/md';
 import { BiMenuAltLeft,BiText } from 'react-icons/bi';
 import { FaEdit} from 'react-icons/fa';
@@ -25,7 +26,8 @@ export default function Adminsetting() {
     // console.log("pkdfso",modelnames)
     useEffect(() => {
         accesscheck()
-            
+        getmodel()
+        getcategory()  
     }, [])
     const notify = (msg) => toast.success(msg, {
         position: "top-center",
@@ -84,7 +86,36 @@ export default function Adminsetting() {
             
         }
     }
-    
+    const deletemodelfn=async(itmid)=>{
+    try {
+        // console.log("itmid",itmid)
+        let datalist ={"id":JSON.stringify([itmid])}
+        let data =  await Callaxios("delete","product/modelname/",datalist)
+        if(data.data.Status===200){
+            getmodel()
+            notify("Deleted Successfully")
+        }else{
+            notifyerror("Something went wrong")
+        }
+    } catch (error) {
+        
+    }
+    }
+    const deletecartfn=async(itmid)=>{
+    try {
+        // console.log("itmid",itmid)
+        let datalist ={"id":JSON.stringify([itmid])}
+        let data =  await Callaxios("delete","product/category/",datalist)
+        if(data.data.Status===200){
+            getcategory()
+            notify("Deleted Successfully")
+        }else{
+            notifyerror("Something went wrong")
+        }
+    } catch (error) {
+        
+    }
+    }
   return (
     <div>
     <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
@@ -124,7 +155,7 @@ export default function Adminsetting() {
                     </div> */}
                     {/* search end */}
                     {/* Dashboard home start */}
-                    <div className=" mx-auto">
+                    <div className=" mx-auto overflow-auto">
 
                     <div className="mt-6 rounded-md">
                     <table className="w-full border border-collapse table-auto">
@@ -142,7 +173,10 @@ export default function Adminsetting() {
                         
                             <td className="px-4 py-4 border border-gray-300 "> {item.model_name} </td>
                             <td className="px-4 py-4 border border-gray-300 "> 
-                            <button onClick={()=>setcartmodal(!cartmodal) & setmodelnames(item) & setmodel(item.model_name)}  className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button>
+                            <ul>
+                            <li><button onClick={()=>setcartmodal(!cartmodal) & setmodelnames(item) & setmodel(item.model_name)}  className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>
+                            <li  className='pt-1'><button onClick={()=>deletemodelfn(item.id)} className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>  
+                            </ul>
                              </td>
                                                    
                             </tr>
@@ -174,7 +208,10 @@ export default function Adminsetting() {
                             <tr key={key} className="py-10 border-b border-gray-200 hover:bg-gray-100">                                                  
                             <td className="px-4 py-4 border border-gray-300 "> {item.category} </td>
                             <td className="px-4 py-4 border border-gray-300 "> 
-                            <button onClick={()=>setcategorymodal(!categorymodal) & setcategorynames(item) & setcategory(item.category)} className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button>                            
+                            <ul className='' >
+                             <li><button onClick={()=>setcategorymodal(!categorymodal) & setcategorynames(item) & setcategory(item.category)} className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>      
+                            <li  className='pt-1'><button onClick={()=>deletecartfn(item.id)}  className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>                      
+                            </ul>
                             </td>                                        
                             </tr>
                         )):<tr className="py-10 border-b border-gray-200 hover:bg-gray-100">                                                  

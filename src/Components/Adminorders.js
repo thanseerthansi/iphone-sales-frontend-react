@@ -198,7 +198,7 @@ export default function Adminorders() {
                             </div>           
                         </div>
                         
-                        <div className='col-span-1 flex items-center'>
+                        <div className='col-span-1 flex items-center ml-auto'>
                             <div className=''>
                                 <b>Sort by : </b>
                                 <select onChange={(e)=>searchorderbystatus(e.target.value)} className='border  border-gray-600 p-2 rounded'>
@@ -212,7 +212,7 @@ export default function Adminorders() {
                     </div>
                     {/* search end */}
                     {/* Dashboard home start */}
-                    <div className=" mx-auto">
+                    <div className=" mx-auto  overflow-auto ">
 
                     <div className="mt-6  rounded-md">
                     <table className="w-full border border-collapse table-auto">

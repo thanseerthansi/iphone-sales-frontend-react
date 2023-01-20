@@ -156,7 +156,7 @@ export default function Adminstatus() {
                     </div>
                     
                     {/* Dashboard home start */}
-                    <div className=" mx-auto">
+                    <div className=" mx-auto  overflow-auto ">
 
                     <div className="mt-6  rounded-md">
                     <table className="w-full border border-collapse table-auto ">

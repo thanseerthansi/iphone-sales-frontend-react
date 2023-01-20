@@ -22,6 +22,8 @@ export default function Adminproducts() {
     const [showreview,setshowreview]=useState(false)
     const [cartmodal,setcartmodal]=useState(false)
     const [editmodal,seteditmodal]=useState(false)
+    const [sellmodal,setsellmodal]=useState(false)
+    const [buymodal,setbuymodal]=useState(false)
     
     // const [productvalue,setproductvalue]=useState([''])
     const [model_name,setmodel_name]=useState('')
@@ -49,7 +51,7 @@ export default function Adminproducts() {
     const [reviewdata,setreviewdata]=useState([])
     // const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
-    // console.log("editprduct",editproduct)
+    console.log("editprduct",editproduct)
     // console.log("images",images)
     
 
@@ -478,7 +480,7 @@ export default function Adminproducts() {
                 
                 <div className='md:p-8  pt-4'>
                 <ToastContainer />
-                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%] shadow-md   w-[94%] fixed overflow-auto  bg-[#f9f8f6]'>
+                    <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%] shadow-md   w-[94%] fixed overflow-auto   bg-[#f9f8f6]'>
                     <b className='text-red-600 '>Products</b>
                     {/* search start */}
                     <div className='grid grid-cols-2'>
@@ -500,12 +502,12 @@ export default function Adminproducts() {
                     {/* search end */}
                     {/* Dashboard home start */}
 
-                    <div className=" mx-auto ">
+                    <div className=" mx-auto overflow-auto ">
 
-                    <div className="mt-6     rounded-md">
+                    <div className="mt-6    rounded-md">
                     <table className="w-full border table-auto   ">
                         <thead className='' >
-                        <tr className="text-base font-bold text-left bg-gray-50">
+                        <tr className="text-base font-bold  bg-gray-50 text-center">
                             <th className="px-4 py-3 border border-gray-300">#</th>
                             <th className="px-4 py-3 border border-gray-300 ">Title</th>
                             <th className="px-4 py-3 border border-gray-300 ">Model</th>
@@ -523,7 +525,7 @@ export default function Adminproducts() {
                             <th className="px-4 py-3  border border-gray-300 ">Action</th>
                         </tr>
                         </thead>
-                        <tbody className="text-sm font-normal text-gray-700">
+                        <tbody className="text-sm font-normal text-gray-700 ">
                         {products.map((itm,k)=>(  
                         <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">                            
                             <td className="px-4 py-4  border border-gray-300">{k+1}</td>
@@ -546,19 +548,21 @@ export default function Adminproducts() {
                             <td className=" px-4 py-4  border border-gray-300 " >                      
                                 <div className="flex font-medium dark:text-gray-700">{itm.category}</div>
                             </td>
-                            <td className="px-2 py-4 border border-gray-300">{itm.sellprice.split(',').map((sellp,k2)=>(
-                              <ul key={k2} className='list-outside list-disc pl-3'>
-                                <li className=''>{sellp}</li></ul>  
-                            ))} </td>
+                            <td onClick={()=>setsellmodal(!sellmodal) & seteditproduct(itm) } className="px-2 py-4 cursor-pointer border border-gray-300 ">
+                                {/* {itm.sellprice.split(',').map((sellp,k2)=>( */}
+                              <ul  className='list-outside list-disc pl-3'>
+                                <li className='text-truncate table-linebreak'>{itm.sellprice}</li></ul>  
+                            {/* // ))} */}
+                             </td>
                             <td className="px-4 py-4 border border-gray-300">
                                 {itm.sellstatus ?
                                 <button onClick={()=>setstatus("sellstatus",false,itm.id)} className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
                                 <button onClick={()=>setstatus("sellstatus",true,itm.id)} className='bg-red-700 rounded p-1 text-white hover:bg-red-600'>disabled</button> }
                             </td>
-                            <td className="px-2 py-4 border border-gray-300">{itm.buyprice.split(',').map((sellp,k2)=>(
-                              <ul key={k2} className='list-outside list-disc flex pl-3'>
-                                <li className=''>{sellp}</li></ul>  
-                            ))} </td>
+                            <td  onClick={()=>setbuymodal(!buymodal) & seteditproduct(itm) } className="px-2 py-4 border  border-gray-300">
+                              <ul  className='list-outside list-disc flex pl-3'>
+                                <li className='table-linebreak'>{itm.buyprice}</li></ul>  
+                           </td>
                             <td className="px-4 py-4 border border-gray-300">
                                 {itm.buystatus ?
                                 <button onClick={()=>setstatus("buystatus",false,itm.id)} className='bg-green-700 rounded p-1 text-white hover:bg-green-600'>enabled</button> :
@@ -582,6 +586,8 @@ export default function Adminproducts() {
                         </tr>
                         
                         ))}  
+                       
+                       
                         </tbody>
                     </table>
                     </div>
@@ -1221,6 +1227,71 @@ export default function Adminproducts() {
                     </div>
             </div>
                     {/* review modal  end */}
+                    {/* sellmodal */}
+                   <div className={sellmodal ?"fixed inset-0 overflow-hidden z-40 " :"hidden" }>
+                    <div className="absolute inset-0 overflow-hidden z-20 ">
+                        <section className="relative w-full h-full">
+                        <div className="absolute inset-0 bg-gray-500 bg-opacity-75" />
+                        <div className="relative z-10 p-6 flex  place-content-center  h-screen">
+                            <div className="relative  bg-white rounded-lg shadow-lg  w-[90%]  md:w-[50%] m-auto  "> 
+                          <div className="bg-gray-200  rounded-t-lg">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-lg font-medium text-gray-800 pl-2">Sell Price</h2>
+                                <button type="button" onClick={()=>setsellmodal(!sellmodal)} className="text-gray-500 font-medium focus:outline-none">
+                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                </button>
+                            </div>
+                            </div>
+                            <div className='px-4 py-3 overflow-auto h-48'>
+                            {editproduct? editproduct.sellprice.split(',').map((sellp,k2)=>(
+                             <ul key={k2} className='list-outside list-disc pl-3'>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                                <li className=''>{sellp}</li>
+                            </ul>  
+                           )):null}
+                           </div>
+                            </div>
+                        </div>
+                        </section>
+                    </div>
+                    </div>
+                    {/* buymodal */}
+                   <div className={buymodal ? "fixed inset-0 overflow-hidden z-40 ":"hidden"} >
+                    <div className="absolute inset-0 overflow-hidden z-20 ">
+                        <section className="relative w-full h-full">
+                        <div className="absolute inset-0 bg-gray-500 bg-opacity-75" />
+                        <div className="relative z-10 p-6 flex  place-content-center  h-screen">
+                            <div className="relative  bg-white rounded-lg shadow-lg w-[90%]  md:w-[50%] m-auto  "> 
+                          <div className="bg-gray-200  rounded-t-lg">
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-lg font-medium text-gray-800 pl-2">Buy Price</h2>
+                                <button type="button" onClick={()=>setbuymodal(!buymodal)} className="text-gray-500 font-medium focus:outline-none">
+                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                </button>
+                            </div>
+                            </div>
+                            <div className='container p-2 overflow-auto h-48 '>
+                             {editproduct? editproduct.buyprice.split(',').map((buyp,k2)=>(
+                             <ul key={k2} className='list-outside list-disc pl-3'>
+                                <li className=''>{buyp}</li></ul>  
+                           )):null}
+                           </div>
+                            </div>
+                        </div>
+                        </section>
+                    </div>
+                    </div>
+
                 </div>
             </div>
         </div>
