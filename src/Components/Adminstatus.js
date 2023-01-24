@@ -53,12 +53,13 @@ export default function Adminstatus() {
     }
     const addstatus=async(e)=>{
         e.preventDefault(); 
+        accesscheck()
         let datalist={"status":status,"code":colorcode,"description":description}
         if(editstatus){
             // console.log("dfsdffs",editstatus)
             datalist.id=editstatus.id
         }
-        console.log("dataaaaaaaaaaalist",datalist)
+        // console.log("dataaaaaaaaaaalist",datalist)
         let data = await Callaxios("post","product/status/",datalist)
         // console.log("dataresponse",data)
         if (data.data.Status===200){
@@ -82,6 +83,7 @@ export default function Adminstatus() {
         setcartmodal(!cartmodal)
     }
     const deletefunction = async(itmid,k)=>{
+        accesscheck()
         let data = await Callaxios("delete","product/status/",{"id":itmid})
         if(data.data.Status===200){
            let splc = statusdata

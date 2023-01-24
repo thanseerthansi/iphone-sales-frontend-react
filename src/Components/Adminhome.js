@@ -20,6 +20,7 @@ export default function Adminhome() {
         accesscheck()
     },[])
     const getorders = async()=>{
+        accesscheck()
         let data = await Callaxios("get","purchase/orderfull/")
         if (data.status===200){
             // console.log("dta",data.data)
@@ -28,6 +29,7 @@ export default function Adminhome() {
         }   
     }
     const getsellorders = async()=>{
+        accesscheck()
         let data = await Callaxios("get","selling/sellfullorder/")
         if (data.status===200){
             // console.log("dta",data.data)
@@ -55,8 +57,8 @@ export default function Adminhome() {
                         <div className='container rounded-lg h-[90vh]   overflow-y-auto shadow-md bg-[#f9f8f6]'>
                         {/* Dashboard home start */}
                         <div className='grid grid-cols-12 mb-8'>
-                            <div className='md:col-span-4 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
+                            <div className='md:col-span-4 p-5 col-span-12 '>
+                            <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
                                     <b>New Orders</b>
@@ -72,7 +74,7 @@ export default function Adminhome() {
                             </div>
                             </div>
                             <div className='md:col-span-4 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
+                            <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
                                     <b>Today Orders</b>
@@ -87,8 +89,8 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-4 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-400 to-blue-900 p-[3px]">
+                            <div className='md:col-span-4 p-5 col-span-12 '>
+                            <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-400 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
                                     <b>Total Orders</b>
@@ -105,8 +107,8 @@ export default function Adminhome() {
                             </div>
                             
                             
-                            <div className='md:col-span-4 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
+                            <div className='md:col-span-4 p-5 col-span-12 '>
+                            <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
                                     <b>New Sells</b>
@@ -121,8 +123,8 @@ export default function Adminhome() {
                                 </div>
                             </div>
                             </div>
-                            <div className='md:col-span-4 p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
+                            <div className='md:col-span-4 p-5 col-span-12 '>
+                            <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
                                     <b>Today Sells</b>
@@ -138,7 +140,7 @@ export default function Adminhome() {
                             </div>
                             </div>
                             <div className='md:col-span-4    p-5 col-span-12'>
-                            <div className="w-60 shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
+                            <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
                                     <b>Total Sells</b>

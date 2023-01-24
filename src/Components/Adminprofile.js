@@ -55,6 +55,7 @@ export default function Adminprofile() {
       
   }
     const getuser=async()=>{
+        accesscheck()
         let data = await Callaxios("get","user/user/",{user:userid})
         if (data.status===200){
             // console.log("data",data.data)
@@ -74,6 +75,7 @@ export default function Adminprofile() {
     }
     const editfunction =async(e)=>{
         e.preventDefault();
+        accesscheck()
         // console.log("edit")
         let datalist = {
             "id":profiledata[0].id,

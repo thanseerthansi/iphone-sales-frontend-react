@@ -26,6 +26,8 @@ export default function Simplecontextprovider({children}) {
       }
       else{
         getproduct()
+        getcategory()
+        getmodel()
       }
          
     }, [])

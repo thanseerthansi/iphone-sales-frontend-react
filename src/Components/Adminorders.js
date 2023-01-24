@@ -37,6 +37,7 @@ export default function Adminorders() {
         });
 
     const getorders=async()=>{
+        
         let data = await Callaxios("get","purchase/order/")
         if (data.status===200){
             // console.log("statusdata",data)
@@ -47,6 +48,7 @@ export default function Adminorders() {
         }
     }
     const changestatus=async(itmid,value)=>{
+        accesscheck()
         let data = await Callaxios("post","purchase/order/",[{"id":itmid,"status":value}])
         if (data.data.Status===200){
             // console.log("updatestatus",data)
@@ -60,6 +62,7 @@ export default function Adminorders() {
     }
     const changeproductstatus=async(itmid,value)=>{
         try {
+            accesscheck()
             let data = await Callaxios("post","purchase/orderedproduct/",[{"id":itmid,"status":value}])
             // console.log("updatestatus",data)
             if (data.data.Status===200){
@@ -76,6 +79,7 @@ export default function Adminorders() {
         }
     }
     const getnextorders=async()=>{
+        accesscheck()
         let data = await Callaxios("next",nextorder)
         if (data.status===200){
             // console.log("statusdata",data)
@@ -87,6 +91,7 @@ export default function Adminorders() {
     }
 
     const getorderproduct=async(order_id,model)=>{
+        accesscheck()
         // console.log("orderid",order_id)
         let data = await Callaxios("get","purchase/orderedproduct/",{"order_id":order_id})
         if (data.status===200){
@@ -102,6 +107,7 @@ export default function Adminorders() {
         }
     }
     const searchproduct = async()=>{
+        accesscheck()
         if(search.includes('Z')===true){
             let searchdata = search.split('Z')[1]
             let data = await Callaxios("get","purchase/order/",{"id":searchdata})
@@ -115,6 +121,7 @@ export default function Adminorders() {
     //    else{console.log("nosearcg")}
     }
     const searchorderbystatus = async(status)=>{
+            accesscheck()
             let data = await Callaxios("get","purchase/order/",{"status":status})
             if (data.status===200){
                 setorders(data.data.results)
@@ -124,6 +131,7 @@ export default function Adminorders() {
             }
     }
     const deletefunction = async(itmid,k)=>{
+        accesscheck()
         let datalist ={"id":JSON.stringify([itmid])}
         let data = await Callaxios("delete","purchase/order/",datalist)
         // console.log("datdelete",data)
@@ -141,6 +149,7 @@ export default function Adminorders() {
        
     }
     const getstatus = async()=>{
+        accesscheck()
         let data = await Callaxios("get","product/status/")
         if (data.status===200){
             // console.log("statusdata",data)

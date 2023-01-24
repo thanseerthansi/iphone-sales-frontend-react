@@ -63,6 +63,7 @@ export default function Adminsetting() {
     
     const postcategoryfn=async(e)=>{
         e.preventDefault(); 
+        accesscheck()
         try {
             let datalist = {
                 category:category
@@ -88,6 +89,7 @@ export default function Adminsetting() {
     }
     const deletemodelfn=async(itmid)=>{
     try {
+        accesscheck()
         // console.log("itmid",itmid)
         let datalist ={"id":JSON.stringify([itmid])}
         let data =  await Callaxios("delete","product/modelname/",datalist)
@@ -103,6 +105,7 @@ export default function Adminsetting() {
     }
     const deletecartfn=async(itmid)=>{
     try {
+        accesscheck()
         // console.log("itmid",itmid)
         let datalist ={"id":JSON.stringify([itmid])}
         let data =  await Callaxios("delete","product/category/",datalist)

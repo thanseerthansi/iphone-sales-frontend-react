@@ -51,7 +51,7 @@ export default function Adminproducts() {
     const [reviewdata,setreviewdata]=useState([])
     // const [reviewnext,setreviewnext]=useState('')
     // console.log("productdata add",buyconditiontolist)
-    console.log("editprduct",editproduct)
+    // console.log("editprduct",editproduct)
     // console.log("images",images)
     
 
@@ -61,6 +61,8 @@ export default function Adminproducts() {
         getproduct()
         accesscheck()
         getcondition()
+        // modeldata()
+        // categorydata()
         const getData = setTimeout(() => {    
             searchproduct()
             }, 1000)
@@ -116,7 +118,7 @@ export default function Adminproducts() {
     //     }
     // }
     const searchproduct = async()=>{
-
+        accesscheck()
         let data = await Callaxios("get","product/product",{title:search})
         if (data.status===200){
             // console.log("datasearcfhg",data)
@@ -207,6 +209,7 @@ export default function Adminproducts() {
         setcolors(itm.colors)
     }
     const deleteimage= async(itm,k)=>{
+        accesscheck()
         // console.log("editprduct",editproduct)
         let datalist= {"keyword":"remove","images":JSON.stringify([itm.id]),"id":editproduct.id}
         // console.log("datalist",datalist)
@@ -226,6 +229,7 @@ export default function Adminproducts() {
         
     }
     const deleteproduct =async(itmid,k)=>{
+        accesscheck()
         let datalist ={"id":JSON.stringify([itmid])}
         let data = await Callaxios("delete","product/product/",datalist) 
         // console.log("delete",data.data)
@@ -240,6 +244,7 @@ export default function Adminproducts() {
         }
     }
     const setstatus= async(keys,status,pid)=>{
+        accesscheck()
         let datalist=''
         if (keys==="buystatus"){
             datalist ={"id":pid,"buystatus":status}
@@ -294,10 +299,10 @@ export default function Adminproducts() {
     };
     const setallnull = ()=>{
         // console.log("allnull")
-        // setproductvalue([])     
+        // setproductvalue([])   
+        seteditproduct('')  
         setimages([])
         seteditimages('')
-        seteditproduct('')
         setsearchcheck('')
         setmodel_name('')
         setcategory('')
@@ -307,6 +312,7 @@ export default function Adminproducts() {
         setfromprice('')
         setoldprice('')
         setdescription('')
+        
         // setcolors('')
         // setsellstoragetolist('')
         // setsellconditiontolist('')
@@ -440,6 +446,7 @@ export default function Adminproducts() {
         // console.log("arrya",array.toString())
     }
     const getreview=async(urlid)=>{
+        accesscheck()
         // console.log("urlid",urlid)
         let data = await Callaxios("get","purchase/review/",{"product":urlid})
         // console.log("reviewdata",data.data)
@@ -1237,7 +1244,7 @@ export default function Adminproducts() {
                           <div className="bg-gray-200  rounded-t-lg">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-lg font-medium text-gray-800 pl-2">Sell Price</h2>
-                                <button type="button" onClick={()=>setsellmodal(!sellmodal)} className="text-gray-500 font-medium focus:outline-none">
+                                <button type="button" onClick={()=>setsellmodal(!sellmodal) &seteditproduct('')} className="text-gray-500 font-medium focus:outline-none">
                                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -1248,13 +1255,7 @@ export default function Adminproducts() {
                             {editproduct? editproduct.sellprice.split(',').map((sellp,k2)=>(
                              <ul key={k2} className='list-outside list-disc pl-3'>
                                 <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
-                                <li className=''>{sellp}</li>
+                                
                             </ul>  
                            )):null}
                            </div>
@@ -1273,7 +1274,7 @@ export default function Adminproducts() {
                           <div className="bg-gray-200  rounded-t-lg">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-lg font-medium text-gray-800 pl-2">Buy Price</h2>
-                                <button type="button" onClick={()=>setbuymodal(!buymodal)} className="text-gray-500 font-medium focus:outline-none">
+                                <button type="button" onClick={()=>setbuymodal(!buymodal) &seteditproduct('')} className="text-gray-500 font-medium focus:outline-none">
                                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>

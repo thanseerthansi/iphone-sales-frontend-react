@@ -48,6 +48,7 @@ export default function Admincategory() {
         });
 
     const getcondition = async()=>{
+        accesscheck()
         let data = await Callaxios("get","product/condition/")
         if (data.status===200){
             // console.log("conditiondata",data)
@@ -57,6 +58,7 @@ export default function Admincategory() {
         }
     }
     const addcondition=async(e)=>{
+        accesscheck()
         e.preventDefault(); 
         if (descriptionstring){
             // console.log("datacondition",condition.toUpperCase())
@@ -85,6 +87,7 @@ export default function Admincategory() {
         }
         }
     const functioneditcondition=(itm)=>{
+        accesscheck()
         seteditcondition(itm)
         // setcolorcode(itm.code)
         setdescriptionstring(itm.description)
@@ -93,6 +96,7 @@ export default function Admincategory() {
         setaddmodal(!addmodal)
     }
     const deletefunction = async(itmid,k)=>{
+        accesscheck()
         // console.log("idddddd",itmid)
         let data = await Callaxios("delete","product/condition/",{"id":JSON.stringify([itmid])})
         if(data.data.Status===200){
