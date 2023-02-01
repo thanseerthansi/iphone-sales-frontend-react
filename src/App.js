@@ -17,6 +17,7 @@ import Adminprofile from "./Components/Adminprofile";
 import Repassword from "./Components/Repassword";
 import Passwordchage from "./Components/Passwordchage";
 import Adminsetting from "./Components/Adminsetting";
+import Testimonial from "./Components/Testimonial";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="adminsetting" element={<Adminsetting/>}/>
         <Route exact path="adminprofile" element={<Adminprofile/>}/>
         <Route exact path="repassword" element={<Repassword/>}/>
+        <Route exact path="testimonials" element={<Testimonial/>}/>
         <Route exact path="passwordchange/:id" element={<Passwordchage/>}/>       
       </Routes>
       </Simplecontextprovider>
