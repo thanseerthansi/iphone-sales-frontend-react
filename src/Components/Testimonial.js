@@ -172,7 +172,7 @@ export default function Testimonial() {
                             <th className="px-4 py-3 border-b-2 border border-gray-300">#</th>
                             <th className="px-4 py-3 border-b-2 border border-gray-300">Name</th>
                             <th className="px-4 py-3 border-b-2 border border-gray-300">Place</th>
-                            <th className="px-4 py-3 border-b-2 border  border-gray-300"> Rating</th>
+                            <th className="px-4 py-3 border-b-2 border  border-gray-300 w-[200px]"> Rating</th>
                             <th className="px-4 py-3 border-b-2 border border-gray-300"> Review</th>
                             <th className="px-4 py-3 border-b-2 border border-gray-300">Action</th>
                            
@@ -185,7 +185,7 @@ export default function Testimonial() {
                                 <td className="px-4 py-4 border border-gray-300">{k+1}</td>
                                     <td className="px-4 py-4 border border-gray-300">{itm.name}</td>
                                     <td className="px-4 py-4 border border-gray-300 ">{itm.place}</td>
-                                    <td className="px-4 py-4 border border-gray-300 ">
+                                    <td className="px-4 py-4 ">
                                     <ReactStars 
                                             key={`stars_${itm.rating}`}
                                             value={itm.rating}
