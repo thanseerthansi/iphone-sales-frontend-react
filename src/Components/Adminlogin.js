@@ -65,7 +65,7 @@ export default function Adminlogin() {
   <div className="container">
     <div className="flex justify-center">
       <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
-        <a href="/"><img src="/assets/images/logo/logo.png" className="mx-auto w-[200px]" alt={''} /></a>
+        <a href="/"><img src="/assets/images/logo/logo.png" className="ml-[30%] w-[200px]" alt={''} /></a>
         <h5 className="my-6 text-xl font-semibold">Login</h5>
         <form className="text-left" onSubmit={(e)=>login(e)} >
           <div className="grid grid-cols-1">
@@ -86,7 +86,7 @@ export default function Adminlogin() {
             </div> */}
             <div className='flex justify-end'><Link to='/repassword'><button className='text-gray-500 cursor-pointer hover:text-gray-600'>Forgot Password ?</button></Link></div>
             <div className="mb-4 pt-2">
-              <button type="Submit" className="btn bg-[#13b5e1] cursor-pointer hover:bg-[#108fb3] border-[#13b5e1]  text-white rounded-md w-full" defaultValue="Login" >Login</button>
+              <button type="Submit" className="btn bg-[#143f66] cursor-pointer hover:bg-[#195aa5] border-[#143f66]  text-white rounded-md w-full" defaultValue="Login" >Login</button>
                          
             </div>
             
