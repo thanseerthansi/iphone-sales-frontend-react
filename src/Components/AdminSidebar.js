@@ -19,10 +19,11 @@ export default function AdminSidebar(show) {
     <div>
         <div className="min-h-screen flex items-center justify-center   bg-gray-100 py-1">            
   <div className="flex w-full max-w-xs p-2  h-screen  overflow-y-auto  bg-white"> 
-    <ul className="flex flex-col w-full">
+    <ul className="flex flex-col w-full ">
         {isMobileDevice ? 
         <div className='flex justify-end  '><button onClick={()=>show.setshow(!show.show)} className='  hover:text-red-600 rounded-full h-8 w-8 text-white bg-red-500 hover:bg-red-800 cursor-pointer'>X</button></div>
           :null}
+          <li><a href="/"><img src="/assets/images/logo/logo.png" className="mx-auto w-[130px]" alt={''} /></a></li>
       <li className="my-px pt-4">
         <Link  to="/adminhome" className="flex flex-row items-center h-12 px-4 rounded-lg text-gray-600 hover:bg-gray-700 hover:text-white">
           <span className="flex items-center justify-center text-lg text-gray-500">
@@ -125,8 +126,8 @@ export default function AdminSidebar(show) {
         </a>
       </li> */}
       
-      <li className="my-px">
-        <p onClick={()=>logout()} className="flex cursor-pointer flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white">
+      <li className="my-px " >
+        <p onClick={()=>logout()} className="flex cursor-pointer flex-row items-center h-12 px-4 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white mb-16">
           <span className="flex items-center justify-center text-lg text-red-400">
             <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
               <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
@@ -135,6 +136,7 @@ export default function AdminSidebar(show) {
           <span className="ml-3 ">Logout</span>
         </p>
       </li>
+      
     </ul>
   </div>
 </div>

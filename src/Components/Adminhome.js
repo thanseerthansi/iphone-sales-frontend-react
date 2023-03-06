@@ -54,9 +54,9 @@ export default function Adminhome() {
                     
                     <div className='md:p-8  pt-4'>
                     
-                        <div className='container rounded-lg h-[90vh]   overflow-y-auto shadow-md bg-[#f9f8f6]'>
+                        <div className=' rounded-lg h-[90vh]   overflow-y-auto shadow-md bg-[#f9f8f6]'>
                         {/* Dashboard home start */}
-                        <div className='grid grid-cols-12 mb-8'>
+                        <div className='grid grid-cols-12 mb-8 p-5'>
                             <div className='md:col-span-4 p-5 col-span-12 '>
                             <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-blue-300 to-blue-900 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
