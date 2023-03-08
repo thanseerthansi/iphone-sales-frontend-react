@@ -21,6 +21,7 @@ export default function Adminorders() {
     const [statusdata,setstatusdata]=useState([])
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         getorders()
         getstatus()
         accesscheck()

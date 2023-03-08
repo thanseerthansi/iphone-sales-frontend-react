@@ -25,6 +25,7 @@ export default function Adminsetting() {
     const [category,setcategory]=useState('')
     // console.log("pkdfso",modelnames)
     useEffect(() => {
+        window.scrollTo(0, 0);
         accesscheck()
         getmodel()
         getcategory()  

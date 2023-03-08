@@ -40,6 +40,7 @@ export default function Adminprofile() {
         position: "top-center",
         });
     useEffect(() => {
+        window.scrollTo(0, 0);
             accesscheck()
             getuser()
         }, [])

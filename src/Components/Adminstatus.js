@@ -25,6 +25,7 @@ export default function Adminstatus() {
     const [colorcode,setcolorcode]=useState('')
     console.log("status",status)
     useEffect(() => {
+        window.scrollTo(0, 0);
         accesscheck()
         getstatus()
     }, [])

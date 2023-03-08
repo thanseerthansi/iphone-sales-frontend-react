@@ -57,7 +57,8 @@ export default function Adminproducts() {
 
     let navigate = useNavigate(); 
     // console.log("next",next) 
-    useEffect(() => {        
+    useEffect(() => {       
+        window.scrollTo(0, 0); 
         getproduct()
         accesscheck()
         getcondition()

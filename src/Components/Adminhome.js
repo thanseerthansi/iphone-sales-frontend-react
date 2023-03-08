@@ -18,6 +18,7 @@ export default function Adminhome() {
         getorders()
         getsellorders()
         accesscheck()
+        window.scrollTo(0, 0);
     },[])
     const getorders = async()=>{
         accesscheck()

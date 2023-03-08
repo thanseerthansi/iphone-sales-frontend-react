@@ -27,6 +27,7 @@ export default function Admincategory() {
     // console.log("gsadugv",description)
     // const [colorcode,setcolorcode]=useState('')
     useEffect(() => {
+        window.scrollTo(0, 0);
         accesscheck()
         getcondition()
     }, [])
