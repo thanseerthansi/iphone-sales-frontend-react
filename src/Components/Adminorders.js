@@ -225,7 +225,7 @@ export default function Adminorders() {
         {
             name: "PURCHASED ON",
             selector: (itm) => itm.created_date.split('T')[0],
-            maxwidth: "130px",
+            width: "130px",
         },
         {
             name: "PRODUCTS",
