@@ -71,11 +71,11 @@ export default function Adminlogin() {
           <div className="grid grid-cols-1">
             <div className="mb-4">
               <label className="font-semibold" htmlFor="LoginEmail">User Name</label>
-              <input id="username" onChange={(e)=>setusername(e.target.value)} type="text" className="form-input mt-3" placeholder="Username:  " />
+              <input id="username" required onChange={(e)=>setusername(e.target.value)} type="text" className="form-input mt-3" placeholder="Username:  " />
             </div>
             <div className="mb-4">
               <label className="font-semibold" htmlFor="LoginPassword">Password:</label>
-              <input  type="password" id="password" onChange={(e)=>setpassword(e.target.value)}  className="form-input mt-3" placeholder="Password:" />
+              <input  type="password" required id="password" onChange={(e)=>setpassword(e.target.value)}  className="form-input mt-3" placeholder="Password:" />
             </div>
             {/* <div className="flex justify-between mb-4">
               <div className="form-checkbox flex items-center mb-0">
