@@ -204,7 +204,7 @@ export default function Adminorders() {
         },
         {
             name: "DELIVERY ADDRESS",
-            selector: (itm) => <div style={{ whiteSpace: 'break-spaces' }}>{itm.address}, {itm.city}, {itm.postcode}, {itm.state}, {itm.country}</div>,
+            selector: (itm) => <div style={{ whiteSpace: 'break-spaces' }}>{itm.address}, {itm.city}<br/>{itm.state}, {itm.country}<br/>{itm.postcode}</div>,
             width: "200px"
         },
         {
@@ -458,7 +458,7 @@ export default function Adminorders() {
                                                                 <td className="px-4 py-4">{itm.product[0].title}</td>
                                                                 <td className="px-4 py-4">AED {itm.price}</td>
                                                                 <td className="px-4 py-4">{itm.condition}</td>
-                                                                <td className="px-4 py-4">{itm.storage} GB</td>
+                                                                <td className="px-4 py-4">{itm.storage} </td>
                                                                 <td className="px-4 py-4 ">
                                                                     <div>
                                                                         <span className='rounded p-1 uppercase ' style={itm.status ? { backgroundColor: itm.status[0].code } : {}}><b className='text-white '>{itm.status ? itm.status[0].status : null}</b></span>

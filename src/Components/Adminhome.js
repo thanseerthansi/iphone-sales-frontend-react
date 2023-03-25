@@ -112,7 +112,7 @@ export default function Adminhome() {
                             <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
-                                    <b>New Sells</b>
+                                    <b>New Sell Orders</b>
                                     
                                     </div>
                                     <div className="mt-4 flex items-end justify-between">
@@ -128,7 +128,7 @@ export default function Adminhome() {
                             <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
-                                    <b>Today Sells</b>
+                                    <b>Today Sell Orders</b>
                                     
                                     </div>
                                     <div className="mt-4 flex items-end justify-between">
@@ -144,7 +144,7 @@ export default function Adminhome() {
                             <div className="w-auto shrink-0 rounded-lg bg-gradient-to-br shadow-md from-amber-400 to-orange-600 p-[3px]">
                                 <div className="rounded-lg bg-white p-3 dark:bg-navy-700">
                                     <div className="flex items-center justify-between">
-                                    <b>Total Sells</b>
+                                    <b>Total Sell Orders</b>
                                     
                                     </div>
                                     <div className="mt-4 flex items-end justify-between">

@@ -581,8 +581,8 @@ export default function Adminproducts() {
                                 <li className='rounded-full w-7 h-7 'style={{backgroundColor:itm}}></li>
                                 </ul>
                             ))}</td> */}
-                            <td className="px-4 py-4 border border-gray-300">${itm.oldfromprice}</td>
-                            <td className="px-4 py-4 border border-gray-300">${itm.sellfromprice}</td>
+                            <td className="px-4 py-4 border border-gray-300">AED {itm.oldfromprice}</td>
+                            <td className="px-4 py-4 border border-gray-300">AED {itm.sellfromprice}</td>
                             <td className='px-4 py-4 border border-gray-300 '> <button className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' onClick={()=>setshowreview(!showreview) & getreview(itm.id)}>Review<FaSortDown/></button></td>
                             <td className='px-4 py-4 border border-gray-300'> {itm.created_date.split('T')[0]}</td>
                             <td className='px-4 py-4 border border-gray-300'>

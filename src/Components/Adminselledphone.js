@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Simplecontext } from './Simplecontext';
+import DataTable from 'react-data-table-component';
 export default function Adminselledphone() {
     const {accesscheck} =useContext(Simplecontext)
     let isMobileDevice = window.matchMedia("only screen and (max-width: 768px)").matches;
@@ -152,6 +153,91 @@ export default function Adminselledphone() {
             
         });
         };
+        const rowNumber = (row) => orders.indexOf(row) + 1;
+    const columns = [
+
+        {
+            name: <div>#</div>,
+            selector: (itm, index) => rowNumber(itm),
+            width: "50px",
+        },
+        {
+            name: "SN.No",
+            selector: (itm) => <div style={{ whiteSpace: 'break-spaces' }}>SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</div>,
+            width: "150px",
+        },
+        {
+            name: "CUSTOMER",
+            selector: (itm) => <div style={{ whiteSpace: 'break-spaces' }}>{itm.customer_name}</div>,
+            width: "150px",
+        },
+        {
+            name: "CONTACT",
+            selector: (itm) => <div style={{ whiteSpace: 'break-spaces' }}>{itm.contact}</div>,
+            width: "150px"
+        },
+        {
+            name: "ADDRESS",
+            selector: (itm) => <div style={{ whiteSpace: 'break-spaces' }}>{itm.address}, {itm.city}<br/>{itm.state}, {itm.country}<br/>{itm.postcode}</div>,
+            width: "200px"
+        },
+        {
+            name: "STATUS",
+            selector: (itm) => <div className='my-2'><div>
+                <span className='rounded p-1 uppercase ' style={{ backgroundColor: itm.status[0].code }}><b className='text-white '>{itm.status[0].status}</b></span>
+            </div>
+                <div className='pt-2'>
+                    <select onChange={(e) => changestatus(itm.id, e.target.value)} className='border border-gray-500 rounded '>
+                        <option value={''} hidden>Change Status</option>
+                        {statusdata.length ? statusdata.map((statusitm, k1) => (
+                            <option key={k1} className='uppercase' value={statusitm.status} >{statusitm.status}</option>
+                        )) : null}
+                    </select>
+                </div></div>,
+            width: "150px"
+        },
+        {
+            name: "PURCHASED ON",
+            selector: (itm) => itm.created_date.split('T')[0],
+            width: "130px",
+        },
+        {
+            name: "PRODUCTS",
+            selector: (itm) => <button onClick={() => getorderproduct(itm.id)} className='rounded p-1 bg-gray-600 flex text-white hover:bg-slate-400' >Products<FaSortDown /></button>,
+            width: "120px",
+        },
+        {
+            name: "DELETE",
+            selector: (itm, k) => <div onClick={() => submitdeleteorder(itm.id, k)} className='pt-1'><button className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18} />delete</button></div>
+            ,
+            maxwidth: "100px",
+        },
+
+    ]
+
+    const customStyles = {
+        cells: {
+            style: {
+                border: "0.5px solid #f5f2f2 ",
+
+            },
+        },
+
+        headCells: {
+            style: {
+                minHeight: '40px',
+                border: "0.5px solid #e8e2e2 ",
+                borderTopWidth: '1.5px'
+            },
+
+        },
+        filter: {
+            style: {
+                border: "1px solid gray",
+            }
+        }
+
+    };
   return (
     <div>
     <div className='bg-[#f2f2f2] fixed h-screen w-screen'>
@@ -171,7 +257,7 @@ export default function Adminselledphone() {
                 <div className='md:p-8  pt-4'>
                 <ToastContainer />
                     <div className='p-4 rounded-lg md:h-[90vh] h-[85vh] md:w-[78%]  w-[94%] fixed overflow-auto shadow-md bg-[#f9f8f6]'>
-                    <b className='text-red-600 '>Selled Orders</b>
+                    <b className='text-red-600 '>Sell Orders</b>
                     {/* search start */}
                     <div className='grid grid-cols-2'>
                         <div className='col-span-1'>
@@ -201,14 +287,25 @@ export default function Adminselledphone() {
                     <div className=" mx-auto  overflow-auto ">
 
                     <div className="mt-6  rounded-md">
-                    <table className="w-full border border-collapse table-auto">
+                    <DataTable
+                        defaultSortField="id"
+                        defaultSortAsc={false}
+                        pagination
+                        highlightOnHover
+                        columns={columns}
+                        data={orders}
+                        fixedHeader
+                        fixedHeaderScrollHeight='63vh'
+                        customStyles={customStyles}
+                    />
+                    {/* <table className="w-full border border-collapse table-auto">
                         <thead >
                         <tr className="text-base font-bold text-left bg-gray-50">
                             <th className="px-4 py-3 border border-gray-300">#</th>
                             <th className="px-4 py-3 border border-gray-300">Sn.No</th>
                             <th className="px-4 py-3 border border-gray-300">Customer</th>
                             <th className="px-4 py-3 border border-gray-300">Contact</th>
-                            <th className="px-4 py-3 border border-gray-300">Delivery Address</th>
+                            <th className="px-4 py-3 border border-gray-300">Address</th>
                             <th className="px-4 py-3  border border-gray-300 ">Status</th>
                             <th className="px-4 py-3  border border-gray-300 ">Purchased On</th>
                             <th className="px-4 py-3  border border-gray-300 ">Products</th>
@@ -222,7 +319,7 @@ export default function Adminselledphone() {
                                 <td className="px-4 py-4 border border-gray-300 ">SN{itm.created_date.split('T')[1].split('.')[1]}{itm.id}</td>
                                 <td className="  px-4 py-4 border border-gray-300">{itm.customer_name}</td>
                                 <td className="px-4 py-4 border border-gray-300">{itm.contact} </td>
-                                <td className="px-4 py-4 border border-gray-300">{itm.address}, {itm.city}, {itm.postcode}, {itm.state}, {itm.country}</td>
+                                <td className="px-4 py-4 border border-gray-300">{itm.address}, {itm.city},<br/> {itm.postcode}, {itm.state}, {itm.country}</td>
                                 <td className="px-4 py-4 border border-gray-300">
                                     <div>
                                     <span className='rounded p-1 uppercase' style={{backgroundColor:itm.status[0].code}}><b className='text-white'>{itm.status[0].status}</b></span>
@@ -248,7 +345,7 @@ export default function Adminselledphone() {
                          )) :null} 
 
                         </tbody>
-                    </table>
+                    </table> */}
                     </div>
                     <div className="flex flex-col items-center w-full px-4 py-2 space-y-2 text-sm text-gray-500 sm:justify-between sm:space-y-0 sm:flex-row">
                     <div className="flex items-center justify-between space-x-2">
@@ -306,7 +403,7 @@ export default function Adminselledphone() {
                             <td className="flex flex-row items-center px-4 py-4">{itm.product[0].model_name}</td>
                             <td className="px-4 py-4">AED {itm.price}</td>
                             <td className="px-4 py-4">{itm.condition}</td>
-                            <td className="px-4 py-4">{itm.storage} GB</td>
+                            <td className="px-4 py-4">{itm.storage} </td>
                             {/* <td className="px-4 py-4"><p className='rounded-full w-7 h-7 'style={{backgroundColor:itm.color}}></p   ></td> */}
                             <td className="px-4 py-4">{itm.quantity}</td>
                         </tr>

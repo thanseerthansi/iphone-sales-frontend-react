@@ -84,7 +84,7 @@ export default function Adminlogin() {
               </div>
               <p className="text-slate-400 mb-0"><a href="auth-re-password.html" className="text-slate-400">Forgot password ?</a></p>
             </div> */}
-            <div className='flex justify-end'><Link to='/repassword'><button className='text-gray-500 cursor-pointer hover:text-gray-600'>Forgot Password ?</button></Link></div>
+            <div className='flex justify-end'><Link to='/repassword'>Forgot Password ?</Link></div>
             <div className="mb-4 pt-2">
               <button type="Submit" className="btn bg-[#143f66] cursor-pointer hover:bg-[#195aa5] border-[#143f66]  text-white rounded-md w-full" defaultValue="Login" >Login</button>
                          
