@@ -101,12 +101,13 @@ export default function Simplecontextprovider({children}) {
   }
   const getcategory = async()=>{
     try {
-      let data = await Callaxios("get","product/category")
-      if (data.status===200){
+      let data = await Callaxios("get","product/category/")
+      // console.log("getcategory",data)
+      if(data.status===200){
         setcategorydata(data.data)
       }
     } catch (error) {
-      
+      console.log("caterror",error)
     }
   }
   return (

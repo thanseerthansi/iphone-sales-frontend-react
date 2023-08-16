@@ -221,7 +221,7 @@ export default function Admincategory() {
                         </tr>
                         </thead>
                         <tbody className="text-sm font-normal text-gray-700">
-                        {conditiondata.map((itm,k)=>(
+                        {conditiondata.length?conditiondata.map((itm,k)=>(
                             <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">
                                 
                                 <td className="px-4 py-4 border border-gray-300">{k+1}</td>
@@ -242,7 +242,7 @@ export default function Admincategory() {
                                     </td>
                                 
                             </tr>
-                        ))} 
+                        )):<tr className='text-center' ><td colSpan={4} rowSpan={2}>No data found</td></tr>} 
                             
 
                         </tbody>

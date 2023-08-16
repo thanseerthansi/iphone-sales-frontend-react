@@ -179,7 +179,7 @@ export default function Testimonial() {
                         </tr>
                         </thead>
                         <tbody className="text-sm font-normal text-gray-700">
-                        {testimonialdata? testimonialdata.map((itm,k)=>(
+                        {testimonialdata?.length? testimonialdata.map((itm,k)=>(
                             <tr key={k} className="py-10 border-b border-gray-200 hover:bg-gray-100">
                                 
                                 <td className="px-4 py-4 border border-gray-300">{k+1}</td>
@@ -199,14 +199,14 @@ export default function Testimonial() {
                                     <td className="px-4 py-4 border border-gray-300 ">{itm.review}</td>
                                 
                                     <td className="px-4 py-4 border border-gray-300">
-                                    <ul className='' >
+                                    <ul className='flex' >
                                             <li><button onClick={()=>functionedit(itm) }  className='bg-yellow-500 rounded-lg flex text-white p-1 hover:bg-yellow-400' ><FaEdit size={18}/>edit</button></li>
-                                            <li  className='pt-1'><button onClick={()=>submitdeleteproduct(itm.id,k)} className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
+                                            <li  className='pl-2'><button onClick={()=>submitdeleteproduct(itm.id,k)} className='bg-red-700 rounded-lg flex text-white p-1 hover:bg-red-600'><RiDeleteBin6Line size={18}/>delete</button></li>
                                         </ul>
                                     </td>
                                 
                             </tr>
-                        )):null} 
+                        )):<tr className='text-center'><td colSpan={6}>No data found</td></tr>} 
                             
 
                         </tbody>

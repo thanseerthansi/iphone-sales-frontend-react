@@ -21,9 +21,9 @@ export default function Adminlogin() {
         "password":password,
       }
       try {
-        let logdata = await Callaxios("get",'user/user/',{admin:"admin",username:username}) 
+        // let logdata = await Callaxios("get",'user/user/',{admin:"admin",username:username}) 
         // console.log("datalog",logdata)
-        if (logdata.data.length){
+        // if (logdata.data.length){
           // console.log("is admin")
           axios({
             method: 'post',
@@ -45,10 +45,10 @@ export default function Adminlogin() {
             console.log(error)
             notifyerror()
           })
-          }
-        else{
-          notifyerror()
-        }
+        //   }
+        // else{
+        //   notifyerror()
+        // }
       } catch (error) {
         
       } 

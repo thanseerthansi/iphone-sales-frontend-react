@@ -4,46 +4,8 @@ import { BaseURL } from './urlcall';
 // import jwt_decode from "jwt-decode";
 // import { Simplecontext } from './Simplecontext';
 // let canceltoken;
-export default async function  Callaxios(method,url,datalist) { 
-    // const {accesscheck} =useContext(Simplecontext)
-    // if(typeof canceltoken != typeof undefined){
-    //     canceltoken.cancel("Cancelling Request")
-    // }
-    // canceltoken = axios.CancelToken.source()
-    // accesscheck()
-    
-    
+export default async function  Callaxios(method,url,datalist) {    
     const token = localStorage.getItem('access_token');
-    // console.log("token",token)
-    // var refresh_token = window.localStorage.getItem('refresh_token')
-    // if (refresh_token && token){
-    //     var decodedToken=jwt_decode(token, {complete: true});
-    //     var dateNow = new Date();
-    //     // console.log("valid1",refresh_token)
-    //     if(decodedToken.exp < dateNow.getTime()){
-    //       // console.log("valid",refresh_token)
-    //       try {
-    //           let accessdata = await axios({
-    //             method: 'post',
-    //             url: BaseURL+'api/token/refresh/',
-    //             data:{"refresh" : refresh_token },
-    //           })
-    //       //   console.log("data",accessdata)    
-    //           if(accessdata.status===200){
-    //             window.localStorage.setItem('access_token', accessdata.data.access)   
-    //           } 
-              
-    //       }catch (error) {
-    //         console.log("error",error)
-    //         // console.log("erro/rmessga",error.response.status)
-    //         if (error.response.status===401){
-    //             // return navigate('/adminlogin');
-    //             window.location.href = '/adminlogin';
-    //         }
-    //       }
-    //     }
-    //   }
-    
     let body = {
                 method: 'post',
                 url: BaseURL+url,
@@ -58,14 +20,14 @@ export default async function  Callaxios(method,url,datalist) {
             data: datalist
             }
     }
-   
+    
     // var refresh_token = window.localStorage.getItem('refresh_token')
     // console.log("token",token)       
     // console.log("method",method)       
     // console.log("datalist",datalist)       
     try {
         if(method==="get"){
-            // console.log("url",BaseURL)
+            console.log("url",BaseURL+url)
             let data = await axios.get(BaseURL+url,{params:datalist})
             // console.log("dataget",data)
             return data
