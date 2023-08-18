@@ -208,6 +208,15 @@ export default function Adminorders() {
             width: "200px"
         },
         {
+            name: "Amount",
+            selector: (itm) => <div className='my-2'><div>
+                <div className='mb-2'><h4>AED {itm.total_price}</h4></div>
+                <span className='rounded p-1 uppercase ' style={itm.payment?{ backgroundColor: "green"}:{backgroundColor:"red"}}><b className='text-white '>{itm.payment?"Paid":"Not Paid"}</b></span>
+            </div>
+               </div>,
+            width: "150px"
+        },
+        {
             name: "STATUS",
             selector: (itm) => <div className='my-2'><div>
                 <span className='rounded p-1 uppercase ' style={{ backgroundColor: itm.status[0].code }}><b className='text-white '>{itm.status[0].status}</b></span>
