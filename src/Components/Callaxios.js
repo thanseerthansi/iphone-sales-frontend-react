@@ -27,7 +27,7 @@ export default async function  Callaxios(method,url,datalist) {
     // console.log("datalist",datalist)       
     try {
         if(method==="get"){
-            console.log("url",BaseURL+url)
+            // console.log("url",BaseURL+url)
             let data = await axios.get(BaseURL+url,{params:datalist})
             // console.log("dataget",data)
             return data

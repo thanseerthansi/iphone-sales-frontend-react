@@ -144,6 +144,7 @@ export default function Adminproducts() {
         let imagelist = images.concat(img)
         setimages(imagelist)
     }
+    // console.log("ertyuhjiklhgfdfvb",images)
     const deletefromlist=(k)=>{
         const splc = images
         splc.splice(k,1)
