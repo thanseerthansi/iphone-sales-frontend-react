@@ -29,7 +29,7 @@ export default function Adminsetting() {
     const [contactvalue,setcontactvalue]=useState([])
     const [bannervalue,setbannervalue]=useState([])
     // console.log("contact model",contactmodal)
-    console.log("bannwermodal",bannermodal)
+    // console.log("bannwermodal",bannermodal)
     // console.log("categoryname",categorydata)
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -127,12 +127,12 @@ export default function Adminsetting() {
         const form_data = new FormData();
         try {
             let bannerdata = bannermodal.data
-            console.log("bannerdata",bannerdata)
+            // console.log("bannerdata",bannerdata)
             Object.entries(bannerdata).forEach(([key, value]) => {
                 form_data.append(key,value);
             });
             let data =  await Callaxios("post","banner/banner/",form_data)
-            console.log("data",data)
+            // console.log("data",data)
             if (data.data.Status===200){
                 notify("Successfully Added")
                 getBanners()
