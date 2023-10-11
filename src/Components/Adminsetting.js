@@ -248,7 +248,7 @@ export default function Adminsetting() {
             setbannermodal({...bannermodal,data:{...bannermodal.data,banner_name:value}})
            }
         }else if(value==="Bottom Left Banner"){
-            let toplen = bannervalue.filter(t=>t.banner_name==="Top Banner")
+            let toplen = bannervalue.filter(t=>t.banner_name==="Bottom Left Banner")
            if(toplen.length>=1){
             notifyerror("You can add only 1  Bottom Left Banner.")
             setbannermodal({...bannermodal,data:{...bannermodal.data,banner_name:""}})
@@ -745,7 +745,7 @@ export default function Adminsetting() {
                                             <div className="lg:col-span-6 col-span-12 mb-5">
                                            
                                             <div className="text-left">
-                                                <label htmlFor="email" className="font-semibold">Banner Image {bannermodal?.data?.banner_name==="Top Banner"?" ( 1920 X 800 )":bannermodal?.data?.banner_name===""?"( 670 x 257 )":""??""}</label>
+                                                <label htmlFor="email" className="font-semibold">Banner Image {bannermodal?.data?.banner_name==="Top Banner"?" ( 1920 X 800 )":bannermodal?.data?.banner_name==="Bottom Left Banner" ||bannermodal?.data?.banner_name==="Bottom Right Banner" ?"( 670 x 257 )":""??""}</label>
                                                 
                                                 <div className="form-icon relative mt-2">
                                                 <i className="w-4 h-4 absolute top-3 left-4"><BiImage  size={18} /></i>
@@ -768,6 +768,7 @@ export default function Adminsetting() {
                                             </div>
                                             
                                             </div>
+                                            {bannermodal?.data?.banner_name==="Bottom Left Banner"||bannermodal.data.banner_name==="Bottom Right Banner"?"":
                                             <div className="lg:col-span-6 col-span-12 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="email" className="font-semibold">Heading</label>
@@ -779,6 +780,7 @@ export default function Adminsetting() {
                                             </div>
                                             
                                             </div>
+                                            }
                                             <div className="lg:col-span-6 col-span-12 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="email" className="font-semibold">Redirect to</label>
@@ -799,6 +801,7 @@ export default function Adminsetting() {
                                             </div>
                                             
                                             </div>
+                                            {bannermodal?.data?.banner_name==="Bottom Left Banner"||bannermodal.data.banner_name==="Bottom Right Banner"?"":
                                             <div className="lg:col-span-6 col-span-12 mb-5">
                                             <div className="text-left">
                                                 <label htmlFor="email" className="font-semibold">Banner Description</label>
@@ -810,6 +813,7 @@ export default function Adminsetting() {
                                             </div>
                                             
                                             </div>
+                                            }
                                         </div>
                                         
                                         <div className='flex justify-end' ><button  type="submit" className='w-64 p-2 bg-green-700 rounded-md  text-white hover:bg-green-900'>Submit</button></div>
